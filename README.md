@@ -1,2 +1,2 @@
 # blog-pro
-Professionnal Blog
+Blog professionnel
