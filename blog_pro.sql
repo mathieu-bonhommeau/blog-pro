@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  Dim 19 juil. 2020 à 19:25
+-- Généré le :  lun. 20 juil. 2020 à 20:56
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -31,37 +31,16 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE IF NOT EXISTS `comment` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nameVisitor` varchar(45) NOT NULL,
   `comment` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `commentDate` datetime NOT NULL,
   `validation` tinyint(1) NOT NULL DEFAULT '0',
   `user_id` int(11) UNSIGNED NOT NULL,
   `post_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_user_id` (`user_id`),
-  KEY `fk_post_id` (`post_id`)
+  KEY `fk_post_id` (`post_id`),
+  KEY `fk_comment_user_id` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `membertype`
---
-
-DROP TABLE IF EXISTS `membertype`;
-CREATE TABLE IF NOT EXISTS `membertype` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `membertype`
---
-
-INSERT INTO `membertype` (`id`, `type`) VALUES
-(1, 'member'),
-(2, 'moderator'),
-(3, 'administrator');
 
 -- --------------------------------------------------------
 
@@ -73,10 +52,12 @@ DROP TABLE IF EXISTS `post`;
 CREATE TABLE IF NOT EXISTS `post` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `postDate` datetime NOT NULL,
-  `author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `chapo` tinytext NOT NULL,
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `lastDateModif` datetime NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_post_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -90,13 +71,35 @@ CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `userName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Hash in php',
-  `registrationDate` date NOT NULL,
   `profilPicture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `memberType_id` int(45) UNSIGNED NOT NULL,
+  `authorName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `userType_id` int(45) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `userName_unique` (`userName`),
-  KEY `fk_memberType_id` (`memberType_id`)
+  KEY `fk_memberType_id` (`userType_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `usertype`
+--
+
+DROP TABLE IF EXISTS `usertype`;
+CREATE TABLE IF NOT EXISTS `usertype` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `usertype`
+--
+
+INSERT INTO `usertype` (`id`, `type`) VALUES
+(4, 'Administrator'),
+(5, 'Author'),
+(6, 'Moderator');
 
 --
 -- Contraintes pour les tables déchargées
@@ -106,14 +109,20 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
-  ADD CONSTRAINT `fk_post_id` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `fk_comment_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_post_id` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Contraintes pour la table `post`
+--
+ALTER TABLE `post`
+  ADD CONSTRAINT `fk_post_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `fk_memberType_id` FOREIGN KEY (`memberType_id`) REFERENCES `membertype` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `fk_userType_id` FOREIGN KEY (`userType_id`) REFERENCES `usertype` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

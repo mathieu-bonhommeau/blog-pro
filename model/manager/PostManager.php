@@ -1,3 +1,3 @@
 <?php
 
-class PostManager { }
+class PostManager extends Manager { }
