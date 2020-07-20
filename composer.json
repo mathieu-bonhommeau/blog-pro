@@ -1,0 +1,12 @@
+{
+    "name": "85mat/blog_pro",
+    "authors": [
+        {
+            "name": "Mathieu Bonhommeau",
+            "email": "mathieu.bonhommeau@orange.fr"
+        }
+    ],
+    "require": {
+        "twig/twig": "^2.0"
+    }
+}
