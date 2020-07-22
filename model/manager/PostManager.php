@@ -30,7 +30,6 @@ class PostManager extends Manager
                 'user_id' => $user_id
                 )
         );
-        return $req;
     }
 
     public function updatePost($title, $chapo, $content)
