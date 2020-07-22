@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  mer. 22 juil. 2020 à 17:08
+-- Généré le :  mer. 22 juil. 2020 à 21:25
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -34,13 +34,20 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `nameVisitor` varchar(45) NOT NULL,
   `comment` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `commentDate` datetime NOT NULL,
-  `validation` tinyint(1) NOT NULL DEFAULT '0',
+  `validComment` enum('TRUE','FALSE') NOT NULL DEFAULT 'FALSE',
   `user_id` int(11) UNSIGNED DEFAULT NULL,
   `post_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_post_id` (`post_id`),
   KEY `fk_comment_user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `comment`
+--
+
+INSERT INTO `comment` (`id`, `nameVisitor`, `comment`, `commentDate`, `validComment`, `user_id`, `post_id`) VALUES
+(1, 'Anna', 'A bah quand même !!!', '2020-07-22 23:24:36', 'TRUE', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -80,19 +87,20 @@ CREATE TABLE IF NOT EXISTS `post` (
   `user_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_post_user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `post`
 --
 
 INSERT INTO `post` (`id`, `title`, `chapo`, `content`, `lastDateModif`, `user_id`) VALUES
-(4, 'titre', 'chapo', 'contenuuuuu', '2020-07-15 00:00:00', 1),
-(8, 'bla', 'bla', 'bla', '2020-07-22 13:56:53', 1),
-(9, 'bla', 'bla', 'bla', '2020-07-22 13:57:34', 1),
-(10, 'bla', 'bla', 'bla', '2020-07-22 13:57:35', 1),
-(11, 'bla', 'bla', 'bla', '2020-07-22 13:57:44', 1),
-(12, 'bla', 'bla', 'bla', '2020-07-22 14:01:04', 1);
+(4, 'titre', 'chapo', 'contenuuuuu', '2020-07-10 00:00:00', 1),
+(14, 'bla', 'bla', 'bla', '2020-07-22 21:12:40', 1),
+(25, 'bla', 'bla', 'bla', '2020-07-22 23:22:00', 1),
+(26, 'bla', 'bla', 'bla', '2020-07-22 23:22:28', 1),
+(27, 'bla', 'bla', 'bla', '2020-07-22 23:23:19', 1),
+(28, 'bla', 'bla', 'bla', '2020-07-22 23:23:25', 1),
+(29, 'bla', 'bla', 'bla', '2020-07-22 23:24:36', 1);
 
 -- --------------------------------------------------------
 

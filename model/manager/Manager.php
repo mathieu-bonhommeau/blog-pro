@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * Class Manager parent
+ */
+
 class Manager 
 { 
     private $_db;
 
+    /**
+     * Database connexion 
+     * return PDO object
+     */
     public function __construct()
     {
         $db = new PDO(

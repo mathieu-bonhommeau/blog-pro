@@ -1,3 +1,41 @@
 <?php
 
-class CommentManager extends Manager { }
+/**
+ * Class for manage comment in database
+ */
+class CommentManager extends Manager
+{    
+    /**
+     * Add a new comment
+     * @param string Name of visitor
+     * @param string Comment
+     * @param bool   Validation of comment
+     * @param int    Id of moderator
+     * @param int    Id of post
+     * 
+     * @return int Number affected lines
+     */
+    public function addComment(
+        $nameVisitor, $comment, $validComment, $user_id, $post_id
+    ) {
+        $req = $this->db()->prepare(
+            'INSERT INTO comment (
+            nameVisitor, comment, commentDate, validComment, user_id, post_id
+            )
+            VALUE (
+            :nameVisitor, :comment, NOW(), :validComment, :user_id, :post_id
+            )'
+        );
+        $req -> execute(
+            array('nameVisitor' => $nameVisitor,
+                  'comment' => $comment,
+                  'validComment' => $validComment,
+                  'user_id' => $user_id,
+                  'post_id' => $post_id
+            )
+        );
+        return $req->rowCount();
+    }
+
+
+}

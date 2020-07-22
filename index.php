@@ -5,27 +5,21 @@ require __DIR__.'/vendor/autoload.php';
 require 'model/entity/Post.php';
 require 'model/manager/Manager.php';
 require 'model/manager/PostManager.php';
+require 'model/manager/CommentManager.php';
 try 
 {
-    $post = new Post;
+    $postManager = new PostManager;
+    $data = $postManager->addPost('bla', 'bla', 'bla', 1);
+    $data = $postManager -> getPost(14);
+    $post = new Post($data);
     dump($post);
-    $post->setId('llll');
-    $post->setTitle('Un nouveau depart');
-    echo $post->title();
-    dump($post);
-    $db = new Manager;
-    dump($db);
-    $r = new PostManager;
-    $data = $r->getPosts()->fetch();
-    dump($data);
-    $r1 = new PostManager;
-    $data = $r1->getPost(4);
-    dump($data);
-    $r2 = new PostManager;
-    $data = $r2->addPost('bla','bla','bla',1);
-    dump($data);
+    echo $post->lastDateModif();
+    $commentManager = new CommentManager;
+    $data = $commentManager -> addComment('Anna','A bah quand même !!!', TRUE, 1, 4);
+    
+
 }
 catch(Exception $e)
 {
-    die('Erreur:' . $e->getCode());
+    die('Erreur:' . $e->getCode() . $e->getMessage());
 }

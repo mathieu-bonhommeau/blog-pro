@@ -1,21 +1,54 @@
 <?php
 
-class PostManager extends Manager 
-{ 
-
+/**
+ * Class for manage post in database
+ */
+class PostManager extends Manager
+{
+    /**
+     * Recovers all the posts
+     * 
+     * @return array Result of request need a fetch process
+     */
     public function getPosts()
     {
-        $req = $this->db()->query('SELECT * FROM post ORDER BY lastDateModif DESC');
+        $req = $this->db()->query(
+            'SELECT id, title, chapo, content, 
+            UNIX_TIMESTAMP(lastDateModif) AS lastDateModif 
+            FROM post ORDER BY lastDateModif DESC'
+        );
         return $req;
     }
 
+    /**
+     * Recovers one post with the id post
+     * 
+     * @param int $id Id post in database
+     * 
+     * @return array Result of request
+     */
     public function getPost($id)
     {
-        $req = $this->db()->prepare('SELECT * FROM post WHERE id = ?');
+        $req = $this->db()->prepare(
+            'SELECT id, title, chapo, content, 
+            UNIX_TIMESTAMP(lastDateModif) AS lastDateModif  
+            FROM post WHERE id = ?'
+        );
         $req->execute(array($id));
         return $data = $req->fetch(PDO::FETCH_ASSOC);
     }
 
+    
+    /**
+     * Add new post 
+     *
+     * @param string $title   Title of post
+     * @param string $chapo   Chapo of post
+     * @param string $content Content of post
+     * @param int    $user_id Author id of post
+     * 
+     * @return int Number of affected lines
+     */
     public function addPost($title, $chapo, $content, $user_id)
     {
         $req = $this->db()->prepare(
@@ -30,16 +63,25 @@ class PostManager extends Manager
                 'user_id' => $user_id
                 )
         );
-<<<<<<< HEAD
-=======
-        return $affectedLines = $req->rowCount();
+        return $req->rowCount();
     }
 
+        
+    /**
+     * Update a post
+     *
+     * @param int    $id      Id of post
+     * @param string $title   Title of post
+     * @param string $chapo   Chapo of post
+     * @param string $content Content of post
+     * 
+     * @return int Number of affected lines
+     */
     public function updatePost($id, $title, $chapo, $content)
     {
         $req = $this->db()->prepare(
             'UPDATE post SET title = :title, chapo = :chapo, 
-            content = :content, lastDateModify = NOW() 
+            content = :content, lastDateModif = NOW() 
             WHERE id = :id'
         );
         $req->execute(
@@ -50,15 +92,23 @@ class PostManager extends Manager
                 'id' => $id
             )
         );
->>>>>>> b6d91ae2410781bbee83b0e052d8fffe6a1da9bb
+        return $req->rowCount();
     }
-
+    
+    /**
+     * Delete a post
+     *
+     * @param mixed $id Id of post
+     * 
+     * @return int Number of affected lines
+     */
     public function deletePost($id)
     {
         $req = $this->db()->prepare(
             'DELETE FROM post WHERE id = ?'
         );
         $req->execute(array($id));
+        return $req->rowCount();
     }
 
 }
