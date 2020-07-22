@@ -30,12 +30,32 @@ class PostManager extends Manager
                 'user_id' => $user_id
                 )
         );
-        return $req;
+        return $affectedLines = $req->rowCount();
     }
 
-    public function updatePost($title, $chapo, $content)
+    public function updatePost($id, $title, $chapo, $content)
     {
-        //$this->
+        $req = $this->db()->prepare(
+            'UPDATE post SET title = :title, chapo = :chapo, 
+            content = :content, lastDateModify = NOW() 
+            WHERE id = :id'
+        );
+        $req->execute(
+            array(
+                'title' => $title,
+                'chapo' => $chapo,
+                'content' => $content,
+                'id' => $id
+            )
+        );
+    }
+
+    public function deletePost($id)
+    {
+        $req = $this->db()->prepare(
+            'DELETE FROM post WHERE id = ?'
+        );
+        $req->execute(array($id));
     }
 
 }
