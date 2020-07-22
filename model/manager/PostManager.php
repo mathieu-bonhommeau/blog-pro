@@ -30,11 +30,35 @@ class PostManager extends Manager
                 'user_id' => $user_id
                 )
         );
+<<<<<<< HEAD
+=======
+        return $affectedLines = $req->rowCount();
     }
 
-    public function updatePost($title, $chapo, $content)
+    public function updatePost($id, $title, $chapo, $content)
     {
-        //$this->
+        $req = $this->db()->prepare(
+            'UPDATE post SET title = :title, chapo = :chapo, 
+            content = :content, lastDateModify = NOW() 
+            WHERE id = :id'
+        );
+        $req->execute(
+            array(
+                'title' => $title,
+                'chapo' => $chapo,
+                'content' => $content,
+                'id' => $id
+            )
+        );
+>>>>>>> b6d91ae2410781bbee83b0e052d8fffe6a1da9bb
+    }
+
+    public function deletePost($id)
+    {
+        $req = $this->db()->prepare(
+            'DELETE FROM post WHERE id = ?'
+        );
+        $req->execute(array($id));
     }
 
 }
