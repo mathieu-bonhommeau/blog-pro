@@ -7,11 +7,12 @@ class CommentManager extends Manager
 {    
     /**
      * Add a new comment
-     * @param string Name of visitor
-     * @param string Comment
-     * @param bool   Validation of comment
-     * @param int    Id of moderator
-     * @param int    Id of post
+     * 
+     * @param string $nameVisitor  Name of visitor
+     * @param string $comment      Comment
+     * @param bool   $validComment Validation of comment
+     * @param int    $user_id      Id of moderator
+     * @param int    $post_id      Id of post
      * 
      * @return int Number affected lines
      */
@@ -37,5 +38,11 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
-
+    /*public function getComments()
+    {
+        $req = $this->db()->query(
+            'SELECT nameVisitor, comment, UNIX_TIMESTAMP(commentDate) AS commentDate
+             validComment, user'
+        )
+    }*/
 }

@@ -13,9 +13,12 @@ class PostManager extends Manager
     public function getPosts()
     {
         $req = $this->db()->query(
-            'SELECT id, title, chapo, content, 
-            UNIX_TIMESTAMP(lastDateModif) AS lastDateModif 
-            FROM post ORDER BY lastDateModif DESC'
+            'SELECT post.id, post.title, post.chapo, post.content, 
+            UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
+            user.userName
+            FROM post 
+            INNER JOIN user ON user.id = post.user_id
+            ORDER BY lastDateModif DESC'
         );
         return $req;
     }
@@ -30,9 +33,12 @@ class PostManager extends Manager
     public function getPost($id)
     {
         $req = $this->db()->prepare(
-            'SELECT id, title, chapo, content, 
-            UNIX_TIMESTAMP(lastDateModif) AS lastDateModif  
-            FROM post WHERE id = ?'
+            'SELECT post.id, post.title, post.chapo, post.content, 
+            UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
+            user.userName
+            FROM post 
+            INNER JOIN user ON user.id = post.user_id
+            WHERE post.id = ?'
         );
         $req->execute(array($id));
         return $data = $req->fetch(PDO::FETCH_ASSOC);

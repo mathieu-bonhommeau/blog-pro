@@ -10,6 +10,7 @@ class Post
     private $_chapo;
     private $_content;
     private $_lastDateModif;
+    private $_user_id;
         
     /**
      * __construct Init object 
@@ -92,6 +93,16 @@ class Post
     }
     
     /**
+     * Getter $_user_id
+     *
+     * @return int
+     */
+    public function user_id()
+    {
+        return $this->_user_id;
+    }
+    
+    /**
      * Setter setId
      *
      * @param int $id Id of post
@@ -156,6 +167,11 @@ class Post
     {
         $lastDateModif = (int)$lastDateModif;
         $this->_lastDateModif = $lastDateModif;
+    }
+
+    public function setUser_id()
+    {
+        
     }
 
 
