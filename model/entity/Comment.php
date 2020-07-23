@@ -7,6 +7,8 @@ class Comment
     private $_comment;
     private $_commentDate;
     private $_validComment;
+    private $_user_id;
+    private $_post_id;
     
     /**
      * __construct Init object
@@ -87,6 +89,16 @@ class Comment
     {
         return $this->_validComment;
     }
+
+    public function user_id()
+    {
+        return $this->_user_id;
+    }
+
+    public function post_id()
+    {
+        return $this->_post_id;
+    }
     
     /**
      * Setter setId
@@ -154,5 +166,17 @@ class Comment
         if ($validComment == 'TRUE' || $validComment =='FALSE') {
             $this->_validComment = $validComment;
         }
+    }
+
+    public function setUser_id($user_id)
+    {
+        $user_id = (int)$user_id;
+        $this->_user_id = $user_id;
+    }
+
+    public function setPost_id($post_id)
+    {
+        $post_id = (int)$post_id;
+        $this->_post_id = $post_id;
     }
 }

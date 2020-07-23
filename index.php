@@ -6,6 +6,8 @@ require 'model/entity/Post.php';
 require 'model/manager/Manager.php';
 require 'model/manager/PostManager.php';
 require 'model/manager/CommentManager.php';
+require 'model/entity/Comment.php';
+require 'model/manager/UserManager.php';
 try 
 {
     $postManager = new PostManager;
@@ -15,7 +17,15 @@ try
     dump($post);
     echo $post->lastDateModif();
     $commentManager = new CommentManager;
-    $data = $commentManager -> addComment('Anna','A bah quand même !!!', TRUE, 1, 4);
+    $datas = $commentManager -> getComment(2);
+    dump($datas);
+    $comment = new Comment($datas);
+    dump($comment);
+    $userManager = new UserManager;
+    $data = $userManager->addUser('Anna', 'coucou', '',  'Annabelle', 4);
+
+    
+
     
 
 }
