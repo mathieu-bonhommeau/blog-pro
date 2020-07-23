@@ -10,7 +10,7 @@ class Post
     private $_chapo;
     private $_content;
     private $_lastDateModif;
-    private $_user_id;
+    private $_userName;
         
     /**
      * __construct Init object 
@@ -93,13 +93,13 @@ class Post
     }
     
     /**
-     * Getter $_user_id
+     * Getter $_userName / Author of post
      *
      * @return int
      */
-    public function user_id()
+    public function userName()
     {
-        return $this->_user_id;
+        return $this->_userName;
     }
     
     /**
@@ -169,9 +169,10 @@ class Post
         $this->_lastDateModif = $lastDateModif;
     }
 
-    public function setUser_id()
+    public function setUserName($userName)
     {
-        
+        $userName = (string)$userName;
+        $this->_userName = $userName;
     }
 
 
