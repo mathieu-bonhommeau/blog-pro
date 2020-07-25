@@ -41,7 +41,7 @@ class CommentManager extends Manager
     public function getComments($post_id)
     {
         $req = $this->db()->prepare(
-            'SELECT nameVisitor, comment, UNIX_TIMESTAMP(commentDate) AS commentDate,
+            'SELECT id, nameVisitor, comment, UNIX_TIMESTAMP(commentDate) AS commentDate,
              validComment,user_id, post_id
             FROM comment 
             WHERE post_id = ?
@@ -54,7 +54,7 @@ class CommentManager extends Manager
     public function getComment($id)
     {
         $req = $this->db()->prepare(
-            'SELECT nameVisitor, comment, UNIX_TIMESTAMP(commentDate) AS commentDate,
+            'SELECT id, nameVisitor, comment, UNIX_TIMESTAMP(commentDate) AS commentDate,
             validComment, user_id, post_id
             FROM comment
             WHERE id = ?'

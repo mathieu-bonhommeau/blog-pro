@@ -9,7 +9,7 @@ class User
     private $_authorName;
     private $_type;
 
-    const ROLES = array('administrator', 'author', 'moderator');
+    private static $_role = array('Administrator', 'Author', 'Moderator');
 
     public function __construct($data)
     {
@@ -18,7 +18,7 @@ class User
 
     public function hydrate($data)
     {
-        foreach ($data as $key =>$value) {
+        foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);
             if (method_exists($this, $method)) {
                 $this->$method($value);
@@ -71,7 +71,7 @@ class User
 
     public function setPassword($password)
     {
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        $password = (string)$password; 
         $this->_password = $password;
     }
 
@@ -92,7 +92,7 @@ class User
 
     public function setType($type)
     {
-        if (in_array($type, self::ROLES)) {
+        if (in_array($type, self::$_role)) {
             $this->_type = $type;
         }
     }

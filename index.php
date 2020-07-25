@@ -7,6 +7,7 @@ require 'model/manager/Manager.php';
 require 'model/manager/PostManager.php';
 require 'model/manager/CommentManager.php';
 require 'model/entity/Comment.php';
+require 'model/entity/User.php';
 require 'model/manager/UserManager.php';
 try 
 {
@@ -22,8 +23,10 @@ try
     $comment = new Comment($datas);
     dump($comment);
     $userManager = new UserManager;
-    $data = $userManager->addUser('Anna', 'coucou', '',  'Annabelle', 4);
-
+    $data = $userManager->getUser(5);
+    $user = new User($data);
+    dump($data);
+    dump($user);
     
 
     

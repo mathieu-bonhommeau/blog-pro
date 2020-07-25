@@ -58,4 +58,36 @@ class UserManager extends Manager
         );
         return $req->rowCount();
     }
+
+    public function updateUser(
+        $id, $userName, $password, $profilPicture, $authorName, $userType_id
+    ) {
+        $req = $this->db()->prepare(
+            'UPDATE user SET
+            userName = :userName, password = :password, 
+            profilPicture = :profilPicture, authorName = :authorName, 
+            userType_id = :userType_id
+            WHERE id = :id'
+        );
+        $req -> execute(
+            array(
+                'userName' => $userName,
+                'password' => $password,
+                'profilPicture' => $profilPicture,
+                'authorName' => $authorName,
+                'userType_id' => $userType_id,
+                'id' => $id
+            )
+        );
+        return $req->rowCount();
+    }
+
+    public function deleteUser($id)
+    {
+        $req = $this->db()->prepare(
+            'DELETE FROM user WHERE id = ?'
+        );
+        $req -> execute(array($id));
+        return $req->rowCount();
+    }
 }
