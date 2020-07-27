@@ -37,6 +37,7 @@ class CommentManager extends Manager
         );
         return $req->rowCount();
     }
+
     public function getComments($post_id)
     {
         $req = $this->db()->prepare(

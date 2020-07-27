@@ -5,8 +5,6 @@ require 'config/Autoloader.php';
 $autoloader = new Autoloader;
 
 
-$commentManager = new CommentManager;
-dump($commentManager);
 
 //Rendu template
 $loader = new Twig\Loader\FilesystemLoader('view');
