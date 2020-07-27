@@ -12,7 +12,7 @@ class Autoloader
 
     public function __construct()
     {
-        spl_autoload_register(self::classLoader($className))
+        spl_autoload_register([__CLASS__, 'classLoader']);
     }
 
     public static function classLoader($className)
