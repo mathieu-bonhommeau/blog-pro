@@ -38,7 +38,7 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
-    /*public function getComments()
+    public function getComments()
     {
         $req = $this->db()->query(
             'SELECT nameVisitor, comment, UNIX_TIMESTAMP(commentDate) AS commentDate
