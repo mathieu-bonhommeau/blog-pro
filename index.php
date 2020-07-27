@@ -1,25 +1,34 @@
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+require 'vendor/autoload.php';
+require 'config/Autoloader.php';
+$autoloader = new Autoloader;
 
-require 'model/entity/Post.php';
-require 'model/manager/Manager.php';
-require 'model/manager/PostManager.php';
-require 'model/manager/CommentManager.php';
-try 
-{
-    $postManager = new PostManager;
-    $data = $postManager->addPost('bla', 'bla', 'bla', 1);
-    $data = $postManager -> getPost(14);
-    $post = new Post($data);
-    dump($post);
-    echo $post->lastDateModif();
-    $commentManager = new CommentManager;
-    $data = $commentManager -> addComment('Anna','A bah quand même !!!', TRUE, 1, 4);
-    
 
-}
-catch(Exception $e)
+$commentManager = new CommentManager;
+dump($commentManager);
+
+//Rendu template
+$loader = new Twig\Loader\FilesystemLoader('view');
+$twig = new Twig\Environment(
+    $loader, [
+    'cache' => false //'/tmp'
+    ]
+);
+
+
+if (isset($_GET['p']) && $_GET['p']=='home')
 {
-    die('Erreur:' . $e->getCode() . $e->getMessage());
+    echo $twig->render('frontView/homeView.twig');
 }
+elseif (isset($_GET['p']) && $_GET['p']=='listposts')
+{
+    echo $twig -> render('frontView/listPostView.twig');
+}
+else {
+    echo $twig->render('frontView/homeView.twig');
+}
+
+?>
+
+

@@ -1,3 +1,6 @@
 <?php
 
-class FrontofficeController { }
+class FrontofficeController 
+{ 
+    
+}

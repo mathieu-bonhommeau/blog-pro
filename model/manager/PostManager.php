@@ -15,7 +15,7 @@ class PostManager extends Manager
         $req = $this->db()->query(
             'SELECT post.id, post.title, post.chapo, post.content, 
             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
-            user.userName
+            user.authorName
             FROM post 
             INNER JOIN user ON user.id = post.user_id
             ORDER BY lastDateModif DESC'
@@ -35,7 +35,7 @@ class PostManager extends Manager
         $req = $this->db()->prepare(
             'SELECT post.id, post.title, post.chapo, post.content, 
             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
-            user.userName
+            user.authorName
             FROM post 
             INNER JOIN user ON user.id = post.user_id
             WHERE post.id = ?'

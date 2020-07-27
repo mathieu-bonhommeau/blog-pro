@@ -37,12 +37,39 @@ class CommentManager extends Manager
         );
         return $req->rowCount();
     }
-
-    public function getComments()
+    public function getComments($post_id)
     {
-        $req = $this->db()->query(
-            'SELECT nameVisitor, comment, UNIX_TIMESTAMP(commentDate) AS commentDate
-             validComment, user'
-        )
-    }*/
+        $req = $this->db()->prepare(
+            'SELECT id, nameVisitor, comment, 
+            UNIX_TIMESTAMP(commentDate) AS commentDate,
+            validComment,user_id, post_id
+            FROM comment 
+            WHERE post_id = ?
+            ORDER BY commentDate DESC'
+        );
+        $req -> execute(array($post_id));
+        return $req;
+    }
+
+    public function getComment($id)
+    {
+        $req = $this->db()->prepare(
+            'SELECT id, nameVisitor, comment, 
+            UNIX_TIMESTAMP(commentDate) AS commentDate,
+            validComment, user_id, post_id
+            FROM comment
+            WHERE id = ?'
+        );
+        $req -> execute(array($id));
+        return $data = $req->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteComment($id)
+    {
+        $req = $this->db()->prepare(
+            'DELETE FROM comment WHERE id = ?'
+        );
+        $req -> execute(array($id));
+        return $req->rowCount();
+    }
 }
