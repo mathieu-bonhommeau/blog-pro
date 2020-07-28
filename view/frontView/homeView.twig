@@ -1,24 +1,18 @@
 {% extends "template.twig" %}
 
-{% block head %}
-{{parent() }}
-
-{% endblock %}
-
-{% block nav %}
-{{parent() }}
-
-{% endblock %}
-
 {% block content %}
-    <div class="container d-flex h-100 align-items-center">
-        <div class="mx-auto text-center">
-            <h1 class="mx-auto my-0 text-uppercase">Nom Prenom</h1>
-            <h2 class="text-white-50 mx-auto mt-2 mb-5">Phrase d'accroche</h2>
-            <a class="btn btn-primary js-scroll-trigger" href="#about">CV</a>
+
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Nom Prenom</h1>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">Phrase d'accroche</h2>
+                <a class="btn btn-primary js-scroll-trigger" href="#about">CV</a>
+            </div>
         </div>
-    </div>
     </header>
+
     <!-- About-->
     <section class="about-section text-center" id="about">
     <div class="container">
@@ -35,13 +29,14 @@
         <img class="img-fluid" src="assets/img/ipad.png" alt="" />  
     </div>
     </section>
+
     <!-- Projects-->
     <section class="projects-section bg-light" id="projects">
     <div class="container">
         <!-- Featured Project Row-->
         {% for post in posts %}
-        {{ post.title }}
-        {{ post.content }}
+        <p>{{ post.title }}</p>
+        <p>{{ post.content }}</p>
         {% endfor %}
             <!--<div class="row align-items-center no-gutters mb-4 mb-lg-5">
                 <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/bg-masthead.jpg" alt="" /></div>
@@ -85,6 +80,7 @@
         </div>
     </div>
     </section>
+
     <!-- Signup-->
     <section class="signup-section" id="signup">
     <div class="container">
@@ -100,6 +96,7 @@
         </div>
     </div>
     </section>
+
     <!-- Contact-->
     <section class="contact-section bg-black">
     <div class="container">
@@ -142,9 +139,5 @@
         </div>
     </div>
     </section>
-{%  endblock%}
-
-{% block footer %}
-{{parent() }}
 
 {%  endblock %}

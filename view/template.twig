@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         {% block head %}
             <meta charset="utf-8" />
@@ -17,7 +18,9 @@
             <link href="public/css/styles.css" rel="stylesheet" />
         {% endblock %}
     </head>
+
     <body id="page-top">
+
         {% block nav %}
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -37,15 +40,18 @@
                 </div>
             </nav>
         {% endblock %}
-        <!-- Masthead-->
-        <header class="masthead">
+       
         {% block content %}
+        
+        
                 
         {% endblock %}
+
         <!-- Footer-->
         {% block footer %}
             <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © Your Website 2020</div></footer>
         {% endblock %}
+        
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
