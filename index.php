@@ -6,27 +6,32 @@ $autoloader = new Autoloader;
 
 
 
-//Rendu template
-$loader = new Twig\Loader\FilesystemLoader('view');
-$twig = new Twig\Environment(
-    $loader, [
-    'cache' => false //'/tmp'
-    ]
-);
+try 
+{
+    $router = new Router;
+
+    if (isset($_GET['p'])) {
+        $router -> run($_GET['p']);
+    }
+    
 
 
-if (isset($_GET['p']) && $_GET['p']=='home')
-{
-    echo $twig->render('frontView/homeView.twig');
+    /*if (isset($_GET['p'])) {
+
+        if ($_GET['p'] == 'home') {
+
+            
+            
+        } elseif ($_GET['p'] == 'listposts') {
+            echo $twig -> render('frontView/listPostView.twig');
+        } 
+    } else {
+        echo $twig->render('frontView/homeView.twig');
+    }*/
 }
-elseif (isset($_GET['p']) && $_GET['p']=='listposts')
+catch (Exception $e)
 {
-    echo $twig -> render('frontView/listPostView.twig');
-}
-else {
-    echo $twig->render('frontView/homeView.twig');
+    echo $e -> getMessage();
 }
 
 ?>
-
-
