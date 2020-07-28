@@ -2,10 +2,11 @@
 
 class Controller
 {
+    protected $twig;
 
     public function twigInit()
     {
         $loader = new Twig\Loader\FilesystemLoader('view');
-        return $twig = new Twig\Environment($loader, ['cache' => false]); //'/tmp'
+        $this->twig = new Twig\Environment($loader, ['cache' => false, 'debug' => true]); //'/tmp'  
     }
 }

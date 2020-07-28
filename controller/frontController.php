@@ -2,17 +2,16 @@
 
 class FrontController extends Controller 
 { 
-    public function home()
+    public function homePage()
     {
         $postManager = new PostManager();
-        $datas = $postManager -> getPosts();
-        $posts = $datas ->fetchAll();
-        dump($posts);
+        $datas = $postManager -> getPosts(3);
 
-        echo $this->twigInit()->render(
-            'frontView/homeView.twig',
-            ['post' => $posts, 
-             'nom' => 'Mathieu']
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+
+        echo $this->twig->render(
+            'frontView/homeView.twig', array('posts' => $datas)
         );
         
     }

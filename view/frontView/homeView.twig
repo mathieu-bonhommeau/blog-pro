@@ -39,9 +39,8 @@
     <section class="projects-section bg-light" id="projects">
     <div class="container">
         <!-- Featured Project Row-->
-        {{ nom }}
         {% for post in posts %}
-        {{ post['title'] }}
+        {{ post.title }}
         {{ post.content }}
         {% endfor %}
             <!--<div class="row align-items-center no-gutters mb-4 mb-lg-5">
