@@ -8,7 +8,7 @@ class Router
         if ($route == 'home') {
 
             $frontController = new FrontController;
-            $frontController -> homeView();
+            $frontController -> home();
 
         }
         elseif ($route == 'listposts') {
