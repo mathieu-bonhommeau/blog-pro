@@ -2,6 +2,7 @@
 
 require 'vendor/autoload.php';
 require 'config/Autoloader.php';
+require 'config/config.php';
 $autoloader = new Autoloader;
 
 

@@ -12,16 +12,17 @@ class PostManager extends Manager
      * 
      * @return array Result of request need a fetch process
      */
-    public function getPosts($number)
+    public function getPosts($number, $offset)
     {
         $number = (int)$number;
+        $offset = (int)$offset;
         $req = $this->db()->query(
             'SELECT post.id, post.title, post.chapo, post.content, 
             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
-            user.authorName
+            picture, user.authorName
             FROM post 
             INNER JOIN user ON user.id = post.user_id
-            ORDER BY lastDateModif DESC LIMIT ' . $number
+            ORDER BY lastDateModif DESC LIMIT ' . $number . ' OFFSET ' . $offset
         );
         return $req;
     }
@@ -38,7 +39,7 @@ class PostManager extends Manager
         $req = $this->db()->prepare(
             'SELECT post.id, post.title, post.chapo, post.content, 
             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
-            user.authorName
+            picture, user.authorName
             FROM post 
             INNER JOIN user ON user.id = post.user_id
             WHERE post.id = ?'
@@ -58,17 +59,18 @@ class PostManager extends Manager
      * 
      * @return int Number of affected lines
      */
-    public function addPost($title, $chapo, $content, $user_id)
+    public function addPost($title, $chapo, $content, $picture, $user_id)
     {
         $req = $this->db()->prepare(
-            'INSERT INTO post (title, chapo, content, lastDateModif, user_id) 
-            VALUES (:title, :chapo, :content, NOW(), :user_id)'
+            'INSERT INTO post (title, chapo, content, lastDateModif, picture, user_id) 
+            VALUES (:title, :chapo, :content, NOW(), :picture, :user_id)'
         );
         $req->execute(
             array(
                 'title' => $title, 
                 'chapo' => $chapo,
                 'content' => $content,
+                'picture' => $picture,
                 'user_id' => $user_id
                 )
         );
@@ -86,11 +88,11 @@ class PostManager extends Manager
      * 
      * @return int Number of affected lines
      */
-    public function updatePost($id, $title, $chapo, $content)
+    public function updatePost($id, $title, $chapo, $content, $picture)
     {
         $req = $this->db()->prepare(
             'UPDATE post SET title = :title, chapo = :chapo, 
-            content = :content, lastDateModif = NOW() 
+            content = :content, lastDateModif = NOW(), picture = :picture 
             WHERE id = :id'
         );
         $req->execute(
@@ -98,6 +100,7 @@ class PostManager extends Manager
                 'title' => $title,
                 'chapo' => $chapo,
                 'content' => $content,
+                'picture' => $picture,
                 'id' => $id
             )
         );
