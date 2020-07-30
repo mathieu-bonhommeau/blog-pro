@@ -12,7 +12,30 @@ try
     $router = new Router;
 
     if (isset($_GET['p'])) {
-        $router -> run($_GET['p']);
+        $router -> runPage($_GET['p']);
+
+        if (isset($_POST['submitMessage'])) {
+            if (isset($_POST['inputName']) 
+                && isset($_POST['inputFirstName']) 
+                && isset($_POST['inputEmail']) 
+                && isset($_POST['inputMessage'])
+            ) {
+                $form = array('inputName' => $_POST['inputName'], 
+                              'inputFirstName' => $_POST['inputFirstName'], 
+                              'inputEmail' => $_POST['inputEmail'], 
+                              'inputMessage' => $_POST['inputMessage']
+                );
+                $router -> runSendMessage($form);
+
+            } else {
+                throw new Exception('OUPS !!! Un des champs est vide');
+            }
+            
+            
+           
+
+            
+        }
     }
     
 

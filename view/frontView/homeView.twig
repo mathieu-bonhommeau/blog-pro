@@ -107,10 +107,17 @@
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto text-center">
                 <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
-                <form class="form-inline d-flex">
-                    <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" type="email" placeholder="Enter email address..." />
-                    <button class="btn btn-primary mx-auto" type="submit">Subscribe</button>
+                <h2 class="text-white mb-5">Me contacter</h2>
+                <form method="post" action="">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputName" name='inputName' type="text" placeholder="Votre nom..." /></div>
+                            <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputFirstName" name="inputFirstName" type="text" placeholder="Votre prénom..." /></div>
+                        </div>
+                        <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputEmail" name="inputEmail" type="email" placeholder="Votre adresse mail..." />
+                        <textarea class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputMessage" name="inputMessage" rows="10" placeholder="Votre message ici..."></textarea>
+                        <div class="row"></div><button class="btn btn-primary m-3" type="submit" id="submitMessage" name="submitMessage">Envoyer</button></div>
+                    </div>
                 </form>
             </div>
         </div>

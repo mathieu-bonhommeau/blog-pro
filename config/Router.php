@@ -3,15 +3,17 @@
 class Router 
 { 
 
-    public function run($route)
+    public function runPage($get)
     {
-        if ($route == 'home') {
+        if ($get == 'home') {
 
             $frontController = new FrontController;
             $frontController -> homePage();
 
+            //if ()
+
         }
-        elseif ($route == 'listposts') {
+        elseif ($get == 'listposts') {
 
             $frontController = new FrontController;
             $frontController -> listPostsView(); 
@@ -19,5 +21,9 @@ class Router
         }
     }
 
-    //public function get
+    public function runSendMessage(array $form)
+    {
+        $frontController = new FrontController;
+        $frontController -> sendMessage($form);
+    }
 }

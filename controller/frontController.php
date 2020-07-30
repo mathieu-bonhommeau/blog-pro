@@ -27,4 +27,14 @@ class FrontController extends Controller
     {
         echo $this->twigInit()->render('frontView/listPostView.twig');
     }
+
+    public function sendMessage(array $form)
+    {
+        foreach ($form as $key => $value) {
+            $form[$key] = htmlspecialchars($form[$key]);
+        }
+
+        $message = new Message($form);
+        $message -> sendMessage();
+    }
 }
