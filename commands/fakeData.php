@@ -12,10 +12,10 @@ $db = new PDO(
 $db->exec('SET FOREIGN_KEY_CHECKS = 0');
 $db->exec('TRUNCATE TABLE comment');
 $db->exec('TRUNCATE TABLE post');
-//$db->exec('TRUNCATE TABLE user');
+$db->exec('TRUNCATE TABLE user');
 $db->exec('SET FOREIGN_KEY_CHECKS = 1');
 
-/*for ($i=0; $i<15; $i++) {
+for ($i=0; $i<15; $i++) {
 
     
     $req = $db->prepare(
@@ -33,8 +33,8 @@ $db->exec('SET FOREIGN_KEY_CHECKS = 1');
         )
     );
 
-}*/
-
+}
+/*
 for ($i=0; $i<25; $i++) {
 
     $ray = array(4, 5);
@@ -53,4 +53,4 @@ for ($i=0; $i<25; $i++) {
         )
     );
 
-}
+}*/
