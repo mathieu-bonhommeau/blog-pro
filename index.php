@@ -5,16 +5,26 @@ require 'config/Autoloader.php';
 require 'config/config.php';
 $autoloader = new Autoloader;
 
-
+session_start();
 
 try 
 {
     $router = new Router;
 
-    if (isset($_GET['msg'])) {
-        $router -> runPage($_GET['msg']);
-    } else {
+    if (isset($_SESSION['msgOk']) && $_SESSION['msgOk'] == 'ok')
+    {
+        unset($_SESSION['msgOk']);
+        $frontController = new FrontController;
+        $frontController -> homePage();
+        
+    }
 
+    elseif (isset($_GET['p'])) {
+        $msgOk = $router -> runPage($_GET['p']);
+        $_SESSION['msgOk'] = $msgOk;
+        
+    } else {
+        unset($_SESSION['msgOk']);
         $frontController = new FrontController;
         $frontController -> homePage();
 

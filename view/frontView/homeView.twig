@@ -108,12 +108,7 @@
             <div class="col-md-10 col-lg-8 mx-auto text-center">
                 <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
                 <h2 class="text-white mb-5">Me contacter</h2>
-                {{ dump(msg) }}
-                {% if msg == constant('MSG_OK') %}
-                    <form method="post" action="index.php?msg=ok#signup">
-                {% else %}
-                    <form method="post" action="index.php?msg=nok#signup">
-                {% endif %}
+                    <form method="post" action="index.php?p=home#signup">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputName" name='inputName' type="text" placeholder="Votre nom..." /></div>
