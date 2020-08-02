@@ -62,7 +62,7 @@ class Message
         if ($emailControl) {
             $this->_email = $email;
         } else {
-            throw new Exception('Oups !!! L\'email saisi est invalide');
+            throw new Exception(INVALID_EMAIL);
         }
     }
     
@@ -74,13 +74,18 @@ class Message
 
     public function sendMessage()
     {
-        mail(
-            EMAIL, SUBJECT_EMAIL, $this->inputMessage(), 
-            array(
-                  $this->inputName(), 
-                  $this->inputFirstName(), 
-                  $this->inputEmail()
-                )
-        );
-    }
+        $header="MIME-Version: 1.0\r\n";
+        $header.= HEADER_MAIL."\n";
+        $header.='Content-Type:text/html; charset="uft-8"'."\n";
+        $header.='Content-Transfer-Encoding: 8bit';
+
+        $to = EMAIL;
+        $subject = 'De ' . $this->inputFirstName() . ' ' . $this->inputName();
+        $message = $this->inputMessage() . 
+        '<br />' . 'mail : ' . $this->inputEmail();
+
+        $mail = mail($to, $subject, $message, $header);
+        return $mail;
+        
+    } 
 }

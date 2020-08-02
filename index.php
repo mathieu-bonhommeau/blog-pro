@@ -11,31 +11,13 @@ try
 {
     $router = new Router;
 
-    if (isset($_GET['p'])) {
-        $router -> runPage($_GET['p']);
+    if (isset($_GET['msg'])) {
+        $router -> runPage($_GET['msg']);
+    } else {
 
-        if (isset($_POST['submitMessage'])) {
-            if (isset($_POST['inputName']) 
-                && isset($_POST['inputFirstName']) 
-                && isset($_POST['inputEmail']) 
-                && isset($_POST['inputMessage'])
-            ) {
-                $form = array('inputName' => $_POST['inputName'], 
-                              'inputFirstName' => $_POST['inputFirstName'], 
-                              'inputEmail' => $_POST['inputEmail'], 
-                              'inputMessage' => $_POST['inputMessage']
-                );
-                $router -> runSendMessage($form);
+        $frontController = new FrontController;
+        $frontController -> homePage();
 
-            } else {
-                throw new Exception('OUPS !!! Un des champs est vide');
-            }
-            
-            
-           
-
-            
-        }
     }
     
 

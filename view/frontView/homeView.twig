@@ -108,7 +108,12 @@
             <div class="col-md-10 col-lg-8 mx-auto text-center">
                 <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
                 <h2 class="text-white mb-5">Me contacter</h2>
-                <form method="post" action="">
+                {{ dump(msg) }}
+                {% if msg == constant('MSG_OK') %}
+                    <form method="post" action="index.php?msg=ok#signup">
+                {% else %}
+                    <form method="post" action="index.php?msg=nok#signup">
+                {% endif %}
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputName" name='inputName' type="text" placeholder="Votre nom..." /></div>
@@ -117,6 +122,7 @@
                         <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputEmail" name="inputEmail" type="email" placeholder="Votre adresse mail..." />
                         <textarea class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputMessage" name="inputMessage" rows="10" placeholder="Votre message ici..."></textarea>
                         <div class="row"></div><button class="btn btn-primary m-3" type="submit" id="submitMessage" name="submitMessage">Envoyer</button></div>
+                        <div class="row"></div><p class="mb-0 text-white-50">{{ msg }}</p></div>
                     </div>
                 </form>
             </div>
@@ -132,9 +138,9 @@
                 <div class="card py-4 h-100">
                     <div class="card-body text-center">
                         <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                        <h4 class="text-uppercase m-0">Address</h4>
+                        <h4 class="text-uppercase m-0">Addresse</h4>
                         <hr class="my-4" />
-                        <div class="small text-black-50">4923 Market Street, Orlando FL</div>
+                        <div class="small text-black-50">8, l'Ouche Grise - 85260 La Copechagnière</div>
                     </div>
                 </div>
             </div>
@@ -144,7 +150,7 @@
                         <i class="fas fa-envelope text-primary mb-2"></i>
                         <h4 class="text-uppercase m-0">Email</h4>
                         <hr class="my-4" />
-                        <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+                        <div class="small text-black-50"><a href="#!">mat.bonhommeau85@gmail.com</a></div>
                     </div>
                 </div>
             </div>
@@ -152,9 +158,9 @@
                 <div class="card py-4 h-100">
                     <div class="card-body text-center">
                         <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                        <h4 class="text-uppercase m-0">Phone</h4>
+                        <h4 class="text-uppercase m-0">Tel</h4>
                         <hr class="my-4" />
-                        <div class="small text-black-50">+1 (555) 902-8832</div>
+                        <div class="small text-black-50">06 47 15 76 04</div>
                     </div>
                 </div>
             </div>
