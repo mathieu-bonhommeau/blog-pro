@@ -123,4 +123,12 @@ class PostManager extends Manager
         return $req->rowCount();
     }
 
+    public function countPosts()
+    {
+        $req = $this->db()->query('SELECT COUNT(*) FROM post');
+        $countPosts = $req->fetch();
+        return $countPosts['COUNT(*)'];
+        dump($countPosts);
+    }
+
 }

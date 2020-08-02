@@ -40,6 +40,18 @@ class Router
             $frontController -> listPostsView(); 
             
         }
+
+        elseif ($get == 'post') {
+
+            if (isset($_GET['id'])) {
+               
+                $frontController = new FrontController;
+                $frontController -> postView($_GET['id']); 
+
+            } else {
+                throw new Exception('Cette page n\'existe pas')
+            }
+        }
     }
 
     public function runSendMessage(array $form)
