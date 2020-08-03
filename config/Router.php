@@ -49,7 +49,7 @@ class Router
                 $frontController -> postView($_GET['id']); 
 
             } else {
-                throw new Exception('Cette page n\'existe pas')
+                throw new Exception('Cette page n\'existe pas');
             }
         }
     }

@@ -10,7 +10,8 @@ class Post
     private $_chapo;
     private $_content;
     private $_lastDateModif;
-    private $_userName;
+    private $_picture;
+    private $_authorName;
         
     /**
      * __construct Init object 
@@ -91,15 +92,20 @@ class Post
     {
         return $this->_lastDateModif;
     }
+
+    public function picture()
+    {
+        return $this->_picture;
+    }
     
     /**
      * Getter $_userName / Author of post
      *
      * @return int
      */
-    public function userName()
+    public function authorName()
     {
-        return $this->_userName;
+        return $this->_authorName;
     }
     
     /**
@@ -169,10 +175,16 @@ class Post
         $this->_lastDateModif = $lastDateModif;
     }
 
-    public function setUserName($userName)
+    public function setPicture($picture)
     {
-        $userName = (string)$userName;
-        $this->_userName = $userName;
+        $picture = (string)$picture;
+        $this->_picture = $picture;
+    }
+
+    public function setAuthorName($authorName)
+    {
+        $authorName = (string)$authorName;
+        $this->_authorName = $authorName;
     }
 
 

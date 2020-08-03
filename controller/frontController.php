@@ -74,6 +74,16 @@ class FrontController extends Controller
         $data = $postManager -> getPost($id); //Si l'id n'existe pas, penser a emettre une exception
 
         $post = new Post($data);
+
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+        $this->twig->addExtension(new Twig_Extensions_Extension_Text());
+
+        echo $this->twig->render(
+            'frontView/postView.twig', array(
+                'post' => $post
+            )
+        );
     }
 
     public function sendMessage(array $form)
