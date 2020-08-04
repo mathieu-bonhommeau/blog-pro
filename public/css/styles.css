@@ -10381,3 +10381,19 @@ body {
   text-transform: none;
   padding: 0.75rem 1rem;
 }
+
+.post:nth-child(2n+1) {
+  flex-direction: row;
+}
+
+.post:nth-child(2n+1) > .reverse {
+  text-align: left;
+}
+
+.post {
+  flex-direction: row-reverse;
+}
+
+.post:nth-child(2n+0) > .reverse {
+  text-align: right;
+}

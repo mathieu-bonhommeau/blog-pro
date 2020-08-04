@@ -6,8 +6,8 @@
 
         <!-- Featured Project Row-->
         {% for post in posts %}
-            <div class="row align-items-center no-gutters mb-4 mb-lg-5">
-                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+            <div class="row align-items-center no-gutters mb-4 mb-lg-5 post">
+                <div class="col-xl-8 col-lg-7 reverse"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
                 <div class="col-xl-4 col-lg-5">
                     <div class="featured-text text-center text-lg-left">
                         <h4>{{ post.title }}</h4>

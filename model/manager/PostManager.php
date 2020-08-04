@@ -12,17 +12,15 @@ class PostManager extends Manager
      * 
      * @return array Result of request need a fetch process
      */
-    public function getPosts($number, $offset)
+    public function getPosts($limit)
     {
-        $number = (int)$number;
-        $offset = (int)$offset;
         $req = $this->db()->query(
             'SELECT post.id, post.title, post.chapo, post.content, 
             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
             picture, user.authorName
             FROM post 
             INNER JOIN user ON user.id = post.user_id
-            ORDER BY lastDateModif DESC LIMIT ' . $number . ' OFFSET ' . $offset
+            ORDER BY lastDateModif DESC LIMIT ' . $limit
         );
         return $req;
     }
