@@ -11,13 +11,13 @@ $db = new PDO(
 
 $db->exec('SET FOREIGN_KEY_CHECKS = 0');
 $db->exec('TRUNCATE TABLE comment');
-$db->exec('TRUNCATE TABLE post');
-$db->exec('TRUNCATE TABLE user');
-$db->exec('SET FOREIGN_KEY_CHECKS = 1');
+//$db->exec('TRUNCATE TABLE post');
+//$db->exec('TRUNCATE TABLE user');
 
-for ($i=0; $i<15; $i++) {
 
-    
+//fake users
+/*for ($i=0; $i<15; $i++) {
+
     $req = $db->prepare(
         'INSERT INTO user 
         (userName, password, profilPicture, authorName, userType_id)
@@ -33,8 +33,9 @@ for ($i=0; $i<15; $i++) {
         )
     );
 
-}
+}*/
 /*
+// fake post
 for ($i=0; $i<25; $i++) {
 
     $ray = array(4, 5);
@@ -54,3 +55,28 @@ for ($i=0; $i<25; $i++) {
     );
 
 }*/
+// fake comments
+for ($i=0; $i<80; $i++) {
+
+    $events = $faker->dateTimeBetween('-30 days', 'now');
+    $dateformate = $events->format('Y-m-d H-m-s');
+    
+    $req = $db->prepare(
+        'INSERT INTO comment 
+        (nameVisitor, comment, commentDate, validComment, user_id, post_id)
+        VALUES (:nameVisitor, :comment, :commentDate, :validComment, :user_id, :post_id)'
+    );
+    $req -> execute(
+        array(
+            'nameVisitor' => $faker->userName,
+            'comment' => $faker->realText($maxNbChars = 90, $indexSize = 2),
+            'commentDate' => $dateformate,
+            'validComment' => true,
+            'user_id' => null,
+            'post_id' => rand(1, 25)
+        )
+    );
+
+}
+
+$db->exec('SET FOREIGN_KEY_CHECKS = 1');

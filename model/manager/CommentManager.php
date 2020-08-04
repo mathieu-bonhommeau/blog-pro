@@ -62,7 +62,7 @@ class CommentManager extends Manager
             WHERE id = ?'
         );
         $req -> execute(array($id));
-        return $data = $req->fetch(PDO::FETCH_ASSOC);
+        return $req->fetch(PDO::FETCH_ASSOC);
     }
 
     public function deleteComment($id)
@@ -72,5 +72,15 @@ class CommentManager extends Manager
         );
         $req -> execute(array($id));
         return $req->rowCount();
+    }
+
+    public function nbrComments($post_id)
+    {
+        $req = $this->db()->prepare(
+            'SELECT COUNT(*) FROM comment 
+             WHERE post_id = ?'
+        );
+        $req -> execute(array($post_id));
+        return $req->fetch(PDO::FETCH_ASSOC);
     }
 }

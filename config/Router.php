@@ -48,6 +48,24 @@ class Router
                 $frontController = new FrontController;
                 $frontController -> postView($_GET['id']); 
 
+                if (isset($_POST['submitComment'])) {
+                    if (!empty($_POST['inputVisitorName']) 
+                        && !empty($_POST['inputEmailVisitor']) 
+                        && !empty($_POST['inputComment'])
+                    ) {
+                        $form = array(
+                            'inputVisitorName' => $_POST['inputVisitorName'],
+                            'inputEmailVisitor' => $_POST['inputEmailVisitor'],
+                            'inputComment' => $_POST['inputComment'],
+                        );
+
+                        $frontController -> addNewComment($form);
+
+                    } else {
+                        $msg = EMPTY_FIELDS;
+                    }
+                }
+
             } else {
                 throw new Exception('Cette page n\'existe pas');
             }

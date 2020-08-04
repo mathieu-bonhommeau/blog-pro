@@ -45,7 +45,14 @@ class PostManager extends Manager
             WHERE post.id = ?'
         );
         $req->execute(array($id));
-        return $data = $req->fetch(PDO::FETCH_ASSOC);
+        $data = $req->fetch(PDO::FETCH_ASSOC);
+
+        if ($data == false) {
+            throw new Exception(PAGE_NOT_EXIST);
+        } else {
+            return $data;
+        }
+        
     }
 
     

@@ -71,9 +71,13 @@ class FrontController extends Controller
     public function postView($id)
     {
         $postManager = new PostManager;
-        $data = $postManager -> getPost($id); //Si l'id n'existe pas, penser a emettre une exception
+        $dataPost = $postManager -> getPost($id); 
 
-        $post = new Post($data);
+        $post = new Post($dataPost);
+
+        $commentManager = new CommentManager;
+        $dataComment = $commentManager -> getComments($id);
+        $nbrComments = $commentManager -> nbrComments($id);
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -81,7 +85,9 @@ class FrontController extends Controller
 
         echo $this->twig->render(
             'frontView/postView.twig', array(
-                'post' => $post
+                'post' => $post,
+                'comments' => $dataComment,
+                'nbrComments' => $nbrComments['COUNT(*)']
             )
         );
     }

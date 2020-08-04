@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  Dim 02 août 2020 à 10:17
+-- Généré le :  mar. 04 août 2020 à 12:50
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -40,7 +40,93 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `fk_post_id` (`post_id`),
   KEY `fk_comment_user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `comment`
+--
+
+INSERT INTO `comment` (`id`, `nameVisitor`, `comment`, `commentDate`, `validComment`, `user_id`, `post_id`) VALUES
+(1, 'ymarty', 'Un râle métallique se traîna dans les lectures de sa beauté, avant les vacances, passer.', '2020-07-05 10:07:52', 'TRUE', NULL, 5),
+(2, 'mlejeune', 'Dépêchez-vous donc! Je souffre, moi! s\'écria Bovary tout en pleurs, se jetant dans les.', '2020-07-27 19:07:45', 'TRUE', NULL, 18),
+(3, 'clerc.astrid', 'Et, en effet, plus de trois mille écus, s\'était écoulée en deux mots: À Dieu! ce qu\'il y.', '2020-07-09 10:07:45', 'TRUE', NULL, 7),
+(4, 'hortense.bertrand', 'Puis, d\'un seul mouvement, ils se racontèrent les petits cheveux follets de sa.', '2020-07-16 15:07:20', 'TRUE', NULL, 1),
+(5, 'rgregoire', 'Elle se tenait en face, appuyée contre l\'embrasure de la succession; si bien encroûtées.', '2020-07-15 14:07:15', 'TRUE', NULL, 18),
+(6, 'richard04', 'Rodolphe dérangea toutes les semaines, à peu les facultés, et, lorsque le volume lui.', '2020-07-21 00:07:00', 'TRUE', NULL, 1),
+(7, 'charles44', 'Quel imbécile je suis! fit-il en haussant les épaules, le dos tourné pour fermer la.', '2020-07-12 23:07:26', 'TRUE', NULL, 3),
+(8, 'matthieu35', 'J\'ai été à Barfeuchères aujourd\'hui. Eh bien, qu\'y puis-je? Alors, elle regarda les.', '2020-08-01 13:08:53', 'TRUE', NULL, 19),
+(9, 'palbert', 'L\'apothicaire passa. Il aperçut trois poules noires qui dormaient se réveillèrent, et.', '2020-07-15 17:07:24', 'TRUE', NULL, 7),
+(10, 'maryse.camus', 'Elle sanglotait. -- Allons, bon! comme si je n\'avais pas d\'autres chiens à fouetter! Ah!.', '2020-07-22 13:07:56', 'TRUE', NULL, 20),
+(11, 'sophie06', 'Pourquoi vient-elle ici? Elle y consentit. Mais, au café, tout se confondit, des nuages.', '2020-07-11 21:07:19', 'TRUE', NULL, 14),
+(12, 'adelaide.blot', 'Rodolphe était resté sur le port, au milieu de la tête de mort et la compagnie de sa.', '2020-07-20 17:07:36', 'TRUE', NULL, 23),
+(13, 'becker.bernard', 'Et il saisit sa main; elle ne voyait pas d\'inconvénient; deux précautions valaient mieux.', '2020-07-31 23:07:49', 'TRUE', NULL, 16),
+(14, 'dijoux.adrienne', 'Bovary à un mois pour quatorze francs de bénéfice; et il la quittait, il revenait, il.', '2020-07-11 16:07:13', 'TRUE', NULL, 10),
+(15, 'mathilde16', 'Les jours que je rentre dans mes déboursés, soyons justes! Elle se promettait.', '2020-07-30 00:07:42', 'TRUE', NULL, 1),
+(16, 'fmunoz', 'Les porteurs fatigués se ralentissaient, et elle eut un moment notre petite localité, a.', '2020-07-22 03:07:45', 'TRUE', NULL, 2),
+(17, 'fmorin', 'La vue seule de l\'espalier. -- Ah! bon ami! murmura tendrement madame Homais, dont la.', '2020-07-13 22:07:45', 'TRUE', NULL, 8),
+(18, 'marques.robert', 'Annette! n\'oublie pas les civilités qui lui montait aux lèvres à des époques qu\'il.', '2020-07-22 06:07:13', 'TRUE', NULL, 4),
+(19, 'lopez.paul', 'Malpalu. Alors, par lâcheté, par bêtise, par cet inqualifiable sentiment qui nous les.', '2020-07-31 19:07:46', 'TRUE', NULL, 14),
+(20, 'alfred.goncalves', 'Ceux qui dormaient dans un roman. Un homme, au contraire, désiré se marier à minuit.', '2020-07-23 14:07:06', 'TRUE', NULL, 2),
+(21, 'gletellier', 'Ils étaient sur les larges portes tapissées; elle aspira d\'être. Elle voulut que l\'on.', '2020-07-06 21:07:14', 'TRUE', NULL, 8),
+(22, 'lombard.dominique', 'Emma, prête à sortir, sur la dernière superfluité de cet avenir qu\'elle se levait à demi.', '2020-07-21 06:07:54', 'TRUE', NULL, 2),
+(23, 'egonzalez', 'Rodolphe apparaissait. Ils se seraient intoxiqués avec des rideaux de calicot blanc.', '2020-08-01 11:08:52', 'TRUE', NULL, 19),
+(24, 'uledoux', 'Léon rentra à son bouquet de mariée, le bouquet de fleurs d\'oranger, noué par des.', '2020-07-07 23:07:32', 'TRUE', NULL, 2),
+(25, 'emilie.roger', 'Il leur fallait un bon garçon! Et Rodolphe acheva sa phrase avec un sourire discret.', '2020-08-04 02:08:02', 'TRUE', NULL, 20),
+(26, 'gmahe', 'Tout est peine perdue, dit Emma. -- Oh! laisse-moi! Et elle lui apparaissait morte. Elle.', '2020-07-29 09:07:01', 'TRUE', NULL, 25),
+(27, 'josette67', 'Pour s\'être découvert trois cheveux gris sur les jalousies... et j\'apercevais vos deux.', '2020-07-16 22:07:13', 'TRUE', NULL, 19),
+(28, 'oceane88', 'Rodolphe, ne lui faille plutôt un paletot de sapin qu\'une camisole de flanelle? Il a.', '2020-07-28 01:07:59', 'TRUE', NULL, 15),
+(29, 'hremy', 'Où est-elle donc? Une idée lui vint. Il demanda, dans un des flambeaux de la salle; puis.', '2020-07-27 10:07:33', 'TRUE', NULL, 3),
+(30, 'nath46', 'Elle baissa la tête avec un silence triste, comme quelqu\'un qui se promène dans son.', '2020-07-23 11:07:00', 'TRUE', NULL, 24),
+(31, 'gferrand', 'Et se penchant vers le front en s\'écriant: -- Morel doit revenir cette nuit! il ne.', '2020-07-31 08:07:16', 'TRUE', NULL, 15),
+(32, 'leroux.eric', 'Léon réapparaissait plus grand, plus beau, plus suave, plus vague; quoiqu\'il fût chaussé.', '2020-07-23 22:07:23', 'TRUE', NULL, 19),
+(33, 'lejeune.hortense', 'M. Léon chanta une barcarolle, et madame Bovary, était monté jusqu\'au grenier, il sentit.', '2020-07-19 10:07:33', 'TRUE', NULL, 7),
+(34, 'schmitt.jules', 'Vaubyessard le 23 juillet 1531, un dimanche, comme l\'inscription porte; et, au-dessous.', '2020-08-01 12:08:28', 'TRUE', NULL, 10),
+(35, 'daniel63', 'Ah! plus tard, plus tard! Et il continuait à lui raconter tout, à la lisière du bois.', '2020-08-02 02:08:23', 'TRUE', NULL, 15),
+(36, 'alice.lemoine', 'Mon Dieu, à moi, c\'est Vinçart. -- Ah bah! interrompit Canivet, vous me faites peur!.', '2020-07-27 12:07:33', 'TRUE', NULL, 22),
+(37, 'nathalie.gros', 'La nuit s\'épaississait sur les vôtres. Quelques hommes (une quinzaine) de vingt-cinq à.', '2020-07-06 10:07:14', 'TRUE', NULL, 13),
+(38, 'danielle63', 'Bovary firent leurs politesses au Marquis et à côté de la nature, cela vous réveillerait.', '2020-07-31 21:07:29', 'TRUE', NULL, 10),
+(39, 'prevost.veronique', 'Comment s\'est-elle donc empoisonnée? -- Je m\'en étais toujours doutée... Alors, ils se.', '2020-07-11 03:07:49', 'TRUE', NULL, 22),
+(40, 'brenard', 'Quels bons soleils ils avaient des existences pâles, où ne parviennent jamais les coeurs.', '2020-07-25 05:07:30', 'TRUE', NULL, 23),
+(41, 'bjacques', 'Madame Bovary mère était avec son pied: -- Ça ne nuit jamais, répliqua-t-il. Elle fut.', '2020-07-16 16:07:02', 'TRUE', NULL, 1),
+(42, 'matthieu.brun', 'Il y avait sous le rapport de la poutrelle. Enfin, elle rassembla ses idées. Elle se.', '2020-07-15 00:07:51', 'TRUE', NULL, 6),
+(43, 'genevieve.noel', 'Conseiller. Vous, agriculteurs et ouvriers des villes, par exemple. -- Ce n\'est pas.', '2020-07-17 06:07:37', 'TRUE', NULL, 25),
+(44, 'elodie81', 'D\'ailleurs, sous le bureau de la grande pyramide d\'Égypte. Elle est même complètement.', '2020-07-09 05:07:47', 'TRUE', NULL, 6),
+(45, 'stephanie65', 'Charles qui polissonnait dans la voiture. Le tambour battit, l\'obusier tonna, et les.', '2020-08-02 20:08:09', 'TRUE', NULL, 10),
+(46, 'fandre', 'Car ils précisaient de plus en plus conscience de ma fille pense à vous de temps à.', '2020-07-26 03:07:35', 'TRUE', NULL, 24),
+(47, 'lesage.raymond', 'De temps à autre, nous demander à dîner? Le clerc eut aussi son jardinet suspendu; ils.', '2020-07-29 10:07:13', 'TRUE', NULL, 12),
+(48, 'carre.marc', 'Moi aussi, je ne connais pas, j\'ignore! Vous voulez peut-être de l\'acide oxalique? C\'est.', '2020-07-19 01:07:28', 'TRUE', NULL, 3),
+(49, 'laure.hoareau', 'Je suis fâché, vraiment, murmura Bovary, de l\'argent que vous... L\'autre eut un moment.', '2020-07-24 01:07:26', 'TRUE', NULL, 14),
+(50, 'susanne80', 'Il lui semblait un acte de haute philanthropie. M. Bovary, peu jaloux, ne s\'en souvenait.', '2020-07-26 04:07:39', 'TRUE', NULL, 11),
+(51, 'suzanne.paul', 'Bovary n\'admirait guère. Il s\'en débarrassa pourtant et courut à son mari. Les pires.', '2020-07-07 21:07:19', 'TRUE', NULL, 21),
+(52, 'christophe25', 'Comment donc avoir pu lui exposer, et en écoutant ce discours, et il m\'a dit que non.', '2020-08-02 03:08:10', 'TRUE', NULL, 18),
+(53, 'francois.edouard', 'Aussi poussa-t-il un grand drap de toile épaisse étalé en long sur la route d\'Abbeville.', '2020-07-18 19:07:59', 'TRUE', NULL, 14),
+(54, 'nathalie53', 'Rodolphe réfléchit beaucoup à cette démarche; et même, je le suis des âmes! Elle fixa.', '2020-07-23 22:07:00', 'TRUE', NULL, 5),
+(55, 'genevieve42', 'Comme il passait près d\'elle, en claquant de la porte de l\'auberge, il fallut se mettre.', '2020-07-26 00:07:26', 'TRUE', NULL, 12),
+(56, 'valentine01', 'Ce velours me parait une superfétation. La dépense, d\'ailleurs... -- Est-ce que nos.', '2020-07-05 21:07:11', 'TRUE', NULL, 24),
+(57, 'isabelle.leroy', 'Son chapeau tomba. -- Je vous en conjure, monsieur Lheureux, quelques jours encore! Elle.', '2020-07-08 17:07:09', 'TRUE', NULL, 16),
+(58, 'lefort.gilbert', 'La servante parut; Emma comprit, et demanda «ce qu\'il faudrait d\'argent pour arrêter.', '2020-07-12 01:07:02', 'TRUE', NULL, 23),
+(59, 'payet.theodore', 'Emma, lui prouvant d\'un mot qu\'il se disposait autour d\'elle; les voûtes s\'inclinaient.', '2020-07-22 19:07:42', 'TRUE', NULL, 18),
+(60, 'durand.stephanie', 'Un mercredi, à trois heures, M. et madame Bovary mère arriva. Elle et son cou, le col.', '2020-07-08 22:07:13', 'TRUE', NULL, 12),
+(61, 'wetienne', 'Botocudos? Charles, cependant, alla prier un domestique d\'atteler son boc. On l\'amena.', '2020-07-16 16:07:52', 'TRUE', NULL, 5),
+(62, 'ltoussaint', 'Ashton ses abominables manoeuvres, Charles, en passant sa main gauche, elle avait.', '2020-08-03 12:08:01', 'TRUE', NULL, 13),
+(63, 'michel.laetitia', 'Il tirait la bride les chevaux du cocher, et tout rentrait chez soi. Et, jusqu\'à la.', '2020-07-08 18:07:48', 'TRUE', NULL, 14),
+(64, 'garcia.alexandre', 'Il se dirigea lestement vers le mur de plâtre. Bondissant dans l\'escalier, elle.', '2020-07-05 14:07:58', 'TRUE', NULL, 23),
+(65, 'trolland', 'D\'autres fois, pour écarter les branches, il passait par les flambeaux qui brûlaient sur.', '2020-07-20 05:07:01', 'TRUE', NULL, 14),
+(66, 'constance29', 'Il n\'y voyait jamais de gants, comme pour boire de la police et des enveloppes.', '2020-07-21 16:07:13', 'TRUE', NULL, 5),
+(67, 'nicole56', 'La pluie ne tombait plus; le grand air, dans la salle à manger. Elle ne parlait point du.', '2020-07-14 05:07:51', 'TRUE', NULL, 20),
+(68, 'jeannine17', 'L\'un des chantres vint faire le procès- verbal de la lune. Léon, par terre, entre les.', '2020-07-06 18:07:47', 'TRUE', NULL, 13),
+(69, 'etienne32', 'Et puis, jamais je n\'ai rien au commencement, puis la veuve d\'un huissier de Dieppe, et.', '2020-07-07 10:07:16', 'TRUE', NULL, 25),
+(70, 'nfrancois', 'Alors il découvrait de tels ravages dans l\'organisme d\'un quadrupède? C\'est extrêmement.', '2020-07-26 16:07:00', 'TRUE', NULL, 8),
+(71, 'fernandes.julien', 'M. Homais de tous les vices, petit malheureux?... Prends garde, tu es folle! -- Pas.', '2020-07-06 01:07:26', 'TRUE', NULL, 16),
+(72, 'cecile.hardy', 'D\'ailleurs, songez, mon bon ami, dit-il, retirez-vous, ce spectacle vous déchire!.', '2020-07-27 15:07:12', 'TRUE', NULL, 10),
+(73, 'alain74', 'Il se citait des premiers parmi les membres du jury se trouvaient offensées.', '2020-07-29 23:07:18', 'TRUE', NULL, 19),
+(74, 'guibert.marcel', 'On entourait un long jet de salive pure découlait de sa bonne amie. Souvent, on était.', '2020-07-08 18:07:46', 'TRUE', NULL, 8),
+(75, 'cecile91', 'Stuart, et des aiguillettes de la laine sur la longue allée, en trébuchant contre les.', '2020-08-02 17:08:23', 'TRUE', NULL, 7),
+(76, 'louise09', 'Nastasie, près du lutrin, la bière était trop large, il fallut boucher les interstices.', '2020-07-24 17:07:00', 'TRUE', NULL, 23),
+(77, 'denise.gautier', 'Ce n\'est pas naturel qu\'un homme portait derrière eux. Il en est de Madame, elle m\'a.', '2020-08-02 09:08:54', 'TRUE', NULL, 17),
+(78, 'tanguy.michel', 'Tu en aimes d\'autres, avoue-le. Oh! je t\'en prie, j\'irai. -- Comme tu as tort aussi toi!.', '2020-07-06 23:07:04', 'TRUE', NULL, 21),
+(79, 'ltexier', 'Elle aurait voulu ne jamais nous quitter. -- Oui..., peut-être! -- Tu vas me prêter.', '2020-07-18 02:07:37', 'TRUE', NULL, 11),
+(80, 'jacques64', 'La voix de soeurs qui la chérissait. L\'idée de Rodolphe, un moment, lui passa la main de.', '2020-07-19 06:07:59', 'TRUE', NULL, 23);
 
 -- --------------------------------------------------------
 

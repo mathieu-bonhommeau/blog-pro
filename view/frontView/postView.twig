@@ -2,22 +2,6 @@
 
 {% block content %}
 
-<!--
-<div class="row align-items-center no-gutters mb-4 mb-lg-5">
-    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
-    <div class="col-xl-4 col-lg-5">
-        <div class="featured-text text-center text-lg-left">
-            <h4>{{ post.title }}</h4>
-            <div class="row justify-content-center no-gutters">
-                <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date }}</p></div>
-                <div class="col-lg-6"><p class="text-right text-black-50">{{ post.authorName }}</p></div>
-            </div>
-            <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true) }}</p>
-            <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
-        </div>
-    </div>
-</div>
--->
 <section class="projects-section bg-light" id="projects">
     <div class="container">
        <div class="row">
@@ -25,13 +9,45 @@
                 <div class="row"><h2 class="mb-4">{{ post.title }}</h2></div>
                 <div class="row"><p class="text-black-50 ">{{ post.lastDateModif|date }}</p></div>
                 <div class="row"><p class="text-black-50 ">{{ post.authorName }}</p></div>
-                <div class="row"><p class="text-black-50 ">{{ 'comments' }}</p></div>
+                <div class="row"><p class="text-black-50 "><a href="#comments" class="badge badge-dark js-scroll-trigger">{{ nbrComments }} commentaires</a></p></div>
             </div> 
             <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>  
         </div>
+        <p class="font-weight-bold">{{ post.chapo }}</p>
         <p class="text-justify featured-text">{{ post.content }}</p>
         <p>{{ post.authorName }}</p>
-        <p><a href='index.php?p=listposts'>RETOUR AUX ARTICLES</a></p>
+        <p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES</a></p>
+        
+        <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
+
+        <form class="form-group" action="" method="post">
+            <div class="form-row">
+                <div class="col">
+                    <label for='inputNameVisitor'>Pseudo</label>
+                    <input type='text' class='form-control' name='inputNameVisitor' id='inputNameVisitor' />
+                </div>
+                <div class="col">
+                    <label for='inputEmailVisitor'>Email</label>
+                    <input type='email' class='form-control' name='inputEmailVisitor' id='inputEmailVisitor' />
+                </div>
+            </div>
+            <textarea id="inputComment" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 ></textarea>
+            <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
+        </form>
+
+        {% for comment in comments %}
+            <section class="comments">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <span id="nameVisitor" class="font-weight-bold">{{ comment.nameVisitor }}</span> <span id="commentDate" class="font-weight-light">- posté le : {{ comment.commentDate|date }}</span>
+                        </div>
+                        <p class="card-text font-weight-light" id="comment">{{ comment.comment }}</p>
+                    </div>
+                </div>
+            </section>
+        {% endfor %}
+
     </div>
 </section>
 {% endblock  %}
