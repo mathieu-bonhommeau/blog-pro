@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         {% block head %}
             <meta charset="utf-8" />
@@ -17,10 +18,12 @@
             <link href="public/css/styles.css" rel="stylesheet" />
         {% endblock %}
     </head>
+
     <body id="page-top">
+
         {% block nav %}
             <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
                 <div class="container">
                     <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,23 +32,27 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">A propos</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Articles</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php">Accueil</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php#about">A propos</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php#projects">Articles</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php#signup">Contact</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
         {% endblock %}
-        <!-- Masthead-->
-        <header class="masthead">
+       
         {% block content %}
+        
+        
                 
         {% endblock %}
+
         <!-- Footer-->
         {% block footer %}
             <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © Your Website 2020</div></footer>
         {% endblock %}
+        
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>

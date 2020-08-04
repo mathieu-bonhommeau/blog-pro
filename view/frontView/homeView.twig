@@ -1,24 +1,18 @@
 {% extends "template.twig" %}
 
-{% block head %}
-{{parent() }}
-
-{% endblock %}
-
-{% block nav %}
-{{parent() }}
-
-{% endblock %}
-
 {% block content %}
-    <div class="container d-flex h-100 align-items-center">
-        <div class="mx-auto text-center">
-            <h1 class="mx-auto my-0 text-uppercase">Nom Prenom</h1>
-            <h2 class="text-white-50 mx-auto mt-2 mb-5">Phrase d'accroche</h2>
-            <a class="btn btn-primary js-scroll-trigger" href="#about">CV</a>
+
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Nom Prenom</h1>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">Phrase d'accroche</h2>
+                <a class="btn btn-primary js-scroll-trigger" href="#about">CV</a>
+            </div>
         </div>
-    </div>
     </header>
+
     <!-- About-->
     <section class="about-section text-center" id="about">
     <div class="container">
@@ -32,69 +26,110 @@
                 </p>
             </div>
         </div>
-        <img class="img-fluid" src="assets/img/ipad.png" alt="" />
+        <img class="img-fluid" src="public/assets/img/ipad.png" alt="" />  
     </div>
     </section>
+
     <!-- Projects-->
     <section class="projects-section bg-light" id="projects">
     <div class="container">
+
         <!-- Featured Project Row-->
-        <div class="row align-items-center no-gutters mb-4 mb-lg-5">
-            <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/bg-masthead.jpg" alt="" /></div>
-            <div class="col-xl-4 col-lg-5">
-                <div class="featured-text text-center text-lg-left">
-                    <h4>Shoreline</h4>
-                    <p class="text-black-50 mb-0">Grayscale is open source and MIT licensed. This means you can use it for any project - even commercial projects! Download it, customize it, and publish your website!</p>
+        {% for post in post1 %}
+            <div class="row align-items-center no-gutters mb-4 mb-lg-5">
+                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="featured-text text-center text-lg-left">
+                        <h4>{{ post.title }}</h4>
+                        <div class="row justify-content-center no-gutters">
+                            <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date }}</p></div>
+                            <div class="col-lg-6"><p class="text-right text-black-50">{{ post.authorName }}</p></div>
+                        </div>
+                        <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true) }}</p>
+                        <p class="mt-2"><a href='#' >LIRE LA SUITE >></a></p>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endfor %}
+
         <!-- Project One Row-->
-        <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-            <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-01.jpg" alt="" /></div>
-            <div class="col-lg-6">
-                <div class="bg-black text-center h-100 project">
-                    <div class="d-flex h-100">
-                        <div class="project-text w-100 my-auto text-center text-lg-left">
-                            <h4 class="text-white">Misty</h4>
-                            <p class="mb-0 text-white-50">An example of where you can put an image of a project, or anything else, along with a description.</p>
-                            <hr class="d-none d-lg-block mb-0 ml-0" />
+        {% for post in post2 %}
+            <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+                <div class="col-lg-6"><img class="img-fluid" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                <div class="col-lg-6">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-left">
+                                <h4 class="text-white">{{ post.title }}</h4>
+                                <div class="row justify-content-center no-gutters">
+                                    <div class="col-lg-6"><p class="text-left text-white-50">{{ post.lastDateModif|date }}</p></div>
+                                    <div class="col-lg-6"><p class="text-right text-white-50">{{ post.authorName }}</p></div>
+                                </div>
+                                <p class="mb-0 text-justify text-white-50">{{ post.content|truncate(155,true) }}</p>
+                                <p class="mt-2"><a href='#' >LIRE LA SUITE >></a></p>
+                                <hr class="d-none d-lg-block mb-0 ml-0" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endfor %}
+
         <!-- Project Two Row-->
-        <div class="row justify-content-center no-gutters">
-            <div class="col-lg-6"><img class="img-fluid" src="assets/img/demo-image-02.jpg" alt="" /></div>
-            <div class="col-lg-6 order-lg-first">
-                <div class="bg-black text-center h-100 project">
-                    <div class="d-flex h-100">
-                        <div class="project-text w-100 my-auto text-center text-lg-right">
-                            <h4 class="text-white">Mountains</h4>
-                            <p class="mb-0 text-white-50">Another example of a project with its respective description. These sections work well responsively as well, try this theme on a small screen!</p>
-                            <hr class="d-none d-lg-block mb-0 mr-0" />
+        {% for post in post3 %}
+            <div class="row justify-content-center no-gutters">
+                <div class="col-lg-6"><img class="img-fluid" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                <div class="col-lg-6 order-lg-first">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-right">
+                                <h4 class="text-white">{{ post.title }}</h4>
+                                <div class="row justify-content-center no-gutters">
+                                    <div class="col-lg-6"><p class="text-left text-white-50">{{ post.lastDateModif|date }}</p></div>
+                                    <div class="col-lg-6"><p class="text-white-50">{{ post.authorName }}</p></div>
+                                </div>
+                                <p class="mb-0 text-justify text-white-50">{{ post.content|truncate(155,true) }}</p>
+                                <p class="mt-2"><a href='#' >LIRE LA SUITE >></a></p>
+                                <hr class="d-none d-lg-block mb-0 mr-0" />
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="text-right mt-4 font-weight-bolder"><a href="index.php?p=listposts">TOUS LES ARTICLES >>>></a></p>
             </div>
         </div>
     </div>
     </section>
+   
+
     <!-- Signup-->
     <section class="signup-section" id="signup">
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-lg-8 mx-auto text-center">
                 <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                <h2 class="text-white mb-5">Subscribe to receive updates!</h2>
-                <form class="form-inline d-flex">
-                    <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" type="email" placeholder="Enter email address..." />
-                    <button class="btn btn-primary mx-auto" type="submit">Subscribe</button>
+                <h2 class="text-white mb-5">Me contacter</h2>
+                    <form method="post" action="index.php?p=home#signup">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputName" name='inputName' type="text" placeholder="Votre nom..." /></div>
+                            <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputFirstName" name="inputFirstName" type="text" placeholder="Votre prénom..." /></div>
+                        </div>
+                        <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputEmail" name="inputEmail" type="email" placeholder="Votre adresse mail..." />
+                        <textarea class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0 m-3" id="inputMessage" name="inputMessage" rows="10" placeholder="Votre message ici..."></textarea>
+                        <div class="row"></div><button class="btn btn-primary m-3" type="submit" id="submitMessage" name="submitMessage">Envoyer</button></div>
+                        <div class="row"></div><p class="mb-0 text-white-50">{{ msg }}</p></div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     </section>
+
     <!-- Contact-->
     <section class="contact-section bg-black">
     <div class="container">
@@ -103,9 +138,9 @@
                 <div class="card py-4 h-100">
                     <div class="card-body text-center">
                         <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                        <h4 class="text-uppercase m-0">Address</h4>
+                        <h4 class="text-uppercase m-0">Addresse</h4>
                         <hr class="my-4" />
-                        <div class="small text-black-50">4923 Market Street, Orlando FL</div>
+                        <div class="small text-black-50">8, l'Ouche Grise - 85260 La Copechagnière</div>
                     </div>
                 </div>
             </div>
@@ -115,7 +150,7 @@
                         <i class="fas fa-envelope text-primary mb-2"></i>
                         <h4 class="text-uppercase m-0">Email</h4>
                         <hr class="my-4" />
-                        <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+                        <div class="small text-black-50"><a href="#!">mat.bonhommeau85@gmail.com</a></div>
                     </div>
                 </div>
             </div>
@@ -123,9 +158,9 @@
                 <div class="card py-4 h-100">
                     <div class="card-body text-center">
                         <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                        <h4 class="text-uppercase m-0">Phone</h4>
+                        <h4 class="text-uppercase m-0">Tel</h4>
                         <hr class="my-4" />
-                        <div class="small text-black-50">+1 (555) 902-8832</div>
+                        <div class="small text-black-50">06 47 15 76 04</div>
                     </div>
                 </div>
             </div>
@@ -137,9 +172,5 @@
         </div>
     </div>
     </section>
-{%  endblock%}
-
-{% block footer %}
-{{parent() }}
 
 {%  endblock %}

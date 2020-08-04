@@ -2,33 +2,52 @@
 
 require 'vendor/autoload.php';
 require 'config/Autoloader.php';
+require 'config/config.php';
 $autoloader = new Autoloader;
 
+session_start();
 
-$commentManager = new CommentManager;
-dump($commentManager);
-
-//Rendu template
-$loader = new Twig\Loader\FilesystemLoader('view');
-$twig = new Twig\Environment(
-    $loader, [
-    'cache' => false //'/tmp'
-    ]
-);
-
-
-if (isset($_GET['p']) && $_GET['p']=='home')
+try 
 {
-    echo $twig->render('frontView/homeView.twig');
+    $router = new Router;
+
+    if (isset($_SESSION['msgOk']) && $_SESSION['msgOk'] == 'ok')
+    {
+        unset($_SESSION['msgOk']);
+        $frontController = new FrontController;
+        $frontController -> homePage();
+        
+    }
+
+    elseif (isset($_GET['p'])) {
+        $msgOk = $router -> runPage($_GET['p']);
+        $_SESSION['msgOk'] = $msgOk;
+        
+    } else {
+        unset($_SESSION['msgOk']);
+        $frontController = new FrontController;
+        $frontController -> homePage();
+
+    }
+    
+
+
+    /*if (isset($_GET['p'])) {
+
+        if ($_GET['p'] == 'home') {
+
+            
+            
+        } elseif ($_GET['p'] == 'listposts') {
+            echo $twig -> render('frontView/listPostView.twig');
+        } 
+    } else {
+        echo $twig->render('frontView/homeView.twig');
+    }*/
 }
-elseif (isset($_GET['p']) && $_GET['p']=='listposts')
+catch (Exception $e)
 {
-    echo $twig -> render('frontView/listPostView.twig');
-}
-else {
-    echo $twig->render('frontView/homeView.twig');
+    echo $e -> getMessage();
 }
 
 ?>
-
-
