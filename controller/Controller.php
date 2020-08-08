@@ -1,5 +1,8 @@
 <?php
 
+namespace controller;
+use Twig;
+
 class Controller
 {
     protected $twig;

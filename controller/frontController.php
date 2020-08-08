@@ -1,5 +1,9 @@
 <?php
 
+namespace controller;
+use Twig;
+use Twig_Extensions_Extension_Text;
+
 class FrontController extends Controller 
 { 
 
@@ -12,7 +16,7 @@ class FrontController extends Controller
 
     public function homePage($msg=null)
     {
-        $postManager = new PostManager;
+        $postManager = new \model\PostManager;
         $posts = $postManager -> getPosts(3);
 
         $this->twigInit();
@@ -29,7 +33,7 @@ class FrontController extends Controller
 
     public function listPostsView()
     {
-        $postManager = new PostManager;
+        $postManager = new \model\PostManager;
         $nbrPosts = $postManager -> countPosts();
         $posts = $postManager -> getPosts($nbrPosts, 0);
 
@@ -46,12 +50,12 @@ class FrontController extends Controller
 
     public function postView($id)
     {
-        $postManager = new PostManager;
+        $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
 
-        $post = new Post($dataPost);
+        $post = new \model\Post($dataPost);
 
-        $commentManager = new CommentManager;
+        $commentManager = new \model\CommentManager;
         $dataComment = $commentManager -> getComments($id);
         $nbrComments = $commentManager -> nbrComments($id);
 
@@ -74,7 +78,7 @@ class FrontController extends Controller
             $form[$key] = htmlspecialchars($form[$key]);
         }
 
-        $message = new Message($form);
+        $message = new \model\Message($form);
         $mail = $message -> sendMessage();
 
         if ($mail) {

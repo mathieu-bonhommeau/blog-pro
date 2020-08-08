@@ -20,18 +20,19 @@
         
         <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
 
+        <!--Add a new post-->
         <form class="form-group" action="" method="post">
             <div class="form-row">
                 <div class="col">
-                    <label for='inputNameVisitor'>Pseudo</label>
-                    <input type='text' class='form-control' name='inputNameVisitor' id='inputNameVisitor' required />
+                    <label for='nameVisitor'>Pseudo</label>
+                    <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' required />
                 </div>
                 <div class="col">
-                    <label for='inputEmailVisitor'>Email</label>
-                    <input type='email' class='form-control' name='inputEmailVisitor' id='inputEmailVisitor' required />
+                    <label for='emailVisitor'>Email</label>
+                    <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' required />
                 </div>
             </div>
-            <textarea id="inputComment" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
+            <textarea id="comment"  name="comment" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
             <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
         </form>
 

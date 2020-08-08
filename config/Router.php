@@ -1,5 +1,7 @@
 <?php
 
+namespace config;
+
 class Router 
 { 
 
@@ -23,7 +25,7 @@ class Router
                     $msg = EMPTY_FIELDS;
                 }
         
-                $frontController = new FrontController;
+                $frontController = new \controller\FrontController;
                 $frontController -> homePage($msg);
 
                 if ($msg == MSG_OK) {
@@ -36,7 +38,7 @@ class Router
 
         elseif ($get == 'listposts') {
 
-            $frontController = new FrontController;
+            $frontController = new \controller\FrontController;
             $frontController -> listPostsView(); 
             
         }
@@ -45,19 +47,29 @@ class Router
 
             if (isset($_GET['id'])) {
                
-                $frontController = new FrontController;
+                $frontController = new \controller\FrontController;
                 $frontController -> postView($_GET['id']); 
 
                 if (isset($_POST['submitComment'])) {
-                    if (!empty($_POST['inputVisitorName']) 
-                        && !empty($_POST['inputEmailVisitor']) 
-                        && !empty($_POST['inputComment'])
+                    if (!empty($_POST['nameVisitor']) 
+                        && !empty($_POST['emailVisitor']) 
+                        && !empty($_POST['content'])
                     ) {
+                        if (isset($_SESSION['user_id'])) {
+                            $user_id = $_SESSION['user_id'];
+                        } else {
+                            $user_id = null;
+                        }
+                        
                         $form = array(
-                            'inputVisitorName' => $_POST['inputVisitorName'],
-                            'inputEmailVisitor' => $_POST['inputEmailVisitor'],
-                            'inputComment' => $_POST['inputComment'],
+                            'nameVisitor' => $_POST['nameVisitor'],
+                            'emailVisitor' => $_POST['emailVisitor'],
+                            'content' => $_POST['content'],
+                            'user_id' => $user_id,
+                            'post_id' =>$_GET['id']
                         );
+
+                        $comment = new \model\Comment($form);
 
                         $frontController -> addNewComment($form);
 
@@ -65,6 +77,7 @@ class Router
                         $msg = EMPTY_FIELDS;
                     }
                 }
+                dump($comment);
 
             } else {
                 throw new Exception('Cette page n\'existe pas');
@@ -74,7 +87,7 @@ class Router
 
     public function runSendMessage(array $form)
     {
-        $frontController = new FrontController;
+        $frontController = new \controller\FrontController;
         $frontController -> sendMessage($form);
         $msg = $frontController -> msg();
         return $msg;

@@ -63,14 +63,15 @@ for ($i=0; $i<80; $i++) {
     
     $req = $db->prepare(
         'INSERT INTO comment 
-        (nameVisitor, comment, commentDate, validComment, user_id, post_id)
-        VALUES (:nameVisitor, :comment, :commentDate, :validComment, :user_id, :post_id)'
+        (nameVisitor, comment, commentDate, emailVisitor, validComment, user_id, post_id)
+        VALUES (:nameVisitor, :comment, :commentDate, :emailVisitor, :validComment, :user_id, :post_id)'
     );
     $req -> execute(
         array(
             'nameVisitor' => $faker->userName,
             'comment' => $faker->realText($maxNbChars = 90, $indexSize = 2),
             'commentDate' => $dateformate,
+            'emailVisitor' => $faker->freeEmail,
             'validComment' => true,
             'user_id' => null,
             'post_id' => rand(1, 25)

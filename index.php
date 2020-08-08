@@ -3,18 +3,18 @@
 require 'vendor/autoload.php';
 require 'config/Autoloader.php';
 require 'config/config.php';
-$autoloader = new Autoloader;
+$autoloader = new config\Autoloader;
 
 session_start();
 
 try 
 {
-    $router = new Router;
+    $router = new config\Router;
 
     if (isset($_SESSION['msgOk']) && $_SESSION['msgOk'] == 'ok')
     {
         unset($_SESSION['msgOk']);
-        $frontController = new FrontController;
+        $frontController = new \controller\FrontController;
         $frontController -> homePage();
         
     }
@@ -25,7 +25,7 @@ try
         
     } else {
         unset($_SESSION['msgOk']);
-        $frontController = new FrontController;
+        $frontController = new \controller\FrontController;
         $frontController -> homePage();
 
     }

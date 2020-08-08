@@ -3,6 +3,9 @@
 /**
  * Class for manage comment in database
  */
+
+namespace model;
+
 class CommentManager extends Manager
 {    
     /**
@@ -16,9 +19,7 @@ class CommentManager extends Manager
      * 
      * @return int Number affected lines
      */
-    public function addComment(
-        $nameVisitor, $comment, $validComment, $user_id, $post_id
-    ) {
+    public function addComment(Comment $comment) {
         $req = $this->db()->prepare(
             'INSERT INTO comment (
             nameVisitor, comment, commentDate, validComment, user_id, post_id
@@ -81,6 +82,6 @@ class CommentManager extends Manager
              WHERE post_id = ?'
         );
         $req -> execute(array($post_id));
-        return $req->fetch(PDO::FETCH_ASSOC);
+        return $req->fetch(\PDO::FETCH_ASSOC);
     }
 }

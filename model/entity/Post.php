@@ -3,6 +3,9 @@
 /**
  * Class for post entities
  */
+
+namespace model;
+
 class Post
 { 
     private $_id;

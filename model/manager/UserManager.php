@@ -1,5 +1,7 @@
 <?php
 
+namespace blog\model;
+
 class UserManager extends Manager 
 { 
     public function getUsers()
