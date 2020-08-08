@@ -31,7 +31,7 @@
     </section>
 
     <!-- Projects-->
-    <section class="projects-section bg-light" id="projects">
+    <section class="projects-section bg-light" id="lastposts">
     <div class="container">
         <!-- Principal post-->
         {% for key, post in posts %}
@@ -46,7 +46,7 @@
                                 <div class="col-lg-6"><p class="text-right text-black-50">{{ post.authorName }}</p></div>
                             </div>
                             <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true) }}</p>
-                            <p class="mt-2"><a href='#' >LIRE LA SUITE >></a></p>
+                            <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                         <div class="col-lg-6"><p class="text-right text-white-50">{{ post.authorName }}</p></div>
                                     </div>
                                     <p class="mb-0 text-justify text-white-50">{{ post.content|truncate(155,true) }}</p>
-                                    <p class="mt-2"><a href='#' >LIRE LA SUITE >></a></p>
+                                    <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
                                     <hr class="d-none d-lg-block mb-0 ml-0" />
                                 </div>
                             </div>

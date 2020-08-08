@@ -10,23 +10,7 @@ class FrontController extends Controller
         return $this->_msg;
     }
 
-    public function homePage()
-    {
-        $postManager = new PostManager;
-        $posts = $postManager -> getPosts(3);
-
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        $this->twig->addExtension(new Twig_Extensions_Extension_Text()); 
-
-        echo $this->twig->render(
-            'frontView/homeView.twig', array(
-                'posts' => $posts
-            )
-        );
-    }
-
-    public function homePageMsg($msg)
+    public function homePage($msg=null)
     {
         $postManager = new PostManager;
         $posts = $postManager -> getPosts(3);
@@ -38,7 +22,7 @@ class FrontController extends Controller
         echo $this->twig->render(
             'frontView/homeView.twig', array(
                 'posts' => $posts,
-                'msg' => $msg   
+                'msg' => $msg 
             )
         );
     }

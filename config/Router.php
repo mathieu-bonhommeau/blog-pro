@@ -24,7 +24,7 @@ class Router
                 }
         
                 $frontController = new FrontController;
-                $frontController -> homePageMsg($msg);
+                $frontController -> homePage($msg);
 
                 if ($msg == MSG_OK) {
                     return $get = 'ok';
