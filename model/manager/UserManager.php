@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\model;
+namespace model;
 
 class UserManager extends Manager 
 { 
@@ -38,7 +38,7 @@ class UserManager extends Manager
                 ORDER BY usertype.type'
             );
         }
-        return $data = $req->fetch(PDO::FETCH_ASSOC); 
+        return $data = $req->fetch(\PDO::FETCH_ASSOC); 
     }
 
     public function addUser(

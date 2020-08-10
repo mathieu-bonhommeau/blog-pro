@@ -32,9 +32,10 @@
                     <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' required />
                 </div>
             </div>
-            <textarea id="comment"  name="comment" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
+            <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
             <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
         </form>
+        <p class="text-center">{{ commentMsg }}</p>
 
         {% for comment in comments %}
             <section class="comments">

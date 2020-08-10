@@ -10,21 +10,13 @@ session_start();
 try 
 {
     $router = new config\Router;
-
-    if (isset($_SESSION['msgOk']) && $_SESSION['msgOk'] == 'ok')
-    {
-        unset($_SESSION['msgOk']);
-        $frontController = new \controller\FrontController;
-        $frontController -> homePage();
         
-    }
-
-    elseif (isset($_GET['p'])) {
-        $msgOk = $router -> runPage($_GET['p']);
-        $_SESSION['msgOk'] = $msgOk;
+    if (isset($_GET['p'])) {
+        
+        $msg = $router -> runPage($_GET['p']);
         
     } else {
-        unset($_SESSION['msgOk']);
+        
         $frontController = new \controller\FrontController;
         $frontController -> homePage();
 

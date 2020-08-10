@@ -68,7 +68,7 @@ class Comment
      *
      * @return string
      */
-    public function comment()
+    public function content()
     {
         return $this->_content;
     }
@@ -143,13 +143,13 @@ class Comment
      * 
      * @return void
      */
-    public function setComment($content)
+    public function setContent($content)
     {
         $content = (string)$content;
-        if (strlen($content) <= 1000) {
+        if (strlen($content) <= 700) {
             $this->_content = $content;
         } else {
-            throw new Exception('MSG_TOO_LONG');
+            throw new \Exception(MSG_TOO_LONG);
         }  
     }
     
@@ -176,7 +176,7 @@ class Comment
         if ($emailControl) {
             $this->_emailVisitor = $emailVisitor;
         } else {
-            throw new Exception(INVALID_EMAIL);
+            throw new \Exception(INVALID_EMAIL);
         }
     }
     
@@ -189,14 +189,20 @@ class Comment
      */
     public function setValidComment($validComment)
     {
-        if ($validComment == 'TRUE' || $validComment =='FALSE') {
+        if (in_array($validComment, ['TRUE', 'FALSE'])) {    
             $this->_validComment = $validComment;
+        } else {
+            $this->_validComment = 'FALSE';
         }
     }
 
     public function setUser_id($user_id)
     {
-        $user_id = (int)$user_id;
+        if (is_null($user_id) || $user_id == 0) {
+            $user_id = null;
+        } else {
+            $user_id = (int)$user_id;
+        }
         $this->_user_id = $user_id;
     }
 

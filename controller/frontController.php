@@ -48,7 +48,7 @@ class FrontController extends Controller
         );
     }
 
-    public function postView($id)
+    public function postView($id, $msg=null)
     {
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
@@ -67,7 +67,8 @@ class FrontController extends Controller
             'frontView/postView.twig', array(
                 'post' => $post,
                 'comments' => $dataComment,
-                'nbrComments' => $nbrComments['COUNT(*)']
+                'nbrComments' => $nbrComments['COUNT(*)'],
+                'commentMsg' => $msg
             )
         );
     }
@@ -87,6 +88,20 @@ class FrontController extends Controller
             $msg = MSG_NO_OK;
         }
         $this->_msg = $msg;
+    }
+
+    public function addNewComment(array $form)
+    {
+        $comment = new \model\Comment($form);
+
+        $commentManager = new \model\CommentManager;
+        $affectedLines = $commentManager -> addComment($comment);
+
+        if ($affectedLines == 1) {
+            return WAIT_VALID_COMMENT;
+        } else {
+            return MSG_NO_OK;
+        }
     }
 
 
