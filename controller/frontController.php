@@ -104,5 +104,13 @@ class FrontController extends Controller
         }
     }
 
+    public function connectView()
+    {
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+        echo $this->twig->render('frontView/connectView.twig');
+
+    }
+
 
 }

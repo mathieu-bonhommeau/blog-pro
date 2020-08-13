@@ -1,0 +1,31 @@
+{% extends "template.twig" %}
+
+{% block content %}
+
+    <section class="projects-section bg-light" id="connect">
+        <div class="container">
+            <h2 class="mb-4">Page de connexion</h2>
+        
+            <form class="form-group mt-5 mb-5" action="" method="post">
+                <div class="form-row mb-5">
+                    <div class="col ">
+                        <label for="inputPseudoConnect">Entrer votre identifiant : </label>
+                        <input type="text" class="form-control" name="inputPseudoConnect" id="inputPseudoConnect" required/>
+                    </div>
+                </div>
+                <div class="form-row mb-5">
+                    <div class="col">
+                        <label for="inputPasswordConnect">Entrer votre mot de passe : </label>
+                        <input type="password" class="form-control" name="inputPasswordConnect" id="inputPasswordConnect" required/>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <button type="submit" id="submitConnect" name="submitConnect" class="btn btn-dark mb-3 p-3">Se Connecter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

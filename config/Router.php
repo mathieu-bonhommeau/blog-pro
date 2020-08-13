@@ -104,6 +104,9 @@ class Router
             } else {
                 throw new \Exception('Cette page n\'existe pas');
             }
+        } elseif ($get == 'connect') {
+            $frontController = new \controller\FrontController;
+            $frontController -> connectView();
         }
     }
 

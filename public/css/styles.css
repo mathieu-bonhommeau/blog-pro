@@ -10397,3 +10397,9 @@ body {
 .post:nth-child(2n+0) > .reverse {
   text-align: right;
 }
+
+#connect {
+  font-weight: normal !important;
+  font-size: 1rem !important;
+  border: 1px black;
+}
