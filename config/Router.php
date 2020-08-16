@@ -35,9 +35,11 @@ class Router
                 exit();
 
             } else {
+
                 if (isset($_SESSION['msg'])) {
                     $frontController -> homePage($_SESSION['msg']);
                     unset($_SESSION['msg']);
+
                 } else {
                     $frontController -> homePage();
                 }
@@ -116,13 +118,16 @@ class Router
                     && !empty($_POST['inputPasswordConnect'])
                 ) {
 
-                    $frontController -> verifyUser(
+                    unset($_SESSION['user']);
+
+                    $msg = $frontController -> verifyUser(
                         $_POST['inputPseudoConnect'], 
                         $_POST['inputPasswordConnect']    
                     );
-
-                    header('Location: index.php?p=post&id=' . $_GET['id']);  //////////////////
-                    exit();
+                
+                    $frontController -> connectView();
+                    echo $msg;
+                    
 
                 } else {
 

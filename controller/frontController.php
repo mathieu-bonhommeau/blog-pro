@@ -8,6 +8,16 @@ class FrontController extends Controller
 { 
 
     private $_msg;
+    private $_userName;
+
+    public function __construct()
+    {
+        if (isset($_SESSION['user'])) {
+            $this->_userName = $_SESSION['user']->userName();
+        } else {
+            $this->_userName = null;
+        }
+    }
 
     public function msg()
     {
@@ -26,7 +36,8 @@ class FrontController extends Controller
         echo $this->twig->render(
             'frontView/homeView.twig', array(
                 'posts' => $posts,
-                'msg' => $msg 
+                'msg' => $msg,
+                'userName' => $this->_userName 
             )
         );
     }
@@ -43,7 +54,8 @@ class FrontController extends Controller
 
         echo $this->twig->render(
             'frontView/listPostView.twig', array(
-                'posts' => $posts
+                'posts' => $posts,
+                'userName' => $this->_userName
             )
         );
     }
@@ -68,7 +80,8 @@ class FrontController extends Controller
                 'post' => $post,
                 'comments' => $dataComment,
                 'nbrComments' => $nbrComments['COUNT(*)'],
-                'commentMsg' => $msg
+                'commentMsg' => $msg,
+                'userName' => $this->_userName
             )
         );
     }
@@ -108,8 +121,40 @@ class FrontController extends Controller
     {
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        echo $this->twig->render('frontView/connectView.twig');
+        echo $this->twig->render(
+            'frontView/connectView.twig', array(
+                'userName' => $this->_userName
+            )
+        );
 
+    }
+
+    public function verifyUser($pseudo, $password)
+    {
+        $userManager = new \model\UserManager;
+        $data = $userManager -> getUser($pseudo);
+
+        if ($data) {
+
+            $user = new \model\User($data);
+
+            if ($user -> password() == $password) {
+
+                $_SESSION['user'] = $user;
+
+                header('Location: index.php?p=home');
+                exit();
+
+            } else {
+                return USER_NO_OK;
+            }
+
+            dump($_SESSION['user']); //////////////////////////
+            
+
+        } else {
+            return USER_NO_OK;
+        }
     }
 
 

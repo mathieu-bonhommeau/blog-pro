@@ -17,3 +17,4 @@ define('EMPTY_FIELDS', 'Veuillez remplir tous les champs');
 define('PAGE_NOT_EXIST', 'Cette page n\existe pas');
 define('MSG_TOO_LONG', 'Votre message ne doit pas dépasser 700 caractères');
 define('WAIT_VALID_COMMENT', 'Votre commentaire a bien été envoyé et est en attente de validation');
+define('USER_NO_OK', 'L\'identifiant ou le mot de passe est incorrect');

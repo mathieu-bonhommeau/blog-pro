@@ -28,6 +28,7 @@ class UserManager extends Manager
                 ORDER BY usertype.type'
             );
             $req -> execute(array($info));
+
         } elseif (is_string($info)) {
             $req = $this->db()->prepare(
                 'SELECT user.id, user.userName, user.password, 
@@ -37,6 +38,7 @@ class UserManager extends Manager
                 WHERE user.userName = ?
                 ORDER BY usertype.type'
             );
+            $req -> execute(array($info));
         }
         return $data = $req->fetch(\PDO::FETCH_ASSOC); 
     }
