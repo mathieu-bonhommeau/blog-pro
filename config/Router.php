@@ -93,7 +93,9 @@ class Router
                 } else {
 
                     if (isset($_SESSION['commentMsg'])) {
-                        $frontController -> postView($_GET['id'], $_SESSION['commentMsg']);
+                        $frontController -> postView(
+                            $_GET['id'], $_SESSION['commentMsg']
+                        );
                         unset($_SESSION['commentMsg']);
                     } else {
                         $frontController -> postView($_GET['id']);
@@ -104,9 +106,37 @@ class Router
             } else {
                 throw new \Exception('Cette page n\'existe pas');
             }
+
         } elseif ($get == 'connect') {
+
             $frontController = new \controller\FrontController;
-            $frontController -> connectView();
+
+            if (isset($_POST['submitConnect'])) {
+                if (!empty($_POST['inputPseudoConnect']) 
+                    && !empty($_POST['inputPasswordConnect'])
+                ) {
+
+                    $frontController -> verifyUser(
+                        $_POST['inputPseudoConnect'], 
+                        $_POST['inputPasswordConnect']    
+                    );
+
+                    header('Location: index.php?p=post&id=' . $_GET['id']);  //////////////////
+                    exit();
+
+                } else {
+
+                    $msg = EMPTY_FIELDS;
+
+                }
+            } else {
+
+                $frontController -> connectView();
+
+            }
+
+            
+            
         }
     }
 
