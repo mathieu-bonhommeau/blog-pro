@@ -8,16 +8,8 @@ class FrontController extends Controller
 { 
 
     private $_msg;
-    private $_user;
 
-    public function __construct()
-    {
-        if (isset($_SESSION['user'])) {
-            $this->_user = $_SESSION['user'];
-        } else {
-            $this->_user = null;
-        }
-    }
+
 
     public function msg()
     {
@@ -37,7 +29,7 @@ class FrontController extends Controller
             'frontView/homeView.twig', array(
                 'posts' => $posts,
                 'msg' => $msg,
-                'user' => $this->_user 
+                'user' => $this->user 
             )
         );
     }
@@ -46,7 +38,7 @@ class FrontController extends Controller
     {
         $postManager = new \model\PostManager;
         $nbrPosts = $postManager -> countPosts();
-        $posts = $postManager -> getPosts($nbrPosts, 0);
+        $posts = $postManager -> getPosts($nbrPosts);
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -55,7 +47,7 @@ class FrontController extends Controller
         echo $this->twig->render(
             'frontView/listPostView.twig', array(
                 'posts' => $posts,
-                'user' => $this->_user
+                'user' => $this->user
             )
         );
     }
@@ -81,7 +73,7 @@ class FrontController extends Controller
                 'comments' => $dataComment,
                 'nbrComments' => $nbrComments['COUNT(*)'],
                 'commentMsg' => $msg,
-                'user' => $this->_user
+                'user' => $this->user
             )
         );
     }
@@ -123,7 +115,7 @@ class FrontController extends Controller
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
         echo $this->twig->render(
             'frontView/connectView.twig', array(
-                'user' => $this->_user,
+                'user' => $this->user,
                 'msg' => $msg
             )
         );

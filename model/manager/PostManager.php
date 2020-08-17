@@ -136,7 +136,6 @@ class PostManager extends Manager
         $req = $this->db()->query('SELECT COUNT(*) FROM post');
         $countPosts = $req->fetch();
         return $countPosts['COUNT(*)'];
-        dump($countPosts);
     }
 
 }

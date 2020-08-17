@@ -5,7 +5,7 @@ namespace config;
 class Router 
 { 
 
-    public function runPage($get)
+    public function runFrontPage($get)
     {
         if ($get == 'home') {
             
@@ -101,12 +101,11 @@ class Router
                         unset($_SESSION['commentMsg']);
                     } else {
                         $frontController -> postView($_GET['id']);
-                    }
-                    
+                    }   
                 }
 
             } else {
-                throw new \Exception('Cette page n\'existe pas');
+                throw new \Exception(PAGE_NOT_EXIST);
             }
 
         } elseif ($get == 'connect') {
@@ -158,5 +157,24 @@ class Router
         $frontController -> sendMessage($form);
         $msg = $frontController -> msg();
         return $msg;
+    }
+
+    public function runBackPage($get)
+    {
+        if (isset($_SESSION['user'])) {
+
+            $backController = new \controller\backController;
+
+            if ($get == 'backhome') {
+                $backController -> backHomePage();
+
+            } elseif ($get == 'post') {
+                $backController -> backListPosts();
+            }
+
+        } else {
+            throw new \Exception(NO_ACCESS);
+        }
+        
     }
 }
