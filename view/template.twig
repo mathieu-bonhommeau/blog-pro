@@ -27,8 +27,8 @@
                 <div class="container">
                     
                     <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
-                    {% if userName %}
-                        <span class="navbar-brand js-scroll-trigger" id="user">Bienvenue {{userName}} !!!</span>
+                    {% if user %}
+                        <span class="navbar-brand js-scroll-trigger" id="user">Bienvenue {{user.userName}} !!!</span>
                     {% endif %}
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
@@ -102,10 +102,14 @@
             <footer class="footer bg-black small text-center text-white-50">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="container text-left mb-3"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
-                        {% if userName %}
-                        <div class="container text-left"><a href="index.php?p=backhome" id="admin">Accéder au BackOffice >>>></a></div>
+
+                        {% if user %}
+                            <div class="container text-left mb-3"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
+                            <div class="container text-left"><a href="index.php?p=backhome" id="admin">Accéder au BackOffice >>>></a></div>
+                        {% else %}
+                            <div class="container text-left mb-3"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
                         {% endif %}
+
                     </div>
                 </div>
                 <div class="row">

@@ -8,14 +8,14 @@ class FrontController extends Controller
 { 
 
     private $_msg;
-    private $_userName;
+    private $_user;
 
     public function __construct()
     {
         if (isset($_SESSION['user'])) {
-            $this->_userName = $_SESSION['user']->userName();
+            $this->_user = $_SESSION['user'];
         } else {
-            $this->_userName = null;
+            $this->_user = null;
         }
     }
 
@@ -37,7 +37,7 @@ class FrontController extends Controller
             'frontView/homeView.twig', array(
                 'posts' => $posts,
                 'msg' => $msg,
-                'userName' => $this->_userName 
+                'user' => $this->_user 
             )
         );
     }
@@ -55,7 +55,7 @@ class FrontController extends Controller
         echo $this->twig->render(
             'frontView/listPostView.twig', array(
                 'posts' => $posts,
-                'userName' => $this->_userName
+                'user' => $this->_user
             )
         );
     }
@@ -81,7 +81,7 @@ class FrontController extends Controller
                 'comments' => $dataComment,
                 'nbrComments' => $nbrComments['COUNT(*)'],
                 'commentMsg' => $msg,
-                'userName' => $this->_userName
+                'user' => $this->_user
             )
         );
     }
@@ -117,13 +117,14 @@ class FrontController extends Controller
         }
     }
 
-    public function connectView()
+    public function connectView($msg=null)
     {
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
         echo $this->twig->render(
             'frontView/connectView.twig', array(
-                'userName' => $this->_userName
+                'user' => $this->_user,
+                'msg' => $msg
             )
         );
 
@@ -149,11 +150,8 @@ class FrontController extends Controller
                 return USER_NO_OK;
             }
 
-            dump($_SESSION['user']); //////////////////////////
-            
-
         } else {
-            return USER_NO_OK;
+            return  USER_NO_OK;
         }
     }
 

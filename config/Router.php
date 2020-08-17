@@ -114,34 +114,41 @@ class Router
             $frontController = new \controller\FrontController;
 
             if (isset($_POST['submitConnect'])) {
+
                 if (!empty($_POST['inputPseudoConnect']) 
                     && !empty($_POST['inputPasswordConnect'])
                 ) {
 
-                    unset($_SESSION['user']);
-
-                    $msg = $frontController -> verifyUser(
+                    $msgConnect = $frontController -> verifyUser(
                         $_POST['inputPseudoConnect'], 
                         $_POST['inputPasswordConnect']    
                     );
                 
-                    $frontController -> connectView();
-                    echo $msg;
-                    
+                    $_SESSION['msgConnect'] = $msgConnect;
+                    header('Location: index.php?p=connect');
+                    exit();
 
                 } else {
 
-                    $msg = EMPTY_FIELDS;
+                    $msgConnect = EMPTY_FIELDS;
+                    $frontController -> connectView($msgConnect);
 
                 }
             } else {
-
-                $frontController -> connectView();
-
-            }
-
             
-            
+                if (isset($_SESSION['msgConnect'])) {
+
+                    $frontController -> connectView($_SESSION['msgConnect']);
+                    unset($_SESSION['msgConnect']);
+
+                } else {
+                    $frontController -> connectView();
+                }
+            }    
+        } elseif ($get == 'disconnect') {
+
+                unset($_SESSION['user']);
+                header('Location: index.php');
         }
     }
 
