@@ -33,7 +33,7 @@
                                     Dernier article ajouté : le 
                                     <span class="badge badge-dark js-scroll-trigger">
                                         {% for lastPost in lastPost %}
-                                            {{ lastPost.lastDateModif|date }}
+                                            {{ lastPost.lastDateModif|date("d/m/Y") }}
                                         {% endfor %}
                                     </span>
                                 </p>

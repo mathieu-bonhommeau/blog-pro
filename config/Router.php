@@ -170,7 +170,77 @@ class Router
 
             } elseif ($get == 'post') {
                 $backController -> backListPosts();
-            }
+            
+            } elseif ($get == 'addpost') {
+
+                if (isset($_POST['addPost'])) {
+
+                    if (!empty($_POST['titlePost'])
+                        && !empty($_POST['chapoPost'])
+                        && !empty($_POST['contentPost'])
+                    ) {
+                        if (empty($_POST['imgPost'])) {
+                            $_POST['imgPost'] = null;
+                        }
+
+                        $form = array(
+                            'title' => $_POST['titlePost'],
+                            'chapo' => $_POST['chapoPost'],
+                            'content' => $_POST['contentPost'],
+                            'picture' => $_POST['imgPost']
+                        );
+                        
+                        $backController -> addPost($form);
+
+                    } else {
+                        $_SESSION['addPostMsg'] = EMPTY_FIELDS;
+                        header('Location: index.php?admin=addpost');
+
+                    }
+                
+                } elseif (isset($_POST['preview'])) {
+
+                    if (!empty($_POST['titlePost'])
+                        && !empty($_POST['chapoPost'])
+                        && !empty($_POST['contentPost'])
+                    ) {
+                        if (!isset($_FILES['imgPost'])) {
+                            $_FILES['imgPost'] = null;
+
+                        } else {
+                        
+                            $backController -> uploadFile($_FILES['imgPost']);
+                        }
+
+                        $form = array(
+                            'title' => $_POST['titlePost'],
+                            'chapo' => $_POST['chapoPost'],
+                            'content' => $_POST['contentPost'],
+                            'picture' => $_FILES['imgPost']
+                        );
+                        
+                        $backController -> previewPost($form);
+
+                    } else {
+                        $_SESSION['addPostMsg'] = EMPTY_FIELDS;
+                        header('Location: index.php?admin=addpost');
+
+                    }
+                    
+                } else {
+                    if (isset($_SESSION['addPostMsg'])) {
+                        
+                        $backController -> addPost(null, $_SESSION['addPostMsg']);
+                        unset($_SESSION['addPostMsg']);
+
+                    } else {
+                        $backController -> addPost();
+                    }
+                    
+                }
+
+                
+            } 
 
         } else {
             throw new \Exception(NO_ACCESS);

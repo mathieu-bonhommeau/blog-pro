@@ -6,14 +6,33 @@
 <section class="projects-section bg-light" id="backListPosts">
     <div class="container">
         <div class="row">
-            <div class="col-lg-1 text-center">Id</div>
-            <div class="col-lg-2 text-center">Titre</div>
-            <div class="col-lg-1 text-center">Auteur</div>
-            <div class="col-lg-2 text-center">Date d'ajout/modif</div>
-            <div class="col-lg-6 text-center">Action</div>
+            <h2 class="col-lg-6 font-weight-bold align-self-center">Gestion des articles</h2>
+            <div class="col-lg-6 text-right"><a class="btn btn-secondary active" href="index.php?admin=addpost">Ajouter un article</a></div>
         </div>
+        <hr class="d-none d-lg-block mb-3" />
+        <div class="row mb-3">
+            <div class="col-lg-1  font-weight-bold align-self-center">Id</div>
+            <div class="col-lg-4  font-weight-bold align-self-center">Titre</div>
+            <div class="col-lg-2  font-weight-bold align-self-center">Auteur</div>
+            <div class="col-lg-2  font-weight-bold align-self-center">Date d'ajout</div>
+            <div class="col-lg-3 text-center font-weight-bold align-self-center">Action</div>
+        </div>
+        <hr class="d-none d-lg-block mb-2 ml-0" />
         {% for post in posts %}
-            <p >{{post.id}}</p>
+            <div class="row mt-3 mb-3">
+                <div class="col-lg-1 align-self-center"><span class="badge badge-dark">{{post.id}}</span></div>
+                <div class="col-lg-4 text-truncate align-self-center">{{ post.title }}</div>
+                <div class="col-lg-2 align-self-center">{{ post.authorName }}</div>
+                <div class="col-lg-2 align-self-center">{{ post.lastDateModif|date("d/m/Y") }}</div>
+                <div class="col-lg-3 text-center justify-content-between">
+                    <div class="row">
+                        <div class="col-lg-4 "><a href="" type="button" name="" class="text-success font-weight-bold">Modifier</a></div>
+                        <div class="col-lg-4 "><a href="" type="button" name="" class="text-danger font-weight-bold">Supprimer</a></div>
+                        <div class="col-lg-4 "><a href="" type="button" name="" class="text-blue ">Publier</a></div>
+                    </div> 
+                </div>
+            </div>
+            <hr class="d-none d-lg-block mb-1 mt-1" />
         {% endfor %}
     </div>
 </section>

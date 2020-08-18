@@ -16,6 +16,8 @@
             <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
             <!-- Core theme CSS (includes Bootstrap)-->
             <link href="public/css/styles.css" rel="stylesheet" />
+            <!-- CSS styles additional-->
+            <link href="public/css/additionalStyles.css" rel="stylesheet" />
         {% endblock %}
     </head>
 
@@ -25,18 +27,18 @@
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
                 <div class="container">
-                    
-                    <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo Dashboard</a>
+                    <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?back=post">Articles</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?back=comment">Commentaires</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?back=user">Utilisateurs</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?back=profil">Photo de profil + {{user.userName}}</a></li>
+                            <li class="nav-item"></li><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=comment">Commentaires</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=user">Utilisateurs</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=profil">Photo de profil + {{user.userName}}: {{ user.type }}</a></li>
                         </ul>
                     </div>
                 </div>

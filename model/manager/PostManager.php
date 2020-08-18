@@ -67,7 +67,7 @@ class PostManager extends Manager
      * 
      * @return int Number of affected lines
      */
-    public function addPost($title, $chapo, $content, $picture, $user_id)
+    public function addPost(Post $newPost)
     {
         $req = $this->db()->prepare(
             'INSERT INTO post (title, chapo, content, lastDateModif, picture, user_id) 
@@ -75,14 +75,14 @@ class PostManager extends Manager
         );
         $req->execute(
             array(
-                'title' => $title, 
-                'chapo' => $chapo,
-                'content' => $content,
-                'picture' => $picture,
-                'user_id' => $user_id
+                'title' => $newPost->title(), 
+                'chapo' => $newPost->chapo(),
+                'content' => $newPost->content(),
+                'picture' => $newPost->picture(),
+                'user_id' => $_SESSION['user']->id()
                 )
         );
-        return $req->rowCount();
+        return array($req->rowCount(),$this->db()->lastInsertId());
     }
 
         

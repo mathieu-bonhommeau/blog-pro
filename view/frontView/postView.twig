@@ -7,7 +7,7 @@
        <div class="row">
             <div class="col-lg-6 ">
                 <div class="row"><h2 class="mb-4">{{ post.title }}</h2></div>
-                <div class="row"><p class="text-black-50 ">{{ post.lastDateModif|date }}</p></div>
+                <div class="row"><p class="text-black-50 ">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
                 <div class="row"><p class="text-black-50 ">{{ post.authorName }}</p></div>
                 <div class="row"><p class="text-black-50 "><a href="#comments" class="badge badge-dark js-scroll-trigger">{{ nbrComments }} commentaires</a></p></div>
             </div> 
@@ -42,7 +42,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="card-title">
-                            <span id="nameVisitor" class="font-weight-bold">{{ comment.nameVisitor }}</span> <span id="commentDate" class="font-weight-light">- posté le : {{ comment.commentDate|date }}</span>
+                            <span id="nameVisitor" class="font-weight-bold">{{ comment.nameVisitor }}</span> <span id="commentDate" class="font-weight-light">- posté le : {{ comment.commentDate|date("d/m/Y") }}</span>
                         </div>
                         <p class="card-text font-weight-light" id="comment">{{ comment.comment }}</p>
                     </div>
