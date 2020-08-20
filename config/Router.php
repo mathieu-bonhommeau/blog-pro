@@ -208,7 +208,7 @@ class Router
                             $_FILES['imgPost'] = null;
 
                         } else {
-                        
+                            dump($_FILES['imgPost']);
                             $backController -> uploadFile($_FILES['imgPost']);
                         }
 

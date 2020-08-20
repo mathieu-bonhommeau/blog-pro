@@ -12,18 +12,20 @@
         <div class="row">
             <div class="col-lg-12">
                 <form class="form-group" method="post" action="" enctype="multipart/form-data">
+
                     <label for="titlePost" class="font-weight-bold">Titre :</label>
                     <input type="text" name="titlePost" id="titlePost" class="form-control mb-3" required />
+
                     <label for="chapoPost" class="font-weight-bold">Chapô :</label>
                     <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" required></textarea>
+
                     <label for="contentPost" class="font-weight-bold">Contenu :</label>
                     <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" required ></textarea>
-                    <div class="custom-file mb-5">
-                        <label class="custom-file-label" for="imgPost" id="labelImgPost">Ajouter une image...</label>
-                        <input type="hidden" name="MAX_FILE_SIZE" value="100000">
-                        <input type="file" class="custom-file-input" id="imgPost" name="imgPost" />
-                        
-                    </div>
+                    
+                    <label for="imgPost" class="font-weight-bold">Ajouter une image : </label>
+                    <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+                    <input type="file" class="mb-5 text-right" id="imgPost" name="imgPost" />
+                
                     <div class="form-row mb-3">
                         <div class="col-md-6">
                             <div class="form-row">

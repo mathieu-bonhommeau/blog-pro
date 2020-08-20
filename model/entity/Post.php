@@ -180,6 +180,7 @@ class Post
 
     public function setPicture($picture)
     {
+        //$picture['']
         $picture = (string)$picture;
         $this->_picture = $picture;
     }
