@@ -173,21 +173,36 @@ class Router
             
             } elseif ($get == 'addpost') {
 
-                if (isset($_POST['addPost'])) {
+                if (isset($_SESSION['previewPost'])) {
+
+                    $previewPost = $_SESSION['previewPost'];
+
+                    if (!empty($previewPost->picture())) {
+                        unlink($previewPost->picture());
+                    }
+                    unset($_SESSION['previewPost']);
+
+                    $backController -> addPost($form=null, $msg=null, $previewPost);
+
+                } elseif (isset($_POST['addPost'])) {
 
                     if (!empty($_POST['titlePost'])
                         && !empty($_POST['chapoPost'])
                         && !empty($_POST['contentPost'])
                     ) {
-                        if (empty($_POST['imgPost'])) {
-                            $_POST['imgPost'] = null;
+                        if (empty($_FILES['imgPost']['name'])) {
+                            $path = null;
+
+                        } else {
+
+                            $path =  $backController -> uploadFile($_FILES['imgPost']);
                         }
 
                         $form = array(
                             'title' => $_POST['titlePost'],
                             'chapo' => $_POST['chapoPost'],
                             'content' => $_POST['contentPost'],
-                            'picture' => $_POST['imgPost']
+                            'picture' => $path
                         );
                         
                         $backController -> addPost($form);
@@ -204,19 +219,19 @@ class Router
                         && !empty($_POST['chapoPost'])
                         && !empty($_POST['contentPost'])
                     ) {
-                        if (!isset($_FILES['imgPost'])) {
-                            $_FILES['imgPost'] = null;
+                        if (empty($_FILES['imgPost']['name'])) {
+                            $path = null;
 
                         } else {
-                            dump($_FILES['imgPost']);
-                            $backController -> uploadFile($_FILES['imgPost']);
+
+                            $path =  $backController -> uploadFile($_FILES['imgPost']);
                         }
 
                         $form = array(
                             'title' => $_POST['titlePost'],
                             'chapo' => $_POST['chapoPost'],
                             'content' => $_POST['contentPost'],
-                            'picture' => $_FILES['imgPost']
+                            'picture' => $path
                         );
                         
                         $backController -> previewPost($form);

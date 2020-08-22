@@ -14,18 +14,18 @@
                 <form class="form-group" method="post" action="" enctype="multipart/form-data">
 
                     <label for="titlePost" class="font-weight-bold">Titre :</label>
-                    <input type="text" name="titlePost" id="titlePost" class="form-control mb-3" required />
+                    <input type="text" name="titlePost" id="titlePost" class="form-control mb-3" value={{ '"' }}{{ postPreview.title }}{{ '"' }} required />
 
                     <label for="chapoPost" class="font-weight-bold">Chapô :</label>
-                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" required></textarea>
+                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" required >{{ postPreview.chapo }}</textarea>
 
                     <label for="contentPost" class="font-weight-bold">Contenu :</label>
-                    <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" required ></textarea>
+                    <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" required >{{ postPreview.content }}</textarea>
                     
                     <label for="imgPost" class="font-weight-bold">Ajouter une image : </label>
-                    <input type="hidden" name="MAX_FILE_SIZE" value="100000">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
                     <input type="file" class="mb-5 text-right" id="imgPost" name="imgPost" />
-                
+
                     <div class="form-row mb-3">
                         <div class="col-md-6">
                             <div class="form-row">

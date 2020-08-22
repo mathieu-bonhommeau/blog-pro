@@ -78,7 +78,7 @@ class PostManager extends Manager
                 'title' => $newPost->title(), 
                 'chapo' => $newPost->chapo(),
                 'content' => $newPost->content(),
-                'picture' => $newPost->picture(),
+                'picture' => basename($newPost->picture()),
                 'user_id' => $_SESSION['user']->id()
                 )
         );

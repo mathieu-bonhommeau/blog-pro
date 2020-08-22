@@ -11,7 +11,7 @@
                 <div class="row"><p class="text-black-50 ">{{ newPost.authorName }}</p></div>
                 <div class="row"><p class="text-black-50 "><a href="#comments" class="badge badge-dark js-scroll-trigger">{{ nbrComments }} commentaires</a></p></div>
             </div> 
-            <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ newPost.picture}} {{ '"' }} alt="" /></div>  
+            <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ newPost.picture }} {{ '"' }} alt="" /></div>  
         </div>
         <p class="font-weight-bold">{{ newPost.chapo }}</p>
         <p class="text-justify featured-text">{{ newPost.content }}</p>

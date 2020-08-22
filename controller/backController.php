@@ -42,7 +42,7 @@ class BackController extends Controller
         );
     }
 
-    public function addPost(array $form=null, $msg=null)
+    public function addPost(array $form=null, $msg=null, \model\Post $postPreview=null)
     {
         if ($form != null) {
 
@@ -69,7 +69,8 @@ class BackController extends Controller
         echo $this->twig->render(
             'backView/addPostView.twig', array(
                 'user' => $this->user,
-                'msg' => $msg
+                'msg' => $msg,
+                'postPreview' => $postPreview
                 
             )
         );
@@ -91,10 +92,43 @@ class BackController extends Controller
                 
             )
         );
+
+        $_SESSION['previewPost'] = $newPost;
     }
 
     public function uploadFile($imgPost)
     {
-        
+        if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000 ) {
+            $fileInfo = pathinfo($imgPost['name']);
+
+            if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
+                if (isset($_POST['addPost'])) {
+
+                    $new = move_uploaded_file(
+                        $imgPost['tmp_name'], 
+                        POST_IMG_DIRECTORY . basename($imgPost['name'])
+                    );
+
+                    rename(POST_IMG_DIRECTORY . basename($imgPost['name']), POST_IMG_DIRECTORY . (string)time() . '.' .$fileInfo['extension']);
+
+                    return POST_IMG_DIRECTORY . (string)time() . '.' . $fileInfo['extension'];
+
+                } elseif (isset($_POST['preview'])) {
+
+                    $new = move_uploaded_file(
+                        $imgPost['tmp_name'], 
+                        'tmp/' . basename($imgPost['name'])
+                    );
+                    return 'tmp/' . basename($imgPost['name']);
+                }
+                
+
+            } else {
+                throw new \Exception(UPLOAD_NO_OK);
+            }
+
+        } else {
+            throw new \Exception(UPLOAD_NO_OK);
+        }
     }
 }
