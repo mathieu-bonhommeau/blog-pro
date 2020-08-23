@@ -78,6 +78,15 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
+    public function deletePostComments($post_id)
+    {
+        $req = $this->db()->prepare(
+            'DELETE FROM comment WHERE post_id = ?'
+        );
+        $req ->execute(array($post_id));
+        return $req->rowCount();
+    }
+
     public function nbrComments($post_id)
     {
         $req = $this->db()->prepare(

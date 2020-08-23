@@ -15,7 +15,8 @@
             <div class="col-lg-4  font-weight-bold align-self-center">Titre</div>
             <div class="col-lg-2  font-weight-bold align-self-center">Auteur</div>
             <div class="col-lg-2  font-weight-bold align-self-center">Date d'ajout</div>
-            <div class="col-lg-3 text-center font-weight-bold align-self-center">Action</div>
+            <div class="col-lg-1  font-weight-bold align-self-center text-center">Publié</div>
+            <div class="col-lg-2 text-center font-weight-bold align-self-center">Action</div>
         </div>
         <hr class="d-none d-lg-block mb-2 ml-0" />
         {% for post in posts %}
@@ -24,11 +25,17 @@
                 <div class="col-lg-4 text-truncate align-self-center">{{ post.title }}</div>
                 <div class="col-lg-2 align-self-center">{{ post.authorName }}</div>
                 <div class="col-lg-2 align-self-center">{{ post.lastDateModif|date("d/m/Y") }}</div>
-                <div class="col-lg-3 text-center justify-content-between">
+                <div class="col-lg-1 align-self-center text-center">
+                   {% if post.published == 'TRUE' %} 
+                        <span class="text-blue font-weight-bold">OUI</span>
+                   {% else %}
+                        <a href={{'index.php?admin=post&published=' ~ post.id }} class="text-blue font-weight-bold">Publier</a>
+                   {% endif %}
+                </div>
+                <div class="col-lg-2 text-center justify-content-between align-self-center">
                     <div class="row">
-                        <div class="col-lg-4 "><a href="" type="button" name="" class="text-success font-weight-bold">Modifier</a></div>
-                        <div class="col-lg-4 "><a href="" type="button" name="" class="text-danger font-weight-bold">Supprimer</a></div>
-                        <div class="col-lg-4 "><a href="" type="button" name="" class="text-blue ">Publier</a></div>
+                        <div class="col-lg-6 "><a href={{'index.php?admin=post&update=' ~ post.id }} class="text-success font-weight-bold">Modifier</a></div>
+                        <div class="col-lg-6 "><a href={{'index.php?admin=post&delete=' ~ post.id }} class="text-danger font-weight-bold">Supprimer</a></div>
                     </div> 
                 </div>
             </div>

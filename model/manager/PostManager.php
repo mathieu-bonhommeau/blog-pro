@@ -106,20 +106,22 @@ class PostManager extends Manager
      * 
      * @return int Number of affected lines
      */
-    public function updatePost($id, $title, $chapo, $content, $picture)
+    public function updatePost(Post $post)
     {
         $req = $this->db()->prepare(
             'UPDATE post SET title = :title, chapo = :chapo, 
-            content = :content, lastDateModif = NOW(), picture = :picture 
+            content = :content, lastDateModif = NOW(), picture = :picture,
+            published = :published 
             WHERE id = :id'
         );
         $req->execute(
             array(
-                'title' => $title,
-                'chapo' => $chapo,
-                'content' => $content,
-                'picture' => $picture,
-                'id' => $id
+                'title' => $post ->title(),
+                'chapo' => $post->chapo(),
+                'content' => $post->content(),
+                'picture' => $post->picture(),
+                'published' => $post->published(),
+                'id' => $post ->id()
             )
         );
         return $req->rowCount();

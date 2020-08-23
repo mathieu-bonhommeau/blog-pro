@@ -1,12 +1,11 @@
 {% extends "backView/templateBack.twig" %}
 
-
 {% block content %}
 
-<section class="projects-section bg-light" id="addPost">
+<section class="projects-section bg-light" id="updatePost">
     <div class="container">
         <div class="row">
-            <h2 class="col-lg-6 font-weight-bold align-self-center">Ajouter un article</h2>
+            <h2 class="col-lg-6 font-weight-bold align-self-center">Modifier un article</h2>
         </div>
         <hr class="d-none d-lg-block  mb-5" />
         <div class="row">
@@ -14,20 +13,20 @@
                 <form class="form-group" method="post" action="" enctype="multipart/form-data">
 
                     <label for="titlePost" class="font-weight-bold">Titre :</label>
-                    <input type="text" name="titlePost" id="titlePost" class="form-control mb-3" value={{ '"' }}{{ postPreview.title }}{{ '"' }} required />
+                    <input type="text" name="titlePost" id="titlePost" class="form-control mb-3" value={{ '"' }}{{ post.title }}{{ '"' }} required />
 
                     <label for="chapoPost" class="font-weight-bold">Chapô :</label>
-                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" required >{{ postPreview.chapo }}</textarea>
+                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" required >{{ post.chapo }}</textarea>
 
                     <label for="contentPost" class="font-weight-bold">Contenu :</label>
-                    <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" required >{{ postPreview.content }}</textarea>
+                    <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" required >{{ post.content }}</textarea>
                     
                     <label for="imgPost" class="font-weight-bold">Ajouter une image : </label>
-                    {% if postPreview.picture is null %}
+                    {% if post.picture is null %}
                         <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
                         <input type="file" class="mb-5 text-right" id="imgPost" name="imgPost" />
                     {% else %}
-                        <input type="text" class="mb-5 text-right" id="imgPost" name="imgPost" value={{ postPreview.picture }} disabled="disabled"/>
+                        <input type="text" class="mb-5 text-right" id="imgPost" name="imgPost" value={{ post.picture }} disabled="disabled"/>
                     {% endif %}
                     <div class="form-row mb-3">
                         <div class="col-md-6">
@@ -48,7 +47,7 @@
                             </div>
                         </div> 
                         <div class="col-md-6 text-right">
-                            <button type="submit" name="addPost" class="btn btn-secondary">
+                            <button type="submit" name="updatePost" class="btn btn-secondary">
                                 Publier l'article
                             </button>
                         </div>

@@ -22,6 +22,8 @@ define('NO_ACCESS', 'Vous n\'avez pas accès à cette page !');
 define('POST_NO_OK', 'L\'article n\' a pas pu être ajouté !');
 define('UPLOAD_NO_OK', 'L\'upload du fichier n\'a pas fonctionné');
 define('MSG_SAVE', 'Votre article est bien enregistré mais non publié');
+define('POST_NO_EXIST', 'Cet article n\existe pas');
+define('POST_NO_SUP', 'L\'article n\' a pas pu être supprimé !');
 
 //Uplaod authorized extensions
 

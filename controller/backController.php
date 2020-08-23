@@ -105,7 +105,7 @@ class BackController extends Controller
         $_SESSION['previewPost'] = $newPost;
     }
 
-    public function dataAddPost()
+    public function dataInputPost()
     {
         if (!empty($_POST['titlePost'])
             && !empty($_POST['chapoPost'])
@@ -131,6 +131,102 @@ class BackController extends Controller
         } else {
             $_SESSION['addPostMsg'] = EMPTY_FIELDS;
             header('Location: index.php?admin=addpost');
+        }
+    }
+
+    public function publishedPost($id) 
+    {
+        $postManager = new \model\PostManager;
+        $data = $postManager -> getPost($id);
+
+        if ($data) {
+            $post = new \model\Post($data);
+            $post -> setPublished('TRUE');
+            
+            $affectedLine = $postManager -> updatePost($post);
+            if ($affectedLine == 1) {
+                header('Location: index.php?admin=post');
+
+            } else {
+                throw new \Exception(POST_NO_OK);
+            }
+            
+        } else {
+            throw new \Exception(POST_NO_EXIST);
+        }
+    }
+
+    public function updatePost($id)
+    {
+        $postManager = new \model\PostManager;
+        $data = $postManager -> getPost($id);
+
+        if ($data) {
+            $post = new \model\Post($data);
+            $_SESSION['updatePost'] = $post;
+           
+            $this->twigInit();
+            $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+
+            echo $this->twig->render(
+                'backView/updatePostView.twig', array(
+                'user' => $this->user,
+                'post' => $post  
+                )
+            );
+
+        } else {
+            throw new \Exception(POST_NO_EXIST); 
+        }
+    }
+
+    public function deleteView($id)
+    {
+        $postManager = new \model\PostManager;
+        $dataPost = $postManager -> getPost($id);
+
+        if ($dataPost == false) {
+            throw new \Exception(PAGE_NOT_EXIST);
+
+        } else {
+            $post = new \model\Post($dataPost);
+
+            $commentManager = new \model\CommentManager;
+            $dataComment = $commentManager -> getComments($id);
+            $nbrComments = $commentManager -> nbrComments($id);
+
+            $this->twigInit();
+            $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+            $this->twig->addExtension(new Twig_Extensions_Extension_Text());
+
+            echo $this->twig->render(
+                'backView/deleteView.twig', array(
+                    'post' => $post,
+                    'comments' => $dataComment,
+                    'nbrComments' => $nbrComments['COUNT(*)'],
+                    'user' => $this->user
+                )
+            );
+        }      
+    }
+
+    public function deletePost($id)
+    {
+        $postManager = new \model\PostManager;
+        $data = $postManager -> getPost($id);
+        $post = new \model\Post($data);
+
+        $commentManager = new \model\CommentManager;
+        $commentManager->deletePostComments($id);
+        
+        $affectedLines = $postManager->deletePost($id);
+
+        if ($affectedLines == 1) {
+            unlink(POST_IMG_DIRECTORY . $post->picture());
+            header('Location: index.php?admin=post');
+
+        } else {
+            throw new \Exception(POST_NO_SUP);
         }
     }
 
