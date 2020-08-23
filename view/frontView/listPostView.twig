@@ -6,20 +6,22 @@
 
         <!-- Featured Project Row-->
         {% for post in posts %}
-            <div class="row align-items-center no-gutters mb-4 mb-lg-5 post">
-                <div class="col-xl-8 col-lg-7 reverse"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
-                <div class="col-xl-4 col-lg-5">
-                    <div class="featured-text text-center text-lg-left">
-                        <h4>{{ post.title }}</h4>
-                        <div class="row justify-content-center no-gutters">
-                            <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
-                            <div class="col-lg-6"><p class="text-right text-black-50">{{ post.authorName }}</p></div>
+            {% if post.published == 'TRUE' %}
+                <div class="row align-items-center no-gutters mb-4 mb-lg-5 post">
+                    <div class="col-xl-8 col-lg-7 reverse"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="featured-text text-center text-lg-left">
+                            <h4>{{ post.title }}</h4>
+                            <div class="row justify-content-center no-gutters">
+                                <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
+                                <div class="col-lg-6"><p class="text-right text-black-50">{{ post.authorName }}</p></div>
+                            </div>
+                            <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true) }}</p>
+                            <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
                         </div>
-                        <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true) }}</p>
-                        <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         {% endfor %}
 
     </div>

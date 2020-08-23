@@ -186,61 +186,22 @@ class Router
 
                 } elseif (isset($_POST['addPost'])) {
 
-                    if (!empty($_POST['titlePost'])
-                        && !empty($_POST['chapoPost'])
-                        && !empty($_POST['contentPost'])
-                    ) {
-                        if (empty($_FILES['imgPost']['name'])) {
-                            $path = null;
+                    $form = $backController -> dataAddPost();
+                    $form['published'] = 'TRUE';
 
-                        } else {
-
-                            $path =  $backController -> uploadFile($_FILES['imgPost']);
-                        }
-
-                        $form = array(
-                            'title' => $_POST['titlePost'],
-                            'chapo' => $_POST['chapoPost'],
-                            'content' => $_POST['contentPost'],
-                            'picture' => $path
-                        );
-                        
-                        $backController -> addPost($form);
-
-                    } else {
-                        $_SESSION['addPostMsg'] = EMPTY_FIELDS;
-                        header('Location: index.php?admin=addpost');
-
-                    }
+                    $backController -> addPost($form);
                 
                 } elseif (isset($_POST['preview'])) {
+   
+                    $form = $backController -> dataAddPost();
+                    $backController -> previewPost($form);
 
-                    if (!empty($_POST['titlePost'])
-                        && !empty($_POST['chapoPost'])
-                        && !empty($_POST['contentPost'])
-                    ) {
-                        if (empty($_FILES['imgPost']['name'])) {
-                            $path = null;
+                } elseif (isset($_POST['notPublished'])) {  
 
-                        } else {
-
-                            $path =  $backController -> uploadFile($_FILES['imgPost']);
-                        }
-
-                        $form = array(
-                            'title' => $_POST['titlePost'],
-                            'chapo' => $_POST['chapoPost'],
-                            'content' => $_POST['contentPost'],
-                            'picture' => $path
-                        );
-                        
-                        $backController -> previewPost($form);
-
-                    } else {
-                        $_SESSION['addPostMsg'] = EMPTY_FIELDS;
-                        header('Location: index.php?admin=addpost');
-
-                    }
+                    $form = $backController -> dataAddPost();
+                    $form['published'] = 'FALSE';
+                    
+                    $backController -> addPost($form);
                     
                 } else {
                     if (isset($_SESSION['addPostMsg'])) {

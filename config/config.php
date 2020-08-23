@@ -21,6 +21,7 @@ define('USER_NO_OK', 'L\'identifiant ou le mot de passe est incorrect');
 define('NO_ACCESS', 'Vous n\'avez pas accès à cette page !');
 define('POST_NO_OK', 'L\'article n\' a pas pu être ajouté !');
 define('UPLOAD_NO_OK', 'L\'upload du fichier n\'a pas fonctionné');
+define('MSG_SAVE', 'Votre article est bien enregistré mais non publié');
 
 //Uplaod authorized extensions
 

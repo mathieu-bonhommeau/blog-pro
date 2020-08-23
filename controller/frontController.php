@@ -19,7 +19,7 @@ class FrontController extends Controller
     public function homePage($msg=null)
     {
         $postManager = new \model\PostManager;
-        $posts = $postManager -> getPosts(3);
+        $posts = $postManager -> getHomePosts(3);
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -37,8 +37,7 @@ class FrontController extends Controller
     public function listPostsView()
     {
         $postManager = new \model\PostManager;
-        $nbrPosts = $postManager -> countPosts();
-        $posts = $postManager -> getPosts($nbrPosts);
+        $posts = $postManager -> getPosts();
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -57,25 +56,35 @@ class FrontController extends Controller
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
 
-        $post = new \model\Post($dataPost);
+        if ($dataPost == false) {
+            throw new \Exception(PAGE_NOT_EXIST);
 
-        $commentManager = new \model\CommentManager;
-        $dataComment = $commentManager -> getComments($id);
-        $nbrComments = $commentManager -> nbrComments($id);
+        } else {
+            $post = new \model\Post($dataPost);
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        $this->twig->addExtension(new Twig_Extensions_Extension_Text());
+            if ($post->published() == 'FALSE') {
+                throw new \Exception(PAGE_NOT_EXIST);
 
-        echo $this->twig->render(
-            'frontView/postView.twig', array(
-                'post' => $post,
-                'comments' => $dataComment,
-                'nbrComments' => $nbrComments['COUNT(*)'],
-                'commentMsg' => $msg,
-                'user' => $this->user
-            )
-        );
+            } else {
+                $commentManager = new \model\CommentManager;
+                $dataComment = $commentManager -> getComments($id);
+                $nbrComments = $commentManager -> nbrComments($id);
+
+                $this->twigInit();
+                $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+                $this->twig->addExtension(new Twig_Extensions_Extension_Text());
+
+                echo $this->twig->render(
+                    'frontView/postView.twig', array(
+                        'post' => $post,
+                        'comments' => $dataComment,
+                        'nbrComments' => $nbrComments['COUNT(*)'],
+                        'commentMsg' => $msg,
+                        'user' => $this->user
+                    )
+                );
+            }
+        }      
     }
 
     public function sendMessage(array $form)

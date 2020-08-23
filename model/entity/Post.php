@@ -14,6 +14,7 @@ class Post
     private $_content;
     private $_lastDateModif;
     private $_picture;
+    private $_published;
     private $_authorName;
         
     /**
@@ -100,6 +101,11 @@ class Post
     {
         return $this->_picture;
     }
+
+    public function published() 
+    {
+        return $this->_published;
+    }
     
     /**
      * Getter $_userName / Author of post
@@ -182,6 +188,15 @@ class Post
     { 
         $picture = (string)$picture;
         $this->_picture = $picture;
+    }
+
+    public function setPublished($published)
+    {
+        if (in_array($published, ['TRUE', 'FALSE'])) {    
+            $this->_published = $published;
+        } else {
+            $this->_published = 'FALSE';
+        }
     }
 
     public function setAuthorName($authorName)

@@ -10,7 +10,7 @@ class BackController extends Controller
     {
         $postManager = new \model\PostManager;
         $nbrPosts = $postManager -> countPosts();
-        $lastPost = $postManager -> getPosts(1);
+        $lastDatePost = $postManager -> lastDatePost();
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -19,7 +19,7 @@ class BackController extends Controller
             'backView/backHomeView.twig', array(
                 'user' => $this->user,
                 'nbrPosts' => $nbrPosts,
-                'lastPost' => $lastPost
+                'lastDatePost' => $lastDatePost
             )
         );
     }
@@ -27,8 +27,7 @@ class BackController extends Controller
     public function backListPosts()
     {
         $postManager = new \model\PostManager;
-        $nbrPosts = $postManager -> countPosts();
-        $posts = $postManager -> getPosts($nbrPosts);
+        $posts = $postManager -> getPosts();
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -42,8 +41,11 @@ class BackController extends Controller
         );
     }
 
-    public function addPost(array $form=null, $msg=null, \model\Post $postPreview=null)
-    {
+    public function addPost(
+        array $form=null, 
+        $msg=null, 
+        \model\Post $postPreview=null
+    ) {
         if ($form != null) {
 
             $newPost = new \model\Post($form);
@@ -53,8 +55,15 @@ class BackController extends Controller
             if ($result[0] == 1) {
                 $data = $postManager -> getPost($result[1]);
                 $newPost = new \model\Post($data);
-                header('Location: index.php?p=post&id=' . $newPost->id());
-                exit();
+
+                if ($newPost->published() == 'TRUE') {
+                    header('Location: index.php?p=post&id=' . $newPost->id());
+                    exit();
+                } else {
+                    $_SESSION['addPostMsg'] = MSG_SAVE;
+                    header('Location: index.php?admin=addpost');
+                    exit();
+                }
 
             } else {
                 $_SESSION['addPostMsg'] = POST_NO_OK;
@@ -96,13 +105,43 @@ class BackController extends Controller
         $_SESSION['previewPost'] = $newPost;
     }
 
+    public function dataAddPost()
+    {
+        if (!empty($_POST['titlePost'])
+            && !empty($_POST['chapoPost'])
+            && !empty($_POST['contentPost'])
+        ) {
+            if (empty($_FILES['imgPost']['name'])) {
+                $path = null;
+
+            } else {
+
+                $path =  $this -> uploadFile($_FILES['imgPost']);
+            }
+
+            $form = array(
+                'title' => $_POST['titlePost'],
+                'chapo' => $_POST['chapoPost'],
+                'content' => $_POST['contentPost'],
+                'picture' => $path
+            );
+
+            return $form;
+
+        } else {
+            $_SESSION['addPostMsg'] = EMPTY_FIELDS;
+            header('Location: index.php?admin=addpost');
+        }
+    }
+
     public function uploadFile($imgPost)
     {
         if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000 ) {
             $fileInfo = pathinfo($imgPost['name']);
 
             if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
-                if (isset($_POST['addPost'])) {
+
+                if (isset($_POST['addPost']) || isset($_POST['notPublished'])) {
 
                     $new = move_uploaded_file(
                         $imgPost['tmp_name'], 
