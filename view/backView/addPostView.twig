@@ -6,7 +6,11 @@
 <section class="projects-section bg-light" id="addPost">
     <div class="container">
         <div class="row">
-            <h2 class="col-lg-6 font-weight-bold align-self-center">Ajouter un article</h2>
+            {% if postPreview.id == null %}
+                <h2 class="col-lg-6 font-weight-bold align-self-center">Ajouter un article</h2>
+            {% else %}
+                <h2 class="col-lg-6 font-weight-bold align-self-center">Modifier l'article</h2>
+            {% endif %}
         </div>
         <hr class="d-none d-lg-block  mb-5" />
         <div class="row">
@@ -27,7 +31,10 @@
                         <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
                         <input type="file" class="mb-5 text-right" id="imgPost" name="imgPost" />
                     {% else %}
-                        <input type="text" class="mb-5 text-right" id="imgPost" name="imgPost" value={{ postPreview.picture }} disabled="disabled"/>
+                        <div>
+                            <input type="text" class="mb-5 text-right" id="imgPost" name="imgPost" value={{ postPreview.picture }} disabled="disabled"/>
+                            <button type="submit" class="btn btn-img btn-outline-secondary" name="imgChange">Changer l'image</button>
+                        </div>
                     {% endif %}
                     <div class="form-row mb-3">
                         <div class="col-md-6">

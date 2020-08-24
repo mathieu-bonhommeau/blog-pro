@@ -186,8 +186,12 @@ class Post
 
     public function setPicture($picture)
     { 
-        $picture = (string)$picture;
-        $this->_picture = $picture;
+        if ($picture == null ) {
+            $this->_picture = null;
+        } else {
+            $picture = (string)$picture;
+            $this->_picture = $picture;
+        }
     }
 
     public function setPublished($published)

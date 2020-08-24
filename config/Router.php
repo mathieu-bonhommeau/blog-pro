@@ -166,60 +166,49 @@ class Router
             $backController = new \controller\backController;
 
             if ($get == 'backhome') {
+
+                $backController -> deleteSession('previewPost');
+                
                 $backController -> backHomePage();
 
             } elseif ($get == 'post') {
 
-                if (isset($_GET['published'])) {
-                    $backController -> publishedPost($_GET['published']);
+                $backController -> deleteSession('previewPost');
 
-                } elseif (isset($_GET['update'])) {
-                    $form = $backController -> updatePost($_GET['update']);
-                    
-                    
+                if (isset($_GET['published'])) {
+                    $backController -> publishedPost($_GET['published']);    
 
                 } elseif (isset($_GET['delete'])) {
-                    
                     if (isset($_POST['validDelete'])) {
-    
                         $backController -> deletePost($_GET['delete']);
 
                     } elseif (isset($_POST['cancelDelete'])) {
                         header('Location: index.php?admin=post');
 
                     } else {
-                        $backController -> deleteView($_GET['delete']);
-                        
+                        $backController -> deleteView($_GET['delete']);   
                     }
 
                 } else { 
-                    $backController -> backListPosts();
-                    
+                    $backController -> backListPosts();   
                 }
  
             } elseif ($get == 'addpost') {
 
-                if (isset($_SESSION['previewPost'])) {
-
-                    $previewPost = $_SESSION['previewPost'];
-
-                    if (!empty($previewPost->picture())) {
-                        unlink($previewPost->picture());
-                    }
-                    unset($_SESSION['previewPost']);
-
-                    $backController -> addPost($form=null, $msg=null, $previewPost);
-
-                } elseif (isset($_POST['addPost'])) {
+                if (isset($_POST['addPost'])) {
 
                     $form = $backController -> dataInputPost();
                     $form['published'] = 'TRUE';
 
                     $backController -> addPost($form);
-                
+
                 } elseif (isset($_POST['preview'])) {
-   
-                    $form = $backController -> dataInputPost();
+                    if (isset($_GET['id'])) {
+                        $form = $backController -> dataInputPost($_GET['id']);
+                    
+                    } else {
+                        $form = $backController -> dataInputPost();
+                    }
                     $backController -> previewPost($form);
 
                 } elseif (isset($_POST['notPublished'])) {  
@@ -229,16 +218,29 @@ class Router
                     
                     $backController -> addPost($form);
 
+                } elseif (isset($_POST['imgChange'])) {
+                    
+                    $backController -> imgChange();
+
+                } elseif (isset($_SESSION['previewPost'])) {
+
+                    $previewPost = $_SESSION['previewPost'];
+                    $backController -> addPost($form=null, $msg=null, $previewPost);
+                
+                } elseif (isset($_GET['id'])) {
+
+                    $updatePost = $backController -> updatePost($_GET['id']);
+                    $_SESSION['previewPost'] = $updatePost;
+                    $backController -> addPost($form=null, $msg=null, $updatePost);
+
                 } else {
                     if (isset($_SESSION['addPostMsg'])) {
-                        
                         $backController -> addPost(null, $_SESSION['addPostMsg']);
                         unset($_SESSION['addPostMsg']);
 
                     } else {
                         $backController -> addPost();
-                    }
-                    
+                    } 
                 }
 
             } else {

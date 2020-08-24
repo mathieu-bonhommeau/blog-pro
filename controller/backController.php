@@ -45,22 +45,28 @@ class BackController extends Controller
         array $form=null, 
         $msg=null, 
         \model\Post $postPreview=null
-    ) {
+    ) { 
+
         if ($form != null) {
 
             $newPost = new \model\Post($form);
             $postManager = new \model\PostManager;
             $result = $postManager -> addPost($newPost);
-
+            
             if ($result[0] == 1) {
                 $data = $postManager -> getPost($result[1]);
                 $newPost = new \model\Post($data);
-
+                
                 if ($newPost->published() == 'TRUE') {
+                    $this -> deleteSession('previewPost');
                     header('Location: index.php?p=post&id=' . $newPost->id());
                     exit();
+
                 } else {
                     $_SESSION['addPostMsg'] = MSG_SAVE;
+
+                    $this -> deleteSession('previewPost');
+
                     header('Location: index.php?admin=addpost');
                     exit();
                 }
@@ -71,7 +77,6 @@ class BackController extends Controller
                 exit();
             }
         }
-
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
 
@@ -79,8 +84,7 @@ class BackController extends Controller
             'backView/addPostView.twig', array(
                 'user' => $this->user,
                 'msg' => $msg,
-                'postPreview' => $postPreview
-                
+                'postPreview' => $postPreview  
             )
         );
     }
@@ -97,35 +101,36 @@ class BackController extends Controller
         echo $this->twig->render(
             'backView\postPreview.twig', array(
                 'user' => $this->user,
-                'newPost' => $newPost
-                
+                'newPost' => $newPost    
             )
         );
-
         $_SESSION['previewPost'] = $newPost;
     }
 
-    public function dataInputPost()
+    public function dataInputPost($id=null)
     {
         if (!empty($_POST['titlePost'])
             && !empty($_POST['chapoPost'])
             && !empty($_POST['contentPost'])
         ) {
             if (empty($_FILES['imgPost']['name'])) {
-                $path = null;
+                if (isset($_SESSION['previewPost'])) {
+                    $path = $_SESSION['previewPost']->picture();
+
+                } else {
+                    $path = null;    
+                }
 
             } else {
-
-                $path =  $this -> uploadFile($_FILES['imgPost']);
+                $path =  $this -> uploadFile($_FILES['imgPost']);  
             }
-
             $form = array(
+                'id' => $id,
                 'title' => $_POST['titlePost'],
                 'chapo' => $_POST['chapoPost'],
                 'content' => $_POST['contentPost'],
                 'picture' => $path
             );
-
             return $form;
 
         } else {
@@ -150,7 +155,6 @@ class BackController extends Controller
             } else {
                 throw new \Exception(POST_NO_OK);
             }
-            
         } else {
             throw new \Exception(POST_NO_EXIST);
         }
@@ -160,9 +164,17 @@ class BackController extends Controller
     {
         $postManager = new \model\PostManager;
         $data = $postManager -> getPost($id);
-
+        
         if ($data) {
-            return $data;
+            $post = new \model\Post($data);
+
+            if ($post->picture() != null) {
+                $_SESSION['oldImg'] = $post->picture();
+                
+                copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . $post->picture());
+                $post->setPicture('tmp/' . $post->picture());
+            }
+            return $post;
 
         } else {
             throw new \Exception(POST_NO_EXIST); 
@@ -253,6 +265,26 @@ class BackController extends Controller
 
         } else {
             throw new \Exception(UPLOAD_NO_OK);
+        }
+    }
+
+    public function imgChange()
+    {
+        if (isset($_SESSION['previewPost'])) {
+            unlink($_SESSION['previewPost'] -> picture());
+            $_SESSION['previewPost']->setPicture(null);
+            $this -> addPost($form=null, $msg=null, $_SESSION['previewPost']);
+        }  
+    }
+
+    public function deleteSession($name) 
+    {
+        if (isset($_SESSION[$name])) {
+            if (file_exists($_SESSION[$name] -> picture())) {
+                unlink($_SESSION[$name] -> picture());
+            }
+            
+            unset($_SESSION[$name]);
         }
     }
 }
