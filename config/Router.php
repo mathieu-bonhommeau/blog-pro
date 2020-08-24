@@ -174,23 +174,8 @@ class Router
                     $backController -> publishedPost($_GET['published']);
 
                 } elseif (isset($_GET['update'])) {
-
-                    if (isset($_POST['updatePost'])) {
-                        $form = $backController -> dataInputPost();
-                        $backController -> updatePost($form);
-
-                        
-                    } else {
-
-                        if (isset($_SESSION['updatePostMsg'])) {
-                        
-                            $backController -> updatePostView(null, $_SESSION['updatePostMsg']);
-                            unset($_SESSION['updatePostMsg']);
-
-                            $backController -> updatePostView($_GET['update']);
-                    }
+                    $form = $backController -> updatePost($_GET['update']);
                     
-
                     
 
                 } elseif (isset($_GET['delete'])) {

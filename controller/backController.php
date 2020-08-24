@@ -162,18 +162,7 @@ class BackController extends Controller
         $data = $postManager -> getPost($id);
 
         if ($data) {
-            $post = new \model\Post($data);
-            $_SESSION['updatePost'] = $post;
-           
-            $this->twigInit();
-            $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-            echo $this->twig->render(
-                'backView/updatePostView.twig', array(
-                'user' => $this->user,
-                'post' => $post  
-                )
-            );
+            return $data;
 
         } else {
             throw new \Exception(POST_NO_EXIST); 
