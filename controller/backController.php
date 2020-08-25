@@ -50,6 +50,7 @@ class BackController extends Controller
         if ($form != null) {
 
             $newPost = new \model\Post($form);
+            
             $postManager = new \model\PostManager;
             $result = $postManager -> addPost($newPost);
             
@@ -58,15 +59,14 @@ class BackController extends Controller
                 $newPost = new \model\Post($data);
                 
                 if ($newPost->published() == 'TRUE') {
+                    
                     $this -> deleteSession('previewPost');
                     header('Location: index.php?p=post&id=' . $newPost->id());
                     exit();
 
                 } else {
                     $_SESSION['addPostMsg'] = MSG_SAVE;
-
                     $this -> deleteSession('previewPost');
-
                     header('Location: index.php?admin=addpost');
                     exit();
                 }
@@ -116,11 +116,10 @@ class BackController extends Controller
             if (empty($_FILES['imgPost']['name'])) {
                 if (isset($_SESSION['previewPost'])) {
                     $path = $_SESSION['previewPost']->picture();
-
+                    
                 } else {
                     $path = null;    
                 }
-
             } else {
                 $path =  $this -> uploadFile($_FILES['imgPost']);  
             }
@@ -231,8 +230,8 @@ class BackController extends Controller
         }
     }
 
-    public function uploadFile($imgPost)
-    {
+    public function uploadFile($imgPost=null)
+    {  
         if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000 ) {
             $fileInfo = pathinfo($imgPost['name']);
 
@@ -257,12 +256,9 @@ class BackController extends Controller
                     );
                     return 'tmp/' . basename($imgPost['name']);
                 }
-                
-
             } else {
                 throw new \Exception(UPLOAD_NO_OK);
             }
-
         } else {
             throw new \Exception(UPLOAD_NO_OK);
         }

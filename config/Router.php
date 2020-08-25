@@ -200,6 +200,14 @@ class Router
                     $form = $backController -> dataInputPost();
                     $form['published'] = 'TRUE';
 
+                    if (isset($_SESSION['previewPost'])) {
+                        $fileInfo = pathinfo(basename($_SESSION['previewPost']->picture()));
+                        copy($_SESSION['previewPost']->picture(), POST_IMG_DIRECTORY . basename($_SESSION['previewPost']->picture()));
+                        $newName = POST_IMG_DIRECTORY . (string)time() . '.' .$fileInfo['extension'];
+                        rename(POST_IMG_DIRECTORY . basename($_SESSION['previewPost']->picture()), $newName);
+                        $_SESSION['previewPost'] -> setPicture($newName);
+                    }
+
                     $backController -> addPost($form);
 
                 } elseif (isset($_POST['preview'])) {
