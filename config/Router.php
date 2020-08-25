@@ -166,13 +166,10 @@ class Router
             $backController = new \controller\backController;
 
             if ($get == 'backhome') {
-
                 $backController -> deleteSession('previewPost');
-                
                 $backController -> backHomePage();
 
             } elseif ($get == 'post') {
-
                 $backController -> deleteSession('previewPost');
 
                 if (isset($_GET['published'])) {
@@ -197,57 +194,56 @@ class Router
 
                 if (isset($_POST['addPost'])) {
 
-                    $form = $backController -> dataInputPost();
-                    $form['published'] = 'TRUE';
-
-                    if (isset($_SESSION['previewPost'])) {
-                        $fileInfo = pathinfo(basename($_SESSION['previewPost']->picture()));
-                        copy($_SESSION['previewPost']->picture(), POST_IMG_DIRECTORY . basename($_SESSION['previewPost']->picture()));
-                        $newName = POST_IMG_DIRECTORY . (string)time() . '.' .$fileInfo['extension'];
-                        rename(POST_IMG_DIRECTORY . basename($_SESSION['previewPost']->picture()), $newName);
-                        $_SESSION['previewPost'] -> setPicture($newName);
+                    if (isset($_GET['id'])) {
+                        $form = $backController -> dataInputPost($_GET['id']);
+                    } else {
+                        $form = $backController -> dataInputPost();
                     }
-
-                    $backController -> addPost($form);
+                    $form['published'] = 'TRUE';
+                    $backController -> addPostView($form);
 
                 } elseif (isset($_POST['preview'])) {
                     if (isset($_GET['id'])) {
                         $form = $backController -> dataInputPost($_GET['id']);
-                    
                     } else {
                         $form = $backController -> dataInputPost();
                     }
                     $backController -> previewPost($form);
 
                 } elseif (isset($_POST['notPublished'])) {  
-
-                    $form = $backController -> dataInputPost();
+                    if (isset($_GET['id'])) {
+                        $form = $backController -> dataInputPost($_GET['id']);
+                    } else {
+                        $form = $backController -> dataInputPost();
+                    }
                     $form['published'] = 'FALSE';
-                    
-                    $backController -> addPost($form);
+                    $backController -> addPostView($form);
 
                 } elseif (isset($_POST['imgChange'])) {
-                    
                     $backController -> imgChange();
 
-                } elseif (isset($_SESSION['previewPost'])) {
-
-                    $previewPost = $_SESSION['previewPost'];
-                    $backController -> addPost($form=null, $msg=null, $previewPost);
-                
                 } elseif (isset($_GET['id'])) {
-
-                    $updatePost = $backController -> updatePost($_GET['id']);
-                    $_SESSION['previewPost'] = $updatePost;
-                    $backController -> addPost($form=null, $msg=null, $updatePost);
-
+                    if (isset($_SESSION['previewPost'])) {
+                        $updatePost = $_SESSION['previewPost'];
+                    } else {
+                        $updatePost = $backController -> updatePost($_GET['id']);
+                        $_SESSION['previewPost'] = $updatePost;
+                    }
+                    
+                    $backController -> addPostView($form=null, $msg=null, $updatePost);
+                    
+                } elseif (isset($_SESSION['previewPost'])) {
+                    $previewPost = $_SESSION['previewPost'];
+                    
+                    $backController -> addPostView($form=null, $msg=null, $previewPost);
+                
                 } else {
                     if (isset($_SESSION['addPostMsg'])) {
-                        $backController -> addPost(null, $_SESSION['addPostMsg']);
+                        $backController -> addPostView(null, $_SESSION['addPostMsg']);
                         unset($_SESSION['addPostMsg']);
 
                     } else {
-                        $backController -> addPost();
+                        $backController -> addPostView();
                     } 
                 }
 

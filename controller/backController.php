@@ -41,45 +41,28 @@ class BackController extends Controller
         );
     }
 
-    public function addPost(
+    public function addPostView(
         array $form=null, 
         $msg=null, 
         \model\Post $postPreview=null
     ) { 
-
         if ($form != null) {
-
+            
             $newPost = new \model\Post($form);
-            
             $postManager = new \model\PostManager;
-            $result = $postManager -> addPost($newPost);
             
-            if ($result[0] == 1) {
-                $data = $postManager -> getPost($result[1]);
-                $newPost = new \model\Post($data);
-                
-                if ($newPost->published() == 'TRUE') {
-                    
-                    $this -> deleteSession('previewPost');
-                    header('Location: index.php?p=post&id=' . $newPost->id());
-                    exit();
-
-                } else {
-                    $_SESSION['addPostMsg'] = MSG_SAVE;
-                    $this -> deleteSession('previewPost');
-                    header('Location: index.php?admin=addpost');
-                    exit();
-                }
+            if ($newPost->id() == null) {
+                $result[] = $postManager -> addPost($newPost);
+                $this -> resultPost($result[0], $result[1]);
 
             } else {
-                $_SESSION['addPostMsg'] = POST_NO_OK;
-                header('Location: index.php?admin=addpost');
-                exit();
+                $result = $postManager -> updatePost($newPost);
+                $this -> resultPost($result, $newPost->id());
+
             }
         }
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
         echo $this->twig->render(
             'backView/addPostView.twig', array(
                 'user' => $this->user,
@@ -87,6 +70,35 @@ class BackController extends Controller
                 'postPreview' => $postPreview  
             )
         );
+    }
+
+    public function resultPost($affectedLines, $id) 
+    {
+        $postManager = new \model\PostManager;
+
+        if ($affectedLines == 1) {
+            $data = $postManager -> getPost($id);
+            $newPost = new \model\Post($data);
+            
+            if ($newPost->published() == 'TRUE') {
+        
+                $this -> deleteSession('previewPost');
+                header('Location: index.php?p=post&id=' . $newPost->id());
+                exit();
+
+            } else {
+                
+                $_SESSION['addPostMsg'] = MSG_SAVE;
+                $this -> deleteSession('previewPost');
+                header('Location: index.php?admin=addpost');
+                exit();
+            }
+
+        } else {
+            $_SESSION['addPostMsg'] = POST_NO_OK;
+            header('Location: index.php?admin=addpost');
+            exit();
+        }
     }
 
     public function previewPost(array $form)
@@ -109,12 +121,33 @@ class BackController extends Controller
 
     public function dataInputPost($id=null)
     {
+        
+        if (isset($_SESSION['previewPost'])) {
+            $_POST['titlePost'] = $_SESSION['previewPost']->title();
+            $_POST['chapoPost'] = $_SESSION['previewPost']->chapo();
+            $_POST['contentPost'] = $_SESSION['previewPost']->content();
+            
+        }
+        
         if (!empty($_POST['titlePost'])
             && !empty($_POST['chapoPost'])
             && !empty($_POST['contentPost'])
         ) {
+            
             if (empty($_FILES['imgPost']['name'])) {
+                
                 if (isset($_SESSION['previewPost'])) {
+                    $path = basename($_SESSION['previewPost']->picture());
+                    
+                    if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
+                        
+                        $fileInfo = pathinfo($path);
+                        $newName = (string)time() . '.' .$fileInfo['extension'];
+                        
+                        rename('tmp/'. $path, POST_IMG_DIRECTORY . $newName);
+                    
+                        $_SESSION['previewPost'] -> setPicture(POST_IMG_DIRECTORY . $newName);
+                    }
                     $path = $_SESSION['previewPost']->picture();
                     
                 } else {
@@ -128,10 +161,12 @@ class BackController extends Controller
                 'title' => $_POST['titlePost'],
                 'chapo' => $_POST['chapoPost'],
                 'content' => $_POST['contentPost'],
-                'picture' => $path
+                'picture' => $path,
+                'published' => 'FALSE'
+                
             );
             return $form;
-
+            
         } else {
             $_SESSION['addPostMsg'] = EMPTY_FIELDS;
             header('Location: index.php?admin=addpost');
@@ -168,10 +203,9 @@ class BackController extends Controller
             $post = new \model\Post($data);
 
             if ($post->picture() != null) {
-                $_SESSION['oldImg'] = $post->picture();
                 
-                copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . $post->picture());
-                $post->setPicture('tmp/' . $post->picture());
+                copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
+                $post->setPicture('tmp/' . 'tmp' . $post->picture());
             }
             return $post;
 
@@ -222,7 +256,7 @@ class BackController extends Controller
         $affectedLines = $postManager->deletePost($id);
 
         if ($affectedLines == 1) {
-            unlink(POST_IMG_DIRECTORY . $post->picture());
+            unlink(POST_IMG_DIRECTORY . basename($post->picture()));
             header('Location: index.php?admin=post');
 
         } else {
@@ -234,22 +268,17 @@ class BackController extends Controller
     {  
         if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000 ) {
             $fileInfo = pathinfo($imgPost['name']);
-
             if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
 
                 if (isset($_POST['addPost']) || isset($_POST['notPublished'])) {
-
                     $new = move_uploaded_file(
                         $imgPost['tmp_name'], 
                         POST_IMG_DIRECTORY . basename($imgPost['name'])
                     );
-
                     rename(POST_IMG_DIRECTORY . basename($imgPost['name']), POST_IMG_DIRECTORY . (string)time() . '.' .$fileInfo['extension']);
-
                     return POST_IMG_DIRECTORY . (string)time() . '.' . $fileInfo['extension'];
 
                 } elseif (isset($_POST['preview'])) {
-
                     $new = move_uploaded_file(
                         $imgPost['tmp_name'], 
                         'tmp/' . basename($imgPost['name'])
@@ -269,7 +298,7 @@ class BackController extends Controller
         if (isset($_SESSION['previewPost'])) {
             unlink($_SESSION['previewPost'] -> picture());
             $_SESSION['previewPost']->setPicture(null);
-            $this -> addPost($form=null, $msg=null, $_SESSION['previewPost']);
+            $this -> addPostView($form=null, $msg=null, $_SESSION['previewPost']);
         }  
     }
 
@@ -277,9 +306,12 @@ class BackController extends Controller
     {
         if (isset($_SESSION[$name])) {
             if (file_exists($_SESSION[$name] -> picture())) {
-                unlink($_SESSION[$name] -> picture());
+                $postManager = new \model\PostManager;
+                $result = $postManager -> getPostImg(basename($_SESSION[$name] -> picture()));
+                if ($result == 0) {
+                    unlink($_SESSION[$name] -> picture());
+                } 
             }
-            
             unset($_SESSION[$name]);
         }
     }

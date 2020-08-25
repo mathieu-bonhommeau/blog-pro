@@ -21,10 +21,10 @@
                     <input type="text" name="titlePost" id="titlePost" class="form-control mb-3" value={{ '"' }}{{ postPreview.title }}{{ '"' }} required />
 
                     <label for="chapoPost" class="font-weight-bold">Chapô :</label>
-                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" required >{{ postPreview.chapo }}</textarea>
+                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" value={{ postPreview.chapo }} required >{{ postPreview.chapo }}</textarea>
 
                     <label for="contentPost" class="font-weight-bold">Contenu :</label>
-                    <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" required >{{ postPreview.content }}</textarea>
+                    <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" value={{ postPreview.content }} required >{{ postPreview.content }}</textarea>
                     
                     <label for="imgPost" class="font-weight-bold">Ajouter une image : </label>
                     {% if postPreview.picture is null %}

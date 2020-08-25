@@ -119,7 +119,7 @@ class PostManager extends Manager
                 'title' => $post ->title(),
                 'chapo' => $post->chapo(),
                 'content' => $post->content(),
-                'picture' => $post->picture(),
+                'picture' => basename($post->picture()),
                 'published' => $post->published(),
                 'id' => $post ->id()
             )
@@ -158,6 +158,14 @@ class PostManager extends Manager
         );
         $lastDateModif = $req->fetch();
         return $lastDateModif['MAX(lastDateModif)'];
+    }
+
+    public function getPostImg($picture)
+    {
+        $req = $this->db()->prepare('SELECT COUNT(*) FROM post WHERE picture = ?');
+        $req -> execute(array($picture));
+        $result = $req -> fetch();
+        return $result['COUNT(*)'];
     }
 
 }
