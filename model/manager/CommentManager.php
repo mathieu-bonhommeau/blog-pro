@@ -42,6 +42,19 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
+    public function getAllComments($validComment)
+    {
+        $req = $this->db()->prepare(
+            'SELECT id, nameVisitor, content, 
+            UNIX_TIMESTAMP(commentDate) AS commentDate,
+            validComment,user_id, post_id
+            FROM comment
+            WHERE  validComment = ?'
+        );
+        $req -> execute(array($validComment));
+        return $req;
+    }
+
     public function getComments($post_id)
     {
         $req = $this->db()->prepare(
@@ -87,13 +100,33 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
-    public function nbrComments($post_id)
+    public function nbrComments($post_id, $validComment)
     {
         $req = $this->db()->prepare(
             'SELECT COUNT(*) FROM comment 
-             WHERE post_id = ? AND validComment = \'TRUE\' '
+             WHERE post_id = ? AND validComment = ? '
         );
-        $req -> execute(array($post_id));
+        $req -> execute(array($post_id, $validComment));
         return $req->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function nbrAllComments($validComment)
+    {
+        $req = $this->db()->prepare(
+            'SELECT COUNT(*) FROM comment 
+             WHERE validComment = ? '
+        );
+        $req -> execute(array($validComment));
+        $nbr = $req->fetch(\PDO::FETCH_ASSOC);
+        return $nbr['COUNT(*)'];
+    }
+
+    public function lastDateComment()
+    {
+        $req = $this->db()->query(
+            'SELECT MAX(commentDate) FROM comment'
+        );
+        $lastDateComment = $req->fetch();
+        return $lastDateComment['MAX(commentDate)'];
     }
 }

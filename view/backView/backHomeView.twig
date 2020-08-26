@@ -8,7 +8,8 @@
         <h2 class="mb-1">Dashboard</h2>
         <hr class="d-none d-lg-block mb-2 ml-0" />
         <h4 class="mb-5">Statut : {{ user.type }}</h4>
-            <div class="row align-items-center no-gutters mb-4 mb-lg-5">
+            <div class="row no-gutters mb-4 mb-lg-5">
+
                 <div class="col-lg-6 mb-5">
                     <h4 class="mb-4">Gestion des articles</h4>
                     <div class="featured-text text-center text-lg-left">
@@ -36,24 +37,39 @@
                             </div>
                         </div>
                         <hr class="d-none d-lg-block mb-0 ml-0 mr-5" />
-                    
-                    </div>
-                    
+                    </div>  
                 </div>
-                <div class="col-lg-6">
+
+                <div class="col-lg-6 mb-5">
+                    <h4 class="mb-4">Gestion des commentaires</h4>
                     <div class="featured-text text-center text-lg-left">
-                        <h4>Gestion des commentaires</h4>
-                        <!--
-                        <div class="row justify-content-center no-gutters">
-                            <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date }}</p></div>
-                            <div class="col-lg-6"><p class="text-right text-black-50">{{ post.authorName }}</p></div>
+                        <div class="row justify-content-between no-gutters">
+                            <div class="col-lg-12">
+                                <p class="text-left text-black-50">
+                                    <a href="index.php?admin=validComment">COMMENTAIRES A VALIDER >>>></a>
+                                </p>
+                            </div>
+                            <div class="col-lg-12">
+                                <p class="text-left text-black-50">
+                                    <a href="index.php?admin=comments">COMMENTAIRES PAR ARTICLE >>>></a>
+                                </p>
+                            </div>
+                            <div class="col-lg-12">
+                                <p class="text-left text-black-50">
+                                    Nombre de commentaires a valider : <span class="badge badge-dark js-scroll-trigger text-right">{{ nbrCommentNoValid }}</span>
+                                </p>
+                            </div>
+                            <div class="col-lg-12">
+                                <p class="text-left text-black-50">
+                                    Dernier commentaire ajouté : le 
+                                    <span class="badge badge-dark js-scroll-trigger">{{ lastDateComment|date("d/m/Y") }}</span>
+                                </p>
+                            </div>
                         </div>
-                    
-                        <p class="text-black-50 text-justify mb-0"></p>
-                        <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
-                        -->
+                        <hr class="d-none d-lg-block mb-0 ml-0 mr-5" />
                     </div>
                 </div>
+
                 <div class="col-lg-6">
                     <div class="featured-text text-center text-lg-left">
                         <h4>Gestion des utilisateurs</h4>

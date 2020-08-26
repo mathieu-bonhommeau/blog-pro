@@ -68,7 +68,7 @@ class FrontController extends Controller
             } else {
                 $commentManager = new \model\CommentManager;
                 $dataComment = $commentManager -> getComments($id);
-                $nbrComments = $commentManager -> nbrComments($id);
+                $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
 
                 $this->twigInit();
                 $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
