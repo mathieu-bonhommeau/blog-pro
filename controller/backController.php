@@ -121,26 +121,27 @@ class BackController extends Controller
 
     public function dataInputPost($id=null)
     {
-        
-        if (isset($_SESSION['previewPost'])) {
-            $_POST['titlePost'] = $_SESSION['previewPost']->title();
-            $_POST['chapoPost'] = $_SESSION['previewPost']->chapo();
-            $_POST['contentPost'] = $_SESSION['previewPost']->content();
-            
+        if (empty($_POST['titlePost'])
+            && empty($_POST['chapoPost'])
+            && empty($_POST['contentPost'])
+        ) {
+            if (isset($_SESSION['previewPost'])) {
+                $_POST['titlePost'] = $_SESSION['previewPost']->title();
+                $_POST['chapoPost'] = $_SESSION['previewPost']->chapo();
+                $_POST['contentPost'] = $_SESSION['previewPost']->content();
+            }
         }
-        
+
         if (!empty($_POST['titlePost'])
             && !empty($_POST['chapoPost'])
             && !empty($_POST['contentPost'])
         ) {
-            
             if (empty($_FILES['imgPost']['name'])) {
                 
                 if (isset($_SESSION['previewPost'])) {
                     $path = basename($_SESSION['previewPost']->picture());
                     
                     if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
-                        
                         $fileInfo = pathinfo($path);
                         $newName = (string)time() . '.' .$fileInfo['extension'];
                         
@@ -266,7 +267,10 @@ class BackController extends Controller
 
     public function uploadFile($imgPost=null)
     {  
-        if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000 ) {
+        if ($imgPost['error'] == 0  
+            && $imgPost['size'] <= 2000000 
+            && preg_match('#[^/\:.]#', $imgPost['name']) /////////////////////////
+        ) {
             $fileInfo = pathinfo($imgPost['name']);
             if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
 
