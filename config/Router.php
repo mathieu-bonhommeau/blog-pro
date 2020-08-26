@@ -198,6 +198,7 @@ class Router
                         $form = $backController -> dataInputPost($_GET['id']);
                     } else {
                         $form = $backController -> dataInputPost();
+                        
                     }
                     $form['published'] = 'TRUE';
                     $backController -> addPostView($form);

@@ -52,7 +52,7 @@ class BackController extends Controller
             $postManager = new \model\PostManager;
             
             if ($newPost->id() == null) {
-                $result[] = $postManager -> addPost($newPost);
+                $result = $postManager -> addPost($newPost);
                 $this -> resultPost($result[0], $result[1]);
 
             } else {
