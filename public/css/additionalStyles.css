@@ -61,7 +61,10 @@
     text-transform: none;
   }
 
+  #imgPost {
+    color: grey;
+  }
 
-#imgPost {
-  color: grey;
-}
+  .text-size-sm {
+    font-size: 0.85em;
+  }

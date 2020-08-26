@@ -163,6 +163,7 @@ class Router
         if (isset($_SESSION['user'])) {
             $backController = new \controller\backController;
             $backPostController = new \controller\backPostController;
+            $backCommentController = new \controller\BackCommentController;
 
             if ($get == 'backhome') {
                 $backPostController -> deleteSession('previewPost');
@@ -184,11 +185,10 @@ class Router
                     } else {
                         $backPostController -> deleteView($_GET['delete']);   
                     }
-
                 } else { 
                     $backPostController -> backListPosts();   
                 }
- 
+
             } elseif ($get == 'addpost') {
 
                 if (isset($_POST['addPost'])) {
@@ -248,7 +248,7 @@ class Router
                 }
 
             } elseif ($get = 'validComment') {
-                $backController -> validComment();
+                $backCommentController -> validComment();
 
             } else {
                 throw new \Exception(PAGE_NOT_EXIST);

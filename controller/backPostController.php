@@ -219,7 +219,7 @@ class BackPostController extends BackController
             $this->twig->addExtension(new Twig_Extensions_Extension_Text());
 
             echo $this->twig->render(
-                'backView/deleteView.twig', array(
+                'backView/deletePostView.twig', array(
                     'post' => $post,
                     'comments' => $dataComment,
                     'nbrComments' => $nbrComments['COUNT(*)'],
