@@ -82,6 +82,14 @@ class BackController extends Controller
             
             if ($newPost->published() == 'TRUE') {
         
+                if (isset($_SESSION['previewPost']) 
+                    && isset($_SESSION['oldImage'])
+                ) {
+                    if (basename($_SESSION['previewPost'])  != $_SESSION['oldImage']
+                    ) {
+                        unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
+                    }
+                }
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?p=post&id=' . $newPost->id());
                 exit();
@@ -202,9 +210,9 @@ class BackController extends Controller
         
         if ($data) {
             $post = new \model\Post($data);
+            $_SESSION['oldImage'] = basename($post->picture());
 
             if ($post->picture() != null) {
-                
                 copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
                 $post->setPicture('tmp/' . 'tmp' . $post->picture());
             }
@@ -267,10 +275,8 @@ class BackController extends Controller
 
     public function uploadFile($imgPost=null)
     {  
-        if ($imgPost['error'] == 0  
-            && $imgPost['size'] <= 2000000 
-            && preg_match('#[^/\:.]#', $imgPost['name']) /////////////////////////
-        ) {
+        if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000) {
+            echo preg_match('#[^/\:.]#', $imgPost['name']);
             $fileInfo = pathinfo($imgPost['name']);
             if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
 
