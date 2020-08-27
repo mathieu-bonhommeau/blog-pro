@@ -3,6 +3,9 @@
 /**
  * Class for manage post in database
  */
+
+namespace model;
+
 class PostManager extends Manager
 {
     /**
@@ -12,17 +15,29 @@ class PostManager extends Manager
      * 
      * @return array Result of request need a fetch process
      */
-    public function getPosts($number, $offset)
+    public function getPosts()
     {
-        $number = (int)$number;
-        $offset = (int)$offset;
         $req = $this->db()->query(
             'SELECT post.id, post.title, post.chapo, post.content, 
             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
-            picture, user.authorName
+            picture, published, user.authorName
             FROM post 
-            INNER JOIN user ON user.id = post.user_id
-            ORDER BY lastDateModif DESC LIMIT ' . $number . ' OFFSET ' . $offset
+            INNER JOIN user ON user.id = post.user_id 
+            ORDER BY lastDateModif DESC'
+        );
+        return $req;
+    }
+
+    public function getHomePosts($limit)
+    {
+        $req = $this->db()->query(
+            'SELECT post.id, post.title, post.chapo, post.content, 
+            UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
+            picture, published, user.authorName
+            FROM post 
+            INNER JOIN user ON user.id = post.user_id 
+            WHERE post.published = \'TRUE\'
+            ORDER BY lastDateModif DESC LIMIT ' . $limit
         );
         return $req;
     }
@@ -39,20 +54,15 @@ class PostManager extends Manager
         $req = $this->db()->prepare(
             'SELECT post.id, post.title, post.chapo, post.content, 
             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
-            picture, user.authorName
+            picture, published, user.authorName
             FROM post 
             INNER JOIN user ON user.id = post.user_id
             WHERE post.id = ?'
         );
         $req->execute(array($id));
-        $data = $req->fetch(PDO::FETCH_ASSOC);
+        $data = $req->fetch(\PDO::FETCH_ASSOC);
 
-        if ($data == false) {
-            throw new Exception(PAGE_NOT_EXIST);
-        } else {
-            return $data;
-        }
-        
+        return $data;   
     }
 
     
@@ -66,22 +76,23 @@ class PostManager extends Manager
      * 
      * @return int Number of affected lines
      */
-    public function addPost($title, $chapo, $content, $picture, $user_id)
+    public function addPost(Post $newPost)
     {
         $req = $this->db()->prepare(
-            'INSERT INTO post (title, chapo, content, lastDateModif, picture, user_id) 
-            VALUES (:title, :chapo, :content, NOW(), :picture, :user_id)'
+            'INSERT INTO post (title, chapo, content, lastDateModif, picture, published, user_id) 
+            VALUES (:title, :chapo, :content, NOW(), :picture, :published, :user_id)'
         );
         $req->execute(
             array(
-                'title' => $title, 
-                'chapo' => $chapo,
-                'content' => $content,
-                'picture' => $picture,
-                'user_id' => $user_id
+                'title' => $newPost->title(), 
+                'chapo' => $newPost->chapo(),
+                'content' => $newPost->content(),
+                'picture' => basename($newPost->picture()),
+                'published' => $newPost->published(),
+                'user_id' => $_SESSION['user']->id()
                 )
         );
-        return $req->rowCount();
+        return array($req->rowCount(),$this->db()->lastInsertId());
     }
 
         
@@ -95,20 +106,22 @@ class PostManager extends Manager
      * 
      * @return int Number of affected lines
      */
-    public function updatePost($id, $title, $chapo, $content, $picture)
+    public function updatePost(Post $post)
     {
         $req = $this->db()->prepare(
             'UPDATE post SET title = :title, chapo = :chapo, 
-            content = :content, lastDateModif = NOW(), picture = :picture 
+            content = :content, lastDateModif = NOW(), picture = :picture,
+            published = :published 
             WHERE id = :id'
         );
         $req->execute(
             array(
-                'title' => $title,
-                'chapo' => $chapo,
-                'content' => $content,
-                'picture' => $picture,
-                'id' => $id
+                'title' => $post ->title(),
+                'chapo' => $post->chapo(),
+                'content' => $post->content(),
+                'picture' => basename($post->picture()),
+                'published' => $post->published(),
+                'id' => $post ->id()
             )
         );
         return $req->rowCount();
@@ -135,7 +148,24 @@ class PostManager extends Manager
         $req = $this->db()->query('SELECT COUNT(*) FROM post');
         $countPosts = $req->fetch();
         return $countPosts['COUNT(*)'];
-        dump($countPosts);
+    }
+
+    public function lastDatePost()
+    {
+        $req = $this->db()->query(
+            'SELECT MAX(lastDateModif) FROM post
+             WHERE published = \'TRUE\''
+        );
+        $lastDateModif = $req->fetch();
+        return $lastDateModif['MAX(lastDateModif)'];
+    }
+
+    public function getPostImg($picture)
+    {
+        $req = $this->db()->prepare('SELECT COUNT(*) FROM post WHERE picture = ?');
+        $req -> execute(array($picture));
+        $result = $req -> fetch();
+        return $result['COUNT(*)'];
     }
 
 }

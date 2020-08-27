@@ -1,10 +1,19 @@
-{% extends "frontView/templateFront.twig" %}
+{% extends "backView/templateBack.twig" %}
 
 {% block content %}
 
 <section class="projects-section bg-light" id="projects">
     <div class="container">
-       <div class="row">
+        <div class="text-danger mb-4 text-center"><h2>Voulez vous vraiment supprimer cet article et tous ses commentaires ?</h2></div>
+        <form class="form-group" method="post" action="">
+            <div class="row">
+                <div class="col-lg-6 text-right"><button type="submit" class="btn btn-outline-primary" name="cancelDelete">ANNULER</button></div>
+                <div class="col-lg-6 text-left"><button type="submit" class="btn btn-outline-danger" name="validDelete">SUPPRIMER</button></div>
+            </div>
+        </form>
+        
+        <hr class="d-none d-lg-block mb-4 ml-0" />
+        <div class="row">
             <div class="col-lg-6 ">
                 <div class="row"><h2 class="mb-4">{{ post.title }}</h2></div>
                 <div class="row"><p class="text-black-50 ">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
@@ -16,26 +25,8 @@
         <p class="font-weight-bold">{{ post.chapo }}</p>
         <p class="text-justify featured-text">{{ post.content }}</p>
         <p>{{ post.authorName }}</p>
-        <p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES</a></p>
         
         <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
-
-        <!--Add a new post-->
-        <form class="form-group" action="" method="post">
-            <div class="form-row">
-                <div class="col">
-                    <label for='nameVisitor'>Pseudo</label>
-                    <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' required />
-                </div>
-                <div class="col">
-                    <label for='emailVisitor'>Email</label>
-                    <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' required />
-                </div>
-            </div>
-            <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
-            <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
-        </form>
-        <p class="text-center">{{ commentMsg }}</p>
 
         {% for comment in comments %}
             <section class="comments">

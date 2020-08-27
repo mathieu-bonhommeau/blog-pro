@@ -10365,19 +10365,4 @@ body {
   padding: 5rem 0;
 }
 
-#submitMessage {
-  width: 100%;
-}
 
-#nameVisitor, #comment {
-  font-size: 0.85em;
-}
-
-#commentDate {
-  font-size: 0.6em;
-}
-
-#submitComment {
-  text-transform: none;
-  padding: 0.75rem 1rem;
-}

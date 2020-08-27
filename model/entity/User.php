@@ -1,5 +1,7 @@
 <?php
 
+namespace model;
+
 class User 
 { 
     private $_id;
@@ -9,7 +11,7 @@ class User
     private $_authorName;
     private $_type;
 
-    private static $_role = array('Administrator', 'Author', 'Moderator');
+    private static $_role = array('Administrateur', 'Auteur', 'Moderateur');
 
     public function __construct($data)
     {

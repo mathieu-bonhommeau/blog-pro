@@ -3,51 +3,31 @@
 require 'vendor/autoload.php';
 require 'config/Autoloader.php';
 require 'config/config.php';
-$autoloader = new Autoloader;
+$autoloader = new config\Autoloader;
 
 session_start();
 
 try 
 {
-    $router = new Router;
-
-    if (isset($_SESSION['msgOk']) && $_SESSION['msgOk'] == 'ok')
-    {
-        unset($_SESSION['msgOk']);
-        $frontController = new FrontController;
-        $frontController -> homePage();
+    $router = new config\Router;
         
-    }
-
-    elseif (isset($_GET['p'])) {
-        $msgOk = $router -> runPage($_GET['p']);
-        $_SESSION['msgOk'] = $msgOk;
+    if (isset($_GET['p'])) {
         
-    } else {
-        unset($_SESSION['msgOk']);
-        $frontController = new FrontController;
-        $frontController -> homePage();
-
-    }
+        $msg = $router -> runFrontPage($_GET['p']);
     
+    } elseif (isset($_GET['admin'])) {
+        
+        $router -> runBackPage($_GET['admin']);
 
-
-    /*if (isset($_GET['p'])) {
-
-        if ($_GET['p'] == 'home') {
-
-            
-            
-        } elseif ($_GET['p'] == 'listposts') {
-            echo $twig -> render('frontView/listPostView.twig');
-        } 
     } else {
-        echo $twig->render('frontView/homeView.twig');
-    }*/
+        
+        $frontController = new \controller\FrontController;
+        $frontController -> homePage();
+    }   
 }
+
 catch (Exception $e)
 {
     echo $e -> getMessage();
 }
 
-?>

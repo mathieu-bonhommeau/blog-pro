@@ -16,6 +16,8 @@
             <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
             <!-- Core theme CSS (includes Bootstrap)-->
             <link href="public/css/styles.css" rel="stylesheet" />
+            <!-- CSS styles additional-->
+            <link href="public/css/additionalStyles.css" rel="stylesheet" />
         {% endblock %}
     </head>
 
@@ -32,25 +34,39 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php">Accueil</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php#about">A propos</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php#projects">Articles</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php#signup">Contact</a></li>
+                            <li class="nav-item"></li><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=comment">Commentaires</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=user">Utilisateurs</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=profil">Photo de profil + {{user.userName}}: {{ user.type }}</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
+                
         {% endblock %}
        
         {% block content %}
-        
-        
-                
+            
         {% endblock %}
 
         <!-- Footer-->
         {% block footer %}
-            <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © Your Website 2020</div></footer>
+
+            
+            <footer class="footer bg-black small text-center text-white-50">
+                <div class="row">
+                    <div class="col-lg-12">
+                            <div class="container text-left mb-3"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
+                            <div class="container text-left"><a href="index.php" id="admin">Retour au site >>>></a></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container text-center">Copyright © Your Website 2020</div>
+                </div>
+                
+               
+            </footer>
         {% endblock %}
         
         <!-- Bootstrap core JS-->

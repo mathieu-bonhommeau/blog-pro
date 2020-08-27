@@ -4,6 +4,8 @@
  * Class Manager parent
  */
 
+namespace model;
+
 class Manager 
 { 
     private $_db;
@@ -14,9 +16,9 @@ class Manager
      */
     public function __construct()
     {
-        $db = new PDO(
+        $db = new \PDO(
             'mysql:host=localhost;port=3308;dbname=blog_pro;charset=utf8',
-            'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+            'root', '', array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION)
         );
         $this->setDb($db);
     }

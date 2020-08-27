@@ -3,6 +3,9 @@
 /**
  * Class for post entities
  */
+
+namespace model;
+
 class Post
 { 
     private $_id;
@@ -11,6 +14,7 @@ class Post
     private $_content;
     private $_lastDateModif;
     private $_picture;
+    private $_published;
     private $_authorName;
         
     /**
@@ -97,6 +101,11 @@ class Post
     {
         return $this->_picture;
     }
+
+    public function published() 
+    {
+        return $this->_published;
+    }
     
     /**
      * Getter $_userName / Author of post
@@ -176,9 +185,22 @@ class Post
     }
 
     public function setPicture($picture)
+    { 
+        if ($picture == null ) {
+            $this->_picture = null;
+        } else {
+            $picture = (string)$picture;
+            $this->_picture = $picture;
+        }
+    }
+
+    public function setPublished($published)
     {
-        $picture = (string)$picture;
-        $this->_picture = $picture;
+        if (in_array($published, ['TRUE', 'FALSE'])) {    
+            $this->_published = $published;
+        } else {
+            $this->_published = 'FALSE';
+        }
     }
 
     public function setAuthorName($authorName)

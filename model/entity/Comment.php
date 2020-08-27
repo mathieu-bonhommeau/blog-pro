@@ -1,11 +1,14 @@
 <?php
 
+namespace model;
+
 class Comment 
 {
     private $_id;
     private $_nameVisitor;
-    private $_comment;
+    private $_content;
     private $_commentDate;
+    private $_emailVisitor;
     private $_validComment;
     private $_user_id;
     private $_post_id;
@@ -65,9 +68,9 @@ class Comment
      *
      * @return string
      */
-    public function comment()
+    public function content()
     {
-        return $this->_comment;
+        return $this->_content;
     }
     
     /**
@@ -78,6 +81,11 @@ class Comment
     public function commentDate()
     {
         return $this->_commentDate;
+    }
+
+    public function emailVisitor()
+    {
+        return $this->_emailVisitor;
     }
     
     /**
@@ -135,10 +143,14 @@ class Comment
      * 
      * @return void
      */
-    public function setComment($comment)
+    public function setContent($content)
     {
-        $comment = (string)$comment;
-        $this->_comment = $comment;
+        $content = (string)$content;
+        if (strlen($content) <= 700) {
+            $this->_content = $content;
+        } else {
+            throw new \Exception(MSG_TOO_LONG);
+        }  
     }
     
     /**
@@ -153,6 +165,20 @@ class Comment
         $commentDate = (string)$commentDate;
         $this->_commentDate = $commentDate;
     }
+
+    public function setEmailVisitor($emailVisitor)
+    {
+        $emailControl = preg_match(
+            '#^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]{2,}\.[a-z]{2,4}$#',
+            $emailVisitor
+        );
+
+        if ($emailControl) {
+            $this->_emailVisitor = $emailVisitor;
+        } else {
+            throw new \Exception(INVALID_EMAIL);
+        }
+    }
     
     /**
      * Setter setValidComment
@@ -163,14 +189,20 @@ class Comment
      */
     public function setValidComment($validComment)
     {
-        if ($validComment == 'TRUE' || $validComment =='FALSE') {
+        if (in_array($validComment, ['TRUE', 'FALSE'])) {    
             $this->_validComment = $validComment;
+        } else {
+            $this->_validComment = 'FALSE';
         }
     }
 
     public function setUser_id($user_id)
     {
-        $user_id = (int)$user_id;
+        if (is_null($user_id) || $user_id == 0) {
+            $user_id = null;
+        } else {
+            $user_id = (int)$user_id;
+        }
         $this->_user_id = $user_id;
     }
 

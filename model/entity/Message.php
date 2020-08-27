@@ -1,5 +1,7 @@
 <?php
 
+namespace model;
+
 class Message 
 {
     private $_name;
