@@ -49,7 +49,8 @@ class CommentManager extends Manager
             UNIX_TIMESTAMP(commentDate) AS commentDate,
             validComment,user_id, post_id
             FROM comment
-            WHERE  validComment = ?'
+            WHERE  validComment = ?
+            ORDER BY commentDate DESC'
         );
         $req -> execute(array($validComment));
         return $req;

@@ -7,7 +7,7 @@ class Router
     public function runFrontPage($get)
     {
         if ($get == 'home') {
-            
+
             $frontController = new \controller\FrontController;
 
             if (isset($_POST['submitMessage'])) {
@@ -247,7 +247,7 @@ class Router
                     } 
                 }
 
-            } elseif ($get = 'validComment') {
+            } elseif ($get == 'validcomment') { 
                 $backCommentController -> validComment();
 
             } else {

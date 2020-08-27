@@ -20,8 +20,8 @@
         
         <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
 
-        <!--Add a new post-->
-        <form class="form-group" action="" method="post">
+        <!--Add a new comment-->
+        <form class="form-group" action="index.php?p=post&amp;id={{ post.id }}" method="post">
             <div class="form-row">
                 <div class="col">
                     <label for='nameVisitor'>Pseudo</label>
@@ -36,7 +36,9 @@
             <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
         </form>
         <p class="text-center">{{ commentMsg }}</p>
-
+        {% if backManageComment == 'valid' %}
+            <p><a class="text-danger" href='index.php?admin=validcomment'>RETOUR AU BACKOFFICE >>>></a></p>
+        {% endif %}
         {% for comment in comments %}
             <section class="comments">
                 <div class="card mb-3">

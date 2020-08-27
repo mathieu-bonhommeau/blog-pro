@@ -53,6 +53,12 @@ class FrontController extends Controller
 
     public function postView($id, $msg=null)
     {
+        if (isset($_GET['c'])) {
+            $backManageComment = $_GET['c'];
+        } else {
+            $backManageComment = null;
+        }
+
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
 
@@ -62,7 +68,10 @@ class FrontController extends Controller
         } else {
             $post = new \model\Post($dataPost);
 
-            if ($post->published() == 'FALSE') {
+            if ($post->published() == 'FALSE' 
+                && $backManageComment != 'valid'
+                
+            ) {
                 throw new \Exception(PAGE_NOT_EXIST);
 
             } else {
@@ -80,7 +89,8 @@ class FrontController extends Controller
                         'comments' => $dataComment,
                         'nbrComments' => $nbrComments['COUNT(*)'],
                         'commentMsg' => $msg,
-                        'user' => $this->user
+                        'user' => $this->user,
+                        'backManageComment' => $backManageComment
                     )
                 );
             }

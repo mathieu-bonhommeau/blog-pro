@@ -26,14 +26,16 @@
                 <div class="col-lg-1 text-truncate align-self-center">{{ comment.nameVisitor }}</div>
                 <div class="col-lg-4 align-self-center text-size-sm">{{ comment.content }}</div>
                 <div class="col-lg-2 align-self-center">{{ comment.commentDate|date("d/m/Y") }}</div>
+                <!--View post-->
                 <div class="col-lg-1 text-center align-self-center">
-                    <a href={{'index.php?p=post&id=' ~ comment.post_id }} class="btn btn-sm text-primary font-weight-bold">
+                    <a href={{'index.php?p=post&id=' ~ comment.post_id ~ '&c=valid'}} class="btn btn-sm text-primary font-weight-bold">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
                             <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                         </svg>
                     </a> 
                 </div>
+                <!--Moderate-->
                 <div class="col-lg-1 align-self-center text-center">
                     <a href={{'index.php?admin=addpost&id=' ~ post.id }} class="btn btn-sm text-success font-weight-bold">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chat-text" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -42,8 +44,10 @@
                         </svg>
                     </a> 
                 </div>
+                <!--Delete and Valid-->
                 <div class="col-lg-2 text-center justify-content-between align-self-center">
                     <div class="row">
+                        <!--Delete-->
                         <div class="col-lg-6 ">
                             <a href={{'index.php?admin=post&delete=' ~ post.id }} class="btn btn-sm text-danger font-weight-bold">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -52,6 +56,7 @@
                                 </svg>
                             </a>
                         </div>
+                        <!--Valid-->
                         <div class="col-lg-6 ">
                             <a href={{'index.php?admin=post&published=' ~ post.id }} class="btn btn-sm text-blue font-weight-bold">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check2-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

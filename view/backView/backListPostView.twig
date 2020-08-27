@@ -27,12 +27,14 @@
                 <div class="col-lg-2 align-self-center">{{ post.lastDateModif|date("d/m/Y") }}</div>
                 <div class="col-lg-1 align-self-center text-center">
                    {% if post.published == 'TRUE' %} 
+                   <!--Check-->
                         <span class="text-blue font-weight-bold">
                             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
                               </svg>
                         </span>
                    {% else %}
+                   <!--Publish-->
                         <a href={{'index.php?admin=post&published=' ~ post.id }} class="btn btn-sm text-blue font-weight-bold">
                             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>
@@ -41,8 +43,10 @@
                         </a>
                    {% endif %}
                 </div>
+                <!--Edit and Delete-->
                 <div class="col-lg-2 text-center justify-content-between align-self-center">
                     <div class="row">
+                        <!--Edit-->
                         <div class="col-lg-6 ">
                             <a href={{'index.php?admin=addpost&id=' ~ post.id }} class="btn btn-sm text-success font-weight-bold">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -51,6 +55,7 @@
                                 </svg>
                             </a>
                         </div>
+                        <!--Delete-->
                         <div class="col-lg-6 ">
                             <a href={{'index.php?admin=post&delete=' ~ post.id }} class="btn btn-sm text-danger font-weight-bold">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
