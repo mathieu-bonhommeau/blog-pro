@@ -55,10 +55,14 @@ class Router
         } elseif ($get == 'post') {
 
             if (isset($_GET['id'])) {
-
                 $frontController = new \controller\FrontController;
+                $backCommentController = new \controller\BackCommentController;
 
-                if (isset($_POST['submitComment'])) {
+                if (isset($_GET['c'])) {
+                    $backCommentController -> updateComment($_GET['c']);
+                    $frontController -> postView($_GET['id']);
+        
+                } elseif (isset($_POST['submitComment'])) {
                     
                     if (!empty($_POST['nameVisitor']) 
                         && !empty($_POST['emailVisitor']) 
@@ -90,9 +94,14 @@ class Router
 
                     header('Location: index.php?p=post&id=' . $_GET['id']);
                     exit();
+                
+                } elseif (isset($_POST['publishedPost'])) {
+                    
+                        $backPostController = new \controller\BackPostController;
+                        $backPostController -> publishedPost($_GET['id']);
 
                 } else {
-
+                    
                     if (isset($_SESSION['commentMsg'])) {
                         $frontController -> postView(
                             $_GET['id'], $_SESSION['commentMsg']

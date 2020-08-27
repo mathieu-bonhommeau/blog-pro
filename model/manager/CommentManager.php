@@ -101,6 +101,17 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
+    public function updateComment($id)
+    {
+        $req = $this->db()->prepare(
+            'UPDATE comment 
+             SET validComment = \'TRUE\' 
+             WHERE id = ?'
+        );
+        $req -> execute(array($id));
+        return $req->rowCount();
+    }
+
     public function nbrComments($post_id, $validComment)
     {
         $req = $this->db()->prepare(

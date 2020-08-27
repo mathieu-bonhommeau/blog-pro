@@ -130,7 +130,9 @@ class BackPostController extends BackController
                     if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
                         $fileInfo = pathinfo($path);
                         $newName = (string)time() . '.' .$fileInfo['extension'];
-                        
+                        if (!file_exists('tmp/')) {
+                            mkdir('tmp/');
+                        }
                         rename('tmp/'. $path, POST_IMG_DIRECTORY . $newName);
                         $_SESSION['previewPost'] -> setPicture(POST_IMG_DIRECTORY . $newName);
                     }
@@ -169,8 +171,11 @@ class BackPostController extends BackController
             
             $affectedLine = $postManager -> updatePost($post);
             if ($affectedLine == 1) {
-                header('Location: index.php?admin=post');
-
+                if ($_GET['c'] == 'valid') {
+                    header('Location: index.php?p=post&id=' . $id . '&c=valid'); 
+                } else {
+                    header('Location: index.php?admin=post');
+                }
             } else {
                 throw new \Exception(POST_NO_OK);
             }
@@ -189,8 +194,14 @@ class BackPostController extends BackController
             $_SESSION['oldImage'] = basename($post->picture());
 
             if ($post->picture() != null) {
-                copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
-                $post->setPicture('tmp/' . 'tmp' . $post->picture());
+                if (!file_exists('tmp/')) {
+                    mkdir('tmp/');
+                }
+                if (file_exists(POST_IMG_DIRECTORY . $post->picture())) {
+                    copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
+                    $post->setPicture('tmp/' . 'tmp' . $post->picture());
+                }
+                
             }
             return $post;
 
@@ -251,6 +262,9 @@ class BackPostController extends BackController
 
     public function uploadFile($imgPost=null)
     {  
+        if (!file_exists('tmp/')) {
+            mkdir('tmp/');
+        }
         if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000) {
             echo preg_match('#[^/\:.]#', $imgPost['name']);
             $fileInfo = pathinfo($imgPost['name']);

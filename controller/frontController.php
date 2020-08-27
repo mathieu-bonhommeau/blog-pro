@@ -61,24 +61,26 @@ class FrontController extends Controller
 
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
-
+        
         if ($dataPost == false) {
             throw new \Exception(PAGE_NOT_EXIST);
-
+            
         } else {
+            
             $post = new \model\Post($dataPost);
 
             if ($post->published() == 'FALSE' 
                 && $backManageComment != 'valid'
-                
+                && $backManageComment != $_GET['c']
             ) {
                 throw new \Exception(PAGE_NOT_EXIST);
 
             } else {
+                
                 $commentManager = new \model\CommentManager;
                 $dataComment = $commentManager -> getComments($id);
                 $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
-
+                
                 $this->twigInit();
                 $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
                 $this->twig->addExtension(new Twig_Extensions_Extension_Text());

@@ -21,4 +21,16 @@ class BackCommentController extends BackController
             )
         );
     }
+
+    public function updateComment($id)
+    {
+        $commentManager = new \model\CommentManager;
+        $affectedLine = $commentManager -> updateComment($id);
+        if ($affectedLine == 1) {
+            return $affectedLine;
+        } else {
+            throw new \Exception(NO_VALID_COMMENT);
+        }
+    }
 }
+
