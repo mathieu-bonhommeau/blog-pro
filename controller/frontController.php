@@ -8,16 +8,7 @@ use Twig_Extensions_Extension_Text;
 
 class FrontController extends Controller 
 { 
-
-    private $_msg;
-
-
-
-    public function msg()
-    {
-        return $this->_msg;
-    }
-
+    
     public function homePage($msg=null)
     {
         $postManager = new \model\PostManager;
@@ -74,6 +65,7 @@ class FrontController extends Controller
             if ($post->published() == 'FALSE' 
                 && $backManageComment != 'valid'
                 && $backManageComment != 'ok'
+                && $backManageComment != 'moderate'
             ) {
                 throw new \Exception(PAGE_NOT_EXIST);
 
@@ -99,23 +91,6 @@ class FrontController extends Controller
                 );
             }
         }      
-    }
-
-    public function sendMessage(array $form)
-    {
-        foreach ($form as $key => $value) {
-            $form[$key] = htmlspecialchars($form[$key]);
-        }
-
-        $message = new \model\Message($form);
-        $mail = $message -> sendMessage();
-
-        if ($mail) {
-            $msg = MSG_OK;
-        } else {
-            $msg = MSG_NO_OK;
-        }
-        $this->_msg = $msg;
     }
 
     public function addNewComment(array $form)

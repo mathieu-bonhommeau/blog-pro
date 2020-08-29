@@ -20,7 +20,7 @@ class UserManager extends Manager
     {
         if (is_int($info)) {
             $req = $this->db()->prepare(
-                'SELECT user.id, user.userName, user.password, 
+                'SELECT user.id, user.userName, user.password, user.userEmail, 
                 user.profilPicture, user.authorName, usertype.type
                 FROM user
                 INNER JOIN usertype ON user.userType_id = usertype.id
@@ -31,7 +31,7 @@ class UserManager extends Manager
 
         } elseif (is_string($info)) {
             $req = $this->db()->prepare(
-                'SELECT user.id, user.userName, user.password, 
+                'SELECT user.id, user.userName, user.password, user.userEmail, 
                 user.profilPicture, user.authorName, usertype.type
                 FROM user
                 INNER JOIN usertype ON user.userType_id = usertype.id

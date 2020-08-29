@@ -64,7 +64,7 @@ class Message
         if ($emailControl) {
             $this->_email = $email;
         } else {
-            throw new Exception(INVALID_EMAIL);
+            throw new\Exception(INVALID_EMAIL);
         }
     }
     

@@ -4,7 +4,7 @@
 
 <section class="projects-section bg-light" id="projects">
     <div class="container">
-    {% if (backManageComment == 'valid' or backManageComment == 'ok') and user is not null and post.published == 'FALSE' %}
+    {% if (backManageComment == 'valid' or backManageComment == 'ok' or backManageComment == 'moderate') and user is not null and post.published == 'FALSE' %}
     <div class="row">
         <div class="col-lg-6 text-danger">
             <h2><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-exclamation-triangle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -31,31 +31,51 @@
             </div> 
             <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>  
         </div>
+        <div id="addComment"></div>
         <p class="font-weight-bold">{{ post.chapo }}</p>
         <p class="text-justify featured-text">{{ post.content }}</p>
         <p>{{ post.authorName }}</p>
         <p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES</a></p>
         
-        <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
+        {% if backManageComment == 'moderate' %}
+            <h4 id="comments" class="mb-4 text-success">Message de modération : </h4>
+        {% else %}
+            <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
+        {% endif %}
         
         <!--Add a new comment-->
         <form class="form-group" action="index.php?p=post&amp;id={{ post.id }}" method="post">
             <div class="form-row">
                 <div class="col">
-                    <label for='nameVisitor'>Pseudo</label>
-                    <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' required />
+                    {% if backManageComment == 'moderate' %}
+                        <label for='nameVisitor'>{{user.userName ~ ' : ' ~ user.type }}</label>
+                        <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' value={{ user.userName ~ ' : ' ~ user.type }}  hidden/>
+                    {% else %}
+                        <label for='nameVisitor'>Pseudo</label>
+                        <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' required />
+                    {% endif %}
                 </div>
                 <div class="col">
-                    <label for='emailVisitor'>Email</label>
-                    <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' required />
+                    {% if backManageComment == 'moderate' %}
+                        <label for='emailVisitor'>{{ user.userEmail }}</label>
+                        <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' value={{ user.userEmail }} hidden />
+                    {% else %}
+                        <label for='emailVisitor'>Email</label>
+                        <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' required />
+                    {% endif %}
                 </div>
             </div>
-            <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
-            <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
+            {% if backManageComment == 'moderate' %}
+                <textarea id="contentComment"  name="content" placeholder="Message de modération" class="form-control mt-3 mb-3" rows=5 required ></textarea>
+                <div class="text-right"></p><button type="submit" id="submitComment" name="submitModerateComment" class="btn btn-success mb-3">Modérer</button></div>
+            {% else %}
+                <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
+                <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
+            {% endif %}
         </form>
         <p class="text-center">{{ commentMsg }}</p>
 
-        {% if backManageComment == 'ok' and user is not null %}
+        {% if (backManageComment == 'ok' or backManageComment == 'moderate') and user is not null %}
             <div class="row" id="comments">
                 <div class="col-lg-6 text-success">
                     <h3><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-hand-thumbs-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +88,7 @@
             <hr class="d-none d-lg-block mb-4 ml-0" />
         {% endif %}
 
-        {% if (backManageComment == 'valid' or backManageComment == 'ok') and user is not null %}
+        {% if (backManageComment == 'valid' or backManageComment == 'ok' or backManageComment == 'moderate') and user is not null %}
             <p><a class="text-danger" href='index.php?admin=validcomment'>RETOUR AU BACKOFFICE >>>></a></p>
         {% endif %}
 
@@ -77,6 +97,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="card-title">
+                            
                             <span id="nameVisitor" class="font-weight-bold">{{ comment.nameVisitor }}</span> <span id="commentDate" class="font-weight-light">- posté le : {{ comment.commentDate|date("d/m/Y") }}</span>
                         </div>
                         <p class="card-text font-weight-light" id="comment">{{ comment.content }}</p>

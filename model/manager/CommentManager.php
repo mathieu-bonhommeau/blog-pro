@@ -75,7 +75,7 @@ class CommentManager extends Manager
         $req = $this->db()->prepare(
             'SELECT id, nameVisitor, content, 
             UNIX_TIMESTAMP(commentDate) AS commentDate,
-            validComment, user_id, post_id
+            emailVisitor, validComment, user_id, post_id
             FROM comment
             WHERE id = ?'
         );

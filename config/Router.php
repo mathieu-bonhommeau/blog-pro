@@ -22,7 +22,7 @@ class Router
                                 'inputMessage' => $_POST['inputMessage']
                     );
                     
-                    $msg = $this -> runSendMessage($form);   
+                    $msg = $this -> runSendMessage($form); 
                 
                 } else {
                     $msg = EMPTY_FIELDS;
@@ -58,17 +58,21 @@ class Router
                 $frontController = new \controller\FrontController;
                 $backCommentController = new \controller\BackCommentController;
 
-                if (isset($_GET['c']) && $_GET['c']=='ok') {
-                    $backCommentController -> updateComment($_GET['cid']);
+                if (isset($_GET['c']) 
+                    && ($_GET['c']=='ok' || $_GET['c']=='moderate')
+                ) {
+                    if (isset($_GET['cid'])) {
+                        $backCommentController -> updateComment($_GET['cid']);
+                    }
                     $frontController -> postView($_GET['id']);
-        
+
                 } elseif (isset($_POST['submitComment'])) {
                     
                     if (!empty($_POST['nameVisitor']) 
                         && !empty($_POST['emailVisitor']) 
                         && !empty($_POST['content'])
                     ) {
-                        // if $user exist
+                        
                         if (isset($_SESSION['user_id'])) {
                             $user_id = $_SESSION['user_id'];
                         } else {
@@ -95,6 +99,31 @@ class Router
                     header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
                     exit();
                 
+                } elseif (isset($_POST['submitModerateComment'])) {
+
+                    if (!empty($_POST['nameVisitor']) 
+                        && !empty($_POST['emailVisitor']) 
+                        && !empty($_POST['content'])
+                    ) {
+
+
+                        $form = array(
+                            'nameVisitor' => 'Admin : ' . $_POST['nameVisitor'],
+                            'emailVisitor' => $_POST['emailVisitor'],
+                            'content' => $_POST['content'],
+                            'validComment' => 'TRUE',
+                            'user_id' => $_SESSION['user_id'],
+                            'post_id' =>$_GET['id']
+                        );
+                        
+                        $frontController -> addNewComment($form); 
+                        
+                    } else {
+                        $msg = EMPTY_FIELDS;
+                    }
+                    $_SESSION['commentMsg'] = $msg;
+                    header('Location: index.php?p=post&id=' . $_GET['id'] . '&c=ok');
+
                 } elseif (isset($_POST['publishedPost'])) {
                     
                         $backPostController = new \controller\BackPostController;
@@ -161,9 +190,9 @@ class Router
 
     public function runSendMessage(array $form)
     {
-        $frontController = new \controller\FrontController;
-        $frontController -> sendMessage($form);
-        $msg = $frontController -> msg();
+        $controller = new \controller\Controller;
+        $controller -> sendMessage($form);
+        $msg = $controller -> msg();
         return $msg;
     }
 
@@ -201,13 +230,15 @@ class Router
             } elseif ($get == 'addpost') {
 
                 if (isset($_POST['addPost'])) {
-
-                    if (isset($_GET['id'])) {
+            
+                    if (isset($_GET['id'])) { 
                         $form = $backPostController -> dataInputPost($_GET['id']);
                     } else {
+                        
                         $form = $backPostController -> dataInputPost();
                         
                     }
+                    
                     $form['published'] = 'TRUE';
                     $backPostController -> addPostView($form);
 
@@ -258,6 +289,19 @@ class Router
 
             } elseif ($get == 'validcomment') { 
                 $backCommentController -> validComment();
+
+            } elseif ($get == 'comment') {
+                
+                if (isset($_POST['cancelDeleteComment'])) {
+                    header('Location: index.php?admin=validcomment');
+
+                } elseif (isset($_POST['validDeleteComment'])) {
+                    $backCommentController -> deleteComment($_GET['delete']);
+                    header('Location: index.php?admin=validcomment');
+
+                } else {
+                    $backCommentController -> deleteCommentView($_GET['delete']);
+                }
 
             } else {
                 throw new \Exception(PAGE_NOT_EXIST);

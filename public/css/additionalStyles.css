@@ -68,3 +68,8 @@
   .text-size-sm {
     font-size: 0.85em;
   }
+
+  .projects-section {
+    min-height: 700px;
+    
+  }

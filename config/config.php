@@ -26,6 +26,8 @@ define('UPLOAD_NO_OK', 'L\'upload du fichier n\'a pas fonctionné');
 define('MSG_SAVE', 'Votre article est bien enregistré mais non publié');
 define('POST_NO_EXIST', 'Cet article n\existe pas');
 define('POST_NO_SUP', 'L\'article n\' a pas pu être supprimé !');
+define('NO_VALID_COMMENT_EMAIL', 'Votre commentaire a été supprimé.');
+define('COMMENT_NO_EXIST', 'Ce commentaire n\existe pas.');
 
 //Uplaod authorized extensions
 

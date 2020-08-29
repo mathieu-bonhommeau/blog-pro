@@ -7,6 +7,7 @@ class User
     private $_id;
     private $_userName;
     private $_password;
+    private $_userEmail;
     private $_profilPicture;
     private $_authorName;
     private $_type;
@@ -44,6 +45,11 @@ class User
         return $this->_password;
     }
 
+    public function userEmail()
+    {
+        return $this->_userEmail;
+    }
+
     public function profilPicture()
     {
         return $this->_profilPicture;
@@ -75,6 +81,20 @@ class User
     {
         $password = (string)$password; 
         $this->_password = $password;
+    }
+
+    public function setUserEmail($userEmail)
+    {
+        $emailControl = preg_match(
+            '#^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]{2,}\.[a-z]{2,4}$#',
+            $userEmail
+        );
+
+        if ($emailControl) {
+            $this->_userEmail = $userEmail;
+        } else {
+            throw new \Exception(INVALID_EMAIL);
+        }
     }
 
     public function setprofilPicture($profilPicture) 

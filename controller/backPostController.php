@@ -64,7 +64,7 @@ class BackPostController extends BackController
                 if (isset($_SESSION['previewPost']) 
                     && isset($_SESSION['oldImage'])
                 ) {
-                    if (basename($_SESSION['previewPost'])  != $_SESSION['oldImage']
+                    if (basename($_SESSION['previewPost']->picture())  != $_SESSION['oldImage']
                     ) {
                         unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
                     }
@@ -124,7 +124,9 @@ class BackPostController extends BackController
         ) {
             if (empty($_FILES['imgPost']['name'])) {
                 
-                if (isset($_SESSION['previewPost'])) {
+                if (isset($_SESSION['previewPost']) 
+                    && $_SESSION['previewPost']->picture() != null
+                ) {
                     $path = basename($_SESSION['previewPost']->picture());
                     
                     if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
@@ -296,7 +298,9 @@ class BackPostController extends BackController
     public function imgChange()
     {
         if (isset($_SESSION['previewPost'])) {
-            unlink($_SESSION['previewPost'] -> picture());
+            if (file_exists($_SESSION['previewPost'] -> picture())) {
+                unlink($_SESSION['previewPost'] -> picture());
+            }
             $_SESSION['previewPost']->setPicture(null);
             $this -> addPostView($form=null, $msg=null, $_SESSION['previewPost']);
         }  
