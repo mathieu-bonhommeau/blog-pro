@@ -58,8 +58,8 @@ class Router
                 $frontController = new \controller\FrontController;
                 $backCommentController = new \controller\BackCommentController;
 
-                if (isset($_GET['c'])) {
-                    $backCommentController -> updateComment($_GET['c']);
+                if (isset($_GET['c']) && $_GET['c']=='ok') {
+                    $backCommentController -> updateComment($_GET['cid']);
                     $frontController -> postView($_GET['id']);
         
                 } elseif (isset($_POST['submitComment'])) {
@@ -92,7 +92,7 @@ class Router
 
                     $_SESSION['commentMsg'] = $msg;
 
-                    header('Location: index.php?p=post&id=' . $_GET['id']);
+                    header('Location: index.php?p=post&id=' . $_GET['id'] . '#comments');
                     exit();
                 
                 } elseif (isset($_POST['publishedPost'])) {

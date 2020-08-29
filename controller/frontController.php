@@ -1,6 +1,8 @@
 <?php
 
 namespace controller;
+
+use Faker\ValidGenerator;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
@@ -71,7 +73,7 @@ class FrontController extends Controller
 
             if ($post->published() == 'FALSE' 
                 && $backManageComment != 'valid'
-                && $backManageComment != $_GET['c']
+                && $backManageComment != 'ok'
             ) {
                 throw new \Exception(PAGE_NOT_EXIST);
 
