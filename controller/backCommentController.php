@@ -79,17 +79,28 @@ class BackCommentController extends BackController
                 );
             
                 $controller = new \controller\Controller;
-                $controller -> sendMessage($data);
+                $controller -> sendMessage($data, $comment-> emailVisitor());
 
             } else {
                 throw new \Exception(COMMENT_NO_EXIST);
             }
-        }
-        
-        
-        
+        }   
+    }
 
-        
+    public function listComments($try=null)
+    {
+        $commentManager = new \model\CommentManager;
+        $comments = $commentManager -> getAllComments($validComment=null, $try);
+    
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+
+        echo $this->twig->render(
+            'backView/backListCommentView.twig', array(
+                'user' => $this->user,
+                'comments' => $comments
+            )
+        );
     }
 }
 

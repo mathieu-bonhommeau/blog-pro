@@ -191,7 +191,7 @@ class Router
     public function runSendMessage(array $form)
     {
         $controller = new \controller\Controller;
-        $controller -> sendMessage($form);
+        $controller -> sendMessage($form, SUPPORT_EMAIL);
         $msg = $controller -> msg();
         return $msg;
     }
@@ -217,9 +217,9 @@ class Router
                     if (isset($_POST['validDelete'])) {
                         $backPostController -> deletePost($_GET['delete']);
 
-                    } elseif (isset($_POST['cancelDelete'])) {
+                    } elseif (isset($_POST['cancelDelete'])) {    
                         header('Location: index.php?admin=post');
-
+                        
                     } else {
                         $backPostController -> deleteView($_GET['delete']);   
                     }
@@ -293,14 +293,34 @@ class Router
             } elseif ($get == 'comment') {
                 
                 if (isset($_POST['cancelDeleteComment'])) {
-                    header('Location: index.php?admin=validcomment');
-
+                    if (isset($_GET['del'])) {  
+                        header('Location: index.php?admin=listcomments');
+                    } else {
+                        header('Location: index.php?admin=validcomment');
+                    }
+                    
                 } elseif (isset($_POST['validDeleteComment'])) {
                     $backCommentController -> deleteComment($_GET['delete']);
-                    header('Location: index.php?admin=validcomment');
+                    if (isset($_GET['del'])) {  
+                        header('Location: index.php?admin=listcomments');
+                    } else {
+                        header('Location: index.php?admin=validcomment');
+                    }
 
                 } else {
                     $backCommentController -> deleteCommentView($_GET['delete']);
+                }
+
+            } elseif ($get == 'listcomments') {
+
+                if (isset($_POST['byPost'])) {
+                    $backCommentController -> listComments('post_id');
+                } elseif (isset($_POST['byDate'])) {
+                    $backCommentController -> listComments('commentDate');
+                } elseif (isset($_POST['byName'])) {
+                    $backCommentController -> listComments('nameVisitor');
+                } else {
+                    $backCommentController -> listComments();
                 }
 
             } else {

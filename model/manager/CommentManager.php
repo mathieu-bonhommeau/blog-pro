@@ -42,17 +42,25 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
-    public function getAllComments($validComment)
+    public function getAllComments($validComment=null, $try=null)
     {
-        $req = $this->db()->prepare(
-            'SELECT id, nameVisitor, content, 
+        if ($validComment == null) {
+            $inputReq = null;
+        } else {
+            $inputReq = 'WHERE validComment = "' . $validComment . '"';
+        }
+
+        if ($try == null || ($try != 'post_id' && $try != 'nameVisitor')) {
+            $try = 'commentDate';
+        }
+
+        $req = $this->db()->query(
+            'SELECT id, nameVisitor, content, emailVisitor, 
             UNIX_TIMESTAMP(commentDate) AS commentDate,
             validComment,user_id, post_id
-            FROM comment
-            WHERE  validComment = ?
-            ORDER BY commentDate DESC'
+            FROM comment ' . $inputReq . 
+            ' ORDER BY ' . $try . ' DESC'
         );
-        $req -> execute(array($validComment));
         return $req;
     }
 

@@ -8,7 +8,7 @@ class UserManager extends Manager
     {
         $req = $this->db()->query(
             'SELECT user.id, user.userName, user.password, 
-            user.profilPicture, user.authorName, usertype.type
+            user.profilPicture, user.authorName, user.registerDate, usertype.type
             FROM user
             INNER JOIN usertype ON user.userType_id = usertype.id
             ORDER BY usertype.type'
@@ -21,7 +21,7 @@ class UserManager extends Manager
         if (is_int($info)) {
             $req = $this->db()->prepare(
                 'SELECT user.id, user.userName, user.password, user.userEmail, 
-                user.profilPicture, user.authorName, usertype.type
+                user.profilPicture, user.authorName, user.registerDate, usertype.type
                 FROM user
                 INNER JOIN usertype ON user.userType_id = usertype.id
                 WHERE user.id = ?
@@ -32,7 +32,7 @@ class UserManager extends Manager
         } elseif (is_string($info)) {
             $req = $this->db()->prepare(
                 'SELECT user.id, user.userName, user.password, user.userEmail, 
-                user.profilPicture, user.authorName, usertype.type
+                user.profilPicture, user.authorName, user.registerDate, usertype.type
                 FROM user
                 INNER JOIN usertype ON user.userType_id = usertype.id
                 WHERE user.userName = ?
@@ -43,29 +43,38 @@ class UserManager extends Manager
         return $data = $req->fetch(\PDO::FETCH_ASSOC); 
     }
 
-    public function addUser(
-        $userName, $password, $profilPicture, $authorName, $userType_id
-    ) {
+    public function addUser(User $user) 
+    {
+        $req = $this->db()->prepare(
+            'SELECT user.id 
+             FROM user
+             INNER JOIN usertype ON usertype.id = user.userType_id
+             WHERE usertype.type = ?'
+        );
+        $req -> execute(array($user->type()));
+        
+
+
         $req = $this->db()->prepare(
             'INSERT INTO user 
-            (userName, password, profilPicture, authorName, userType_id)
-            VALUES (:userName, :password, :profilPicture, :authorName, :userType_id)'
+            (userName, password, profilPicture, authorName, registerDate, userType_id)
+            VALUES (:userName, :password, :profilPicture, :authorName, :registerDate, :userType_id)'
         );
         $req -> execute(
             array(
-                'userName' => $userName,
-                'password' => $password,
-                'profilPicture' => $profilPicture,
-                'authorName' => $authorName,
-                'userType_id' => $userType_id
+                'userName' => $user->userName(),
+                'password' => $user->password(),
+                'profilPicture' => $user->profilPicture(),
+                'authorName' => $user->authorName(),
+                'registerDate' => $user->registerDate(),
+                'userType_id' => $user->userType_id()
             )
         );
         return $req->rowCount();
     }
 
-    public function updateUser(
-        $id, $userName, $password, $profilPicture, $authorName, $userType_id
-    ) {
+    public function updateUser(User $user) 
+    {
         $req = $this->db()->prepare(
             'UPDATE user SET
             userName = :userName, password = :password, 
@@ -75,12 +84,13 @@ class UserManager extends Manager
         );
         $req -> execute(
             array(
-                'userName' => $userName,
-                'password' => $password,
-                'profilPicture' => $profilPicture,
-                'authorName' => $authorName,
-                'userType_id' => $userType_id,
-                'id' => $id
+                'userName' => $user->userName(),
+                'password' => $user->password(),
+                'profilPicture' => $user->profilPicture(),
+                'authorName' => $user->authorName(),
+                'registerDate' => $user->registerDate(),
+                'userType_id' => $user->userType_id(),
+                'id' => $user->id()
             )
         );
         return $req->rowCount();
@@ -93,5 +103,20 @@ class UserManager extends Manager
         );
         $req -> execute(array($id));
         return $req->rowCount();
+    }
+
+    public function countUser()
+    {
+        $req = $this->db()->query('SELECT COUNT(*) FROM user');
+
+        $data = $req->fetch();
+        return $data['COUNT(*)'];
+    }
+
+    public function lastAddedUser()
+    {
+        $req = $this->db()->query(
+            'SELECT 
+        ');
     }
 }

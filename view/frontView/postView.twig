@@ -4,7 +4,12 @@
 
 <section class="projects-section bg-light" id="projects">
     <div class="container">
-    {% if (backManageComment == 'valid' or backManageComment == 'ok' or backManageComment == 'moderate') and user is not null and post.published == 'FALSE' %}
+    {% if (backManageComment == 'valid' 
+       or backManageComment == 'ok' 
+       or backManageComment == 'moderate'
+       or backManageComment == 'list') 
+       and user is not null 
+       and post.published == 'FALSE' %}
     <div class="row">
         <div class="col-lg-6 text-danger">
             <h2><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-exclamation-triangle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -88,8 +93,13 @@
             <hr class="d-none d-lg-block mb-4 ml-0" />
         {% endif %}
 
-        {% if (backManageComment == 'valid' or backManageComment == 'ok' or backManageComment == 'moderate') and user is not null %}
+        {% if (backManageComment == 'valid' 
+            or backManageComment == 'ok' 
+            or backManageComment == 'moderate') 
+            and user is not null %}
             <p><a class="text-danger" href='index.php?admin=validcomment'>RETOUR AU BACKOFFICE >>>></a></p>
+        {% elseif backManageComment == 'list' and user is not null %}
+            <p><a class="text-danger" href='index.php?admin=listcomments'>RETOUR AU BACKOFFICE >>>></a></p>
         {% endif %}
 
         {% for comment in comments %}
@@ -97,7 +107,7 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="card-title">
-                            
+
                             <span id="nameVisitor" class="font-weight-bold">{{ comment.nameVisitor }}</span> <span id="commentDate" class="font-weight-light">- posté le : {{ comment.commentDate|date("d/m/Y") }}</span>
                         </div>
                         <p class="card-text font-weight-light" id="comment">{{ comment.content }}</p>

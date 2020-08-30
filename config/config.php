@@ -6,7 +6,7 @@
 define('POST_IMG_DIRECTORY', 'public/assets/img/postImg/');
 
 //Email parameters
-define('EMAIL', 'mathieu.bonhommeau@orange.fr');
+define('SUPPORT_EMAIL', 'mathieu.bonhommeau@orange.fr');
 define('HEADER_MAIL', 'From:"MatDev.com"<support@matdev.com>');
 
 //Messages

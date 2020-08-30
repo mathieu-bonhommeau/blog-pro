@@ -29,7 +29,7 @@ class Controller
         $this->twig = new Twig\Environment($loader, ['cache' => false, 'debug' => true]); //'/tmp' 
     }
 
-    public function sendMessage(array $form)
+    public function sendMessage(array $form, $email)
     {
         if (!isset($_SESSION['user'])) {
             foreach ($form as $key => $value) {
@@ -37,7 +37,7 @@ class Controller
             }
         }
         $message = new \model\Message($form);
-        $mail = $message -> sendMessage();
+        $mail = $message -> sendMessage($email);
 
         if ($mail) {
             $msg = MSG_OK;

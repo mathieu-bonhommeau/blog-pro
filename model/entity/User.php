@@ -10,6 +10,7 @@ class User
     private $_userEmail;
     private $_profilPicture;
     private $_authorName;
+    private $_registerDate;
     private $_type;
 
     private static $_role = array('Administrateur', 'Auteur', 'Moderateur');
@@ -58,6 +59,11 @@ class User
     public function authorName()
     {
         return $this->_authorName;
+    }
+
+    public function registerDate()
+    {
+        return $this->_registerDate;
     }
 
     public function type()
@@ -110,6 +116,12 @@ class User
     {
         $authorName = (string)$authorName;
         $this->_authorName = $authorName;
+    }
+
+    public function setRegisterDate($registerDate)
+    {
+        $registerDate = (int)$registerDate;
+        $this->_registerDate = $registerDate;
     }
 
     public function setType($type)
