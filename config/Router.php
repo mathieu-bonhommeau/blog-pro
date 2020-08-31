@@ -202,6 +202,7 @@ class Router
             $backController = new \controller\backController;
             $backPostController = new \controller\backPostController;
             $backCommentController = new \controller\BackCommentController;
+            $backUserController = new \controller\backUserController;
 
             if ($get == 'backhome') {
                 $backPostController -> deleteSession('previewPost');
@@ -322,6 +323,9 @@ class Router
                 } else {
                     $backCommentController -> listComments();
                 }
+            
+            } elseif ($get == 'adduser') {
+                $backUserController -> addUserView();
 
             } else {
                 throw new \Exception(PAGE_NOT_EXIST);
