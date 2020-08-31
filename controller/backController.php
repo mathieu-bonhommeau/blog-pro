@@ -18,6 +18,7 @@ class BackController extends Controller
 
         $userManager = new \model\userManager;
         $nbrUser = $userManager->countUser();
+        $lastAddedUser = $userManager->lastAddedUser();
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -29,7 +30,8 @@ class BackController extends Controller
                 'lastDatePost' => $lastDatePost,
                 'nbrCommentNoValid' => $nbrCommentNoValid,
                 'lastDateComment' => $lastDateComment,
-                'nbrUser' => $nbrUser
+                'nbrUser' => $nbrUser,
+                'lastAddedUser' => $lastAddedUser
             )
         );
     }

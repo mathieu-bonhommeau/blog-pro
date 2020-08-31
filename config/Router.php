@@ -325,7 +325,26 @@ class Router
                 }
             
             } elseif ($get == 'adduser') {
-                $backUserController -> addUserView();
+                if (isset($_POST['addUser'])) {
+                    if (isset($_POST['userName'])
+                        && isset($_POST['userPassword'])
+                        && isset($_POST['userPasswordConfirm'])
+                        && isset($_POST['userType'])
+                    ) {
+                        $form = array(
+                            'userName' => $_POST['userName'],
+                            'userPassword' => $_POST['userPassword'],
+                            'userPasswordConfirm' => $_POST['userPasswordConfirm'],
+                            'userType' => $_POST['userType'] 
+                        );
+
+                        $backUserController -> addUser($form);
+                    } else {
+                        throw new \Exception(EMPTY_FIELDS);
+                    }
+                } else {
+                    $backUserController -> addUserView();
+                }
 
             } else {
                 throw new \Exception(PAGE_NOT_EXIST);

@@ -25,9 +25,13 @@ class BackUserController extends BackController
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
         echo $this->twig->render(
             'backView/addUserView.twig', array(
-                'user' => $this->user
-                 
+                'user' => $this->user,   
             )
         );
+    }
+
+    public function addUser($form)
+    {
+        
     }
 }

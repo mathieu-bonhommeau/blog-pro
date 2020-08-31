@@ -92,7 +92,8 @@
                             <div class="col-lg-12">
                                 <p class="text-left text-black-50">
                                     Dernier utilisateur ajouté : 
-                                    <span class="badge badge-dark js-scroll-trigger">{{ lastDateComment|date("d/m/Y") }}</span>
+                                    <span class="badge badge-dark js-scroll-trigger">{{ lastAddedUser.userName }}</span>
+                                       le    <span class="badge badge-dark js-scroll-trigger">{{ lastAddedUser.registerDate|date("d/m/Y") }}</span>
                                 </p>
                             </div>
                         </div>
