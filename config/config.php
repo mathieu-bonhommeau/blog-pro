@@ -28,6 +28,9 @@ define('POST_NO_EXIST', 'Cet article n\existe pas');
 define('POST_NO_SUP', 'L\'article n\' a pas pu être supprimé !');
 define('NO_VALID_COMMENT_EMAIL', 'Votre commentaire a été supprimé.');
 define('COMMENT_NO_EXIST', 'Ce commentaire n\existe pas.');
+define('ADD_USER_OK', 'L\'utilisateur a bien été ajouté.');
+define('ADD_USER_NO_OK', 'L\ajout d\'utilisateur n\a pas fonctionné.');
+define('USER_NO_EXIST', 'Cet utilisateur n\'existe pas.');
 
 //Uplaod authorized extensions
 

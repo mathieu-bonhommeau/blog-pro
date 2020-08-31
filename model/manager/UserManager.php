@@ -11,7 +11,7 @@ class UserManager extends Manager
             user.profilPicture, user.authorName, user.registerDate, usertype.type
             FROM user
             INNER JOIN usertype ON user.userType_id = usertype.id
-            ORDER BY usertype.type'
+            ORDER BY usertype.type, user.registerDate DESC'
         );
         return $req;
     }
@@ -24,8 +24,7 @@ class UserManager extends Manager
                 user.profilPicture, user.authorName, user.registerDate, usertype.type
                 FROM user
                 INNER JOIN usertype ON user.userType_id = usertype.id
-                WHERE user.id = ?
-                ORDER BY usertype.type'
+                WHERE user.id = ?'
             );
             $req -> execute(array($info));
 
@@ -38,29 +37,30 @@ class UserManager extends Manager
                 WHERE user.userName = ?
                 ORDER BY usertype.type'
             );
-            $req -> execute(array($info));
+            $req -> execute(array($info));  
         }
-        return $data = $req->fetch(\PDO::FETCH_ASSOC); 
+
+        $data = $req->fetch(\PDO::FETCH_ASSOC); 
+        return $data;
     }
 
     public function addUser(User $user) 
     {
         $req = $this->db()->prepare(
-            'SELECT user.id 
-             FROM user
-             INNER JOIN usertype ON usertype.id = user.userType_id
-             WHERE usertype.type = ?'
+            'SELECT id 
+             FROM usertype
+             WHERE type = ?'
         );
         $req -> execute(array($user->type()));
         $data = $req->fetch(\PDO::FETCH_ASSOC);
-        $userType = $data['type'];
+        $userType = $data['id'];
 
         $req = $this->db()->prepare(
             'INSERT INTO user 
             (userName, password, profilPicture, 
              authorName, registerDate, userType_id)
              VALUES (:userName, :password, :profilPicture, 
-             :authorName, :registerDate, :userType_id)'
+             :authorName, NOW(), :userType_id)'
         );
         $req -> execute(
             array(
@@ -68,7 +68,6 @@ class UserManager extends Manager
                 'password' => $user->password(),
                 'profilPicture' => $user->profilPicture(),
                 'authorName' => $user->authorName(),
-                'registerDate' => $user->registerDate(),
                 'userType_id' => $userType
             )
         );
@@ -78,14 +77,13 @@ class UserManager extends Manager
     public function updateUser(User $user) 
     {
         $req = $this->db()->prepare(
-            'SELECT user.id 
-             FROM user
-             INNER JOIN usertype ON usertype.id = user.userType_id
-             WHERE usertype.type = ?'
+            'SELECT id 
+             FROM usertype
+             WHERE type = ?'
         );
         $req -> execute(array($user->type()));
         $data = $req->fetch(\PDO::FETCH_ASSOC);
-        $userType = $data['type'];
+        $userType = $data['id'];
 
         $req = $this->db()->prepare(
             'UPDATE user SET
@@ -100,7 +98,6 @@ class UserManager extends Manager
                 'password' => $user->password(),
                 'profilPicture' => $user->profilPicture(),
                 'authorName' => $user->authorName(),
-                'registerDate' => $user->registerDate(),
                 'userType_id' => $userType,
                 'id' => $user->id()
             )

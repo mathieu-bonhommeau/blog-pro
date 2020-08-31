@@ -8,30 +8,91 @@ class BackUserController extends BackController
 {
     public function addUserView($form=null)
     {
-        /*if ($form != null) {
-            $newPost = new \model\Post($form);
-            $postManager = new \model\PostManager;
-            
-            if ($newPost->id() == null) {
-                $result = $postManager -> addPost($newPost);
-                $this -> resultPost($result[0], $result[1]);
+        if (isset($_SESSION['addUserMsg'])) {
+            $msg = $_SESSION['addUserMsg'];
+            unset($_SESSION['addUserMsg']);
+        } else {
+            $msg = null;
+        }
 
-            } else {
-                $result = $postManager -> updatePost($newPost);
-                $this -> resultPost($result, $newPost->id());
-            }
-        }*/
+        if ($form != null) {
+            $updateUser = new \model\User($form);
+        } else {
+            $updateUser = null;
+        }
+
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
         echo $this->twig->render(
             'backView/addUserView.twig', array(
-                'user' => $this->user,   
+                'user' => $this->user,
+                'msg' => $msg,
+                'updateUser' => $updateUser   
             )
         );
     }
 
     public function addUser($form)
     {
+        $userManager = new \model\UserManager;
+        $user = new \model\User($form);
+        
+        return $userManager -> addUser($user); 
+        
+
+    }
+
+    public function listUsers()
+    {
+        $userManager = new \model\UserManager;
+        $users = $userManager -> getUsers();
+
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+        echo $this->twig->render(
+            'backView/backListUserView.twig', array(
+                'user' => $this->user,
+                'users' => $users  
+            )
+        );
+    }
+
+    public function getUpdateUser($id)
+    {
+        $userManager = new \model\UserManager;
+        $data = $userManager -> getUser((int)$id);
+        if ($data != false) {
+            return $data;
+        } else {
+            throw new \Exception(USER_NO_EXIST);
+        }
+          
+    }
+
+    public function updateUser($form)
+    {
+        $userManager = new \model\UserManager;
+        $user = new \model\User($form);
+
+        return $userManager -> updateUser($user);
+    }
+
+    public function deleteUserView($id)
+    {
+        $userManager = new \model\UserManager;
+        $data = $userManager -> getUser((int)$id);
+        
+        $deleteUser = new \model\User($data);
+
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+
+        echo $this->twig->render(
+            'backView/deleteUserView.twig', array(
+                'user' => $this->user,
+                'deleteUser' => $deleteUser 
+            )
+        );
         
     }
 }

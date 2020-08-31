@@ -146,11 +146,11 @@ class Router
             }
 
         } elseif ($get == 'connect') {
-
+            
             $frontController = new \controller\FrontController;
 
             if (isset($_POST['submitConnect'])) {
-
+                
                 if (!empty($_POST['inputPseudoConnect']) 
                     && !empty($_POST['inputPasswordConnect'])
                 ) {
@@ -159,8 +159,9 @@ class Router
                         $_POST['inputPseudoConnect'], 
                         $_POST['inputPasswordConnect']    
                     );
-                
+                    
                     $_SESSION['msgConnect'] = $msgConnect;
+                    
                     header('Location: index.php?p=connect');
                     exit();
 
@@ -325,25 +326,77 @@ class Router
                 }
             
             } elseif ($get == 'adduser') {
+
                 if (isset($_POST['addUser'])) {
+                
                     if (isset($_POST['userName'])
-                        && isset($_POST['userPassword'])
-                        && isset($_POST['userPasswordConfirm'])
+                        && !empty($_POST['userPassword'])
+                        && !empty($_POST['userPasswordConfirm'])
                         && isset($_POST['userType'])
                     ) {
-                        $form = array(
-                            'userName' => $_POST['userName'],
-                            'userPassword' => $_POST['userPassword'],
-                            'userPasswordConfirm' => $_POST['userPasswordConfirm'],
-                            'userType' => $_POST['userType'] 
-                        );
+                        
+                        if ($_POST['userPassword'] == $_POST['userPasswordConfirm'] ) {
+                            if (isset($_GET['id'])) {
+                                $form = array(
+                                    'id' => $_GET['id'],
+                                    'userName' => $_POST['userName'],
+                                    'password' => $_POST['userPassword'],
+                                    'type' => $_POST['userType'] 
+                                );
+                                
+                                $affectedLine = $backUserController -> updateUser($form);
+                                
 
-                        $backUserController -> addUser($form);
+                            } else {
+                                $form = array(
+                                    'userName' => $_POST['userName'],
+                                    'password' => password_hash(
+                                        $_POST['userPassword'], 
+                                        PASSWORD_DEFAULT
+                                    ),
+                                    'type' => $_POST['userType'] 
+                                );
+                                $affectedLine = $backUserController -> addUser($form);
+                            }
+                            
+                            if ($affectedLine == 1 ) {
+                                $_SESSION['addUserMsg'] = ADD_USER_OK;
+                                header('Location: index.php?admin=adduser');
+
+                            } else {
+                                $_SESSION['addUserMsg'] = ADD_USER_NO_OK;
+                                header('Location: index.php?admin=adduser');
+                            }
+                            
+                        } else {
+                            $_SESSION['addUserMsg'] = USER_NO_OK;
+                            header('Location: index.php?admin=adduser');
+                        } 
+
                     } else {
-                        throw new \Exception(EMPTY_FIELDS);
+                        $_SESSION['addUserMsg'] = EMPTY_FIELDS;
+                        header('Location: index.php?admin=adduser');
+                        
                     }
+
+                } elseif (isset($_GET['id'])) {
+                    $form = $backUserController -> getUpdateUser($_GET['id']);
+                    $backUserController -> addUserView($form);
+                    
                 } else {
+                
                     $backUserController -> addUserView();
+                }
+
+            } elseif ($get == 'listusers') {
+                $backUserController -> listUsers();
+
+            } elseif ($get == 'deleteuser') {  
+                if (isset($_GET['id'])) {
+                    $backUserController -> deleteUserView($_GET['id']);
+
+                } else {
+                    throw new \Exception(PAGE_NOT_EXIST);
                 }
 
             } else {

@@ -126,10 +126,10 @@ class FrontController extends Controller
         $data = $userManager -> getUser($pseudo);
 
         if ($data) {
-
+            
             $user = new \model\User($data);
-
-            if ($user -> password() == $password) {
+            
+            if (password_verify($password, $user->password())) {
 
                 $_SESSION['user'] = $user;
 

@@ -13,7 +13,7 @@ class User
     private $_registerDate;
     private $_type;
 
-    private static $_role = array('Administrateur', 'Auteur', 'Moderateur');
+    private static $_role = array('administrator', 'author', 'moderator');
 
     public function __construct($data)
     {
@@ -91,16 +91,22 @@ class User
 
     public function setUserEmail($userEmail)
     {
-        $emailControl = preg_match(
-            '#^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]{2,}\.[a-z]{2,4}$#',
-            $userEmail
-        );
-
-        if ($emailControl) {
+        if ($userEmail == null) {
             $this->_userEmail = $userEmail;
+
         } else {
-            throw new \Exception(INVALID_EMAIL);
+            $emailControl = preg_match(
+                '#^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]{2,}\.[a-z]{2,4}$#',
+                $userEmail
+            );
+    
+            if ($emailControl) {
+                $this->_userEmail = $userEmail;
+            } else {
+                throw new \Exception(INVALID_EMAIL);
+            }
         }
+        
     }
 
     public function setprofilPicture($profilPicture) 

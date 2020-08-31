@@ -37,8 +37,19 @@
                             <li class="nav-item"></li><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=listcomments">Commentaires</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=user">Utilisateurs</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=profil">Photo de profil + {{user.userName}}: {{ user.type }}</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=listusers">Utilisateurs</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link js-scroll-trigger" href="index.php?admin=profil">
+                                    Photo de profil + {{user.userName}} : 
+                                    {% if user.type == 'administrator' %}
+                                        Administrateur
+                                    {% elseif user.type == 'author' %}
+                                        Auteur
+                                    {% elseif user.type == 'moderator' %} 
+                                        Modérateur
+                                    {% endif %}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

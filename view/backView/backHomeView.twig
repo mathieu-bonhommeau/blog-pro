@@ -7,7 +7,14 @@
     <div class="container">
         <h2 class="mb-1">Dashboard</h2>
         <hr class="d-none d-lg-block mb-2 ml-0" />
-        <h4 class="mb-5">Statut : {{ user.type }}</h4>
+
+        {% if user.type == 'administrator' %}
+            <h4 class="mb-5">Statut : Administrateur</h4>
+        {% elseif user.type == 'author' %}
+            <h4 class="mb-5">Statut : Auteur</h4>
+        {% elseif user.type == 'moderator' %} 
+            <h4 class="mb-5">Statut : Modérateur</h4>
+        {% endif %}
             <div class="row no-gutters mb-4 mb-lg-5">
 
                 <div class="col-lg-6 mb-5">

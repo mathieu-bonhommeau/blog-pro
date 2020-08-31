@@ -1,0 +1,35 @@
+{% extends "backView/templateBack.twig" %}
+
+{% block content %}
+
+<section class="projects-section bg-light" id="projects">
+    <div class="container">
+        <div class="text-danger mb-4 text-center"><h2>Voulez vous vraiment supprimer cet utilisateur ?</h2></div>
+        <form class="form-group" method="post" action="">
+            <div class="row">
+                <div class="col-lg-6 text-right"><button type="submit" class="btn btn-outline-primary" name="cancelDeleteComment">ANNULER</button></div>
+                <div class="col-lg-6 text-left"><button type="submit" class="btn btn-outline-danger" name="validDeleteComment">SUPPRIMER</button></div>
+            </div>
+        
+            <hr class="d-none d-lg-block mb-4 ml-0" />
+            <div class="row">
+                <div class="col-lg-6 ">
+                    <div class="row"><h2 class="mb-4">Pseudo : {{ deleteUser.userName }}</h2></div>
+                    <div class="row"><p class="text-black-50 ">Email : {{ deleteUser.userEmail }}</p></div>
+                    <div class="row"><p class="text-black-50 ">Enregistré depuis le {{ deleteUser.registerDate|date("d/m/Y") }}</p></div>
+                    <div class="row"><p class="text-black-50 font-weight-bold">
+                        {% if deleteUser.type == 'administrator' %}
+                            Statut : Administrateur</p></div>
+                        {% elseif deleteUser.type == 'author' %}
+                            Statut : Auteur</p></div>
+                        {% elseif deleteUser.type == 'moderator' %}
+                            Statut : Modérateur</p></div>
+                        {% endif %}
+                        
+                    <hr class="d-none d-lg-block mb-4 ml-0" />
+                </div>   
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock  %}
