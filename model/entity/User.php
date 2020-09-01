@@ -92,7 +92,7 @@ class User
     public function setUserEmail($userEmail)
     {
         if ($userEmail == null) {
-            $this->_userEmail = $userEmail;
+            $this->_userEmail = null;
 
         } else {
             $emailControl = preg_match(
@@ -111,9 +111,10 @@ class User
 
     public function setprofilPicture($profilPicture) 
     {
-        if (preg_match(
-            "#^public/images/profilPicture/[a-zA-Z0-9]+\.png$#", $profilPicture
-        )) {
+        if ($profilPicture == null ) {
+            $this->_profilPicture = null;
+        } else {
+            $picture = (string)$profilPicture;
             $this->_profilPicture = $profilPicture;
         }
     }

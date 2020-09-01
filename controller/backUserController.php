@@ -73,7 +73,7 @@ class BackUserController extends BackController
     {
         $userManager = new \model\UserManager;
         $user = new \model\User($form);
-
+        
         return $userManager -> updateUser($user);
     }
 
@@ -104,6 +104,51 @@ class BackUserController extends BackController
     {
         $userManager = new \model\UserManager;
         return $userManager -> deleteUser($id);
+    }
+
+    public function profilView($id, $update=null)
+    {
+        $userManager = new \model\UserManager;
+        $userProfil = $userManager -> getUser((int)$id);
+        if (isset($_SESSION['updateUserMsg'])) {
+            $msg = $_SESSION['updateUserMsg'];
+            unset($_SESSION['updateUserMsg']);
+        } else {
+            $msg = null;
+        }
+
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+
+        echo $this->twig->render(
+            'backView/profilView.twig', array(
+                'user' => $this->user,
+                'userProfil' => $userProfil,
+                'update' => $update,
+                'msg' => $msg
+                
+            )
+        );
+    }
+
+    public function uploadProfilPicture($picture)
+    {
+        if ($picture['error'] == 0  && $picture['size'] <= 2000000) {
+            $fileInfo = pathinfo($picture['name']);
+            
+            if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
+                $new = move_uploaded_file(
+                    $picture['tmp_name'], 
+                    USER_IMG_DIRECTORY . basename($picture['name'])
+                );
+                return basename($picture['name']);
+
+            } else {
+                throw new \Exception(UPLOAD_NO_OK);
+            }
+        } else {
+            throw new \Exception(UPLOAD_NO_OK);
+        }
     }
 
 }

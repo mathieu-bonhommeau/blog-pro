@@ -4,6 +4,8 @@
 
 //Directory posts images
 define('POST_IMG_DIRECTORY', 'public/assets/img/postImg/');
+define('USER_IMG_DIRECTORY', 'public/assets/img/userImg/');
+
 
 //Email parameters
 define('SUPPORT_EMAIL', 'mathieu.bonhommeau@orange.fr');

@@ -30,7 +30,8 @@
                     
                     <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
                     {% if user %}
-                        <span class="navbar-brand js-scroll-trigger" id="user">Photo de profil + {{user.userName}}</span>
+                        <img src={{ user.profilPicture }} alt="Photo de profil" id="profilPictureMenu" class="ml-5"/>
+                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.id }} id="adminProfil">{{user.userName}} </a>
                     {% endif %}
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         Menu

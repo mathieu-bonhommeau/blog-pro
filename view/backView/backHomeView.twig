@@ -108,18 +108,23 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
+                    <h4 class="mb-4">Profil</h4>
                     <div class="featured-text text-center text-lg-left">
-                        <h4>Gestion du profil</h4>
-                        <!--
-                        <div class="row justify-content-center no-gutters">
-                            <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date }}</p></div>
-                            <div class="col-lg-6"><p class="text-right text-black-50">{{ post.authorName }}</p></div>
+                        <div class="row justify-content-between no-gutters">
+                            <div class="col-lg-6 mb-4">
+                                <div class="d-inline mr-3"><img src={{ user.profilPicture }} alt="Photo de profil" id="profilPicture"/></div>
+                                <h3 class="text-left text-black-50 d-inline">{{ user.userName }}</h3>
+                            </div>
+                            
+                            <div class="col-lg-12 mb-3">
+                                <p class="text-left text-black-50">
+                                    <a href={{ 'index.php?admin=profil&id=' ~ user.id }}>MODIFIER LE PROFIL >>>></a>
+                                </p>
+                            </div>
                         </div>
-                    
-                        <p class="text-black-50 text-justify mb-0"></p>
-                        <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
-                        -->
+                        
                     </div>
+                    <hr class="d-none d-lg-block mb-0 ml-0 mr-5" />
                 </div>
             </div>
     </div>

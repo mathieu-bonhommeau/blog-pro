@@ -70,6 +70,27 @@
   }
 
   .projects-section {
-    min-height: 700px;
-    
+    min-height: 700px; 
+  }
+
+  #profilPicture {
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+  }
+
+  #profilPictureMenu {
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  #adminProfil {
+    padding: 1rem 0.75rem !important;
+  }
+
+  #profilPictureLarge {
+    border-radius: 50%;
+    width: 8rem;
+    height: 8rem;
   }

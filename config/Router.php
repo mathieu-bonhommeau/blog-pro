@@ -412,9 +412,75 @@ class Router
                     throw new \Exception(PAGE_NOT_EXIST);
                 }
 
+            } elseif ($get == 'profil') {
+                if (isset($_GET['id'])) {
+                    if (isset($_POST['updateProfil'])
+                        && isset($_POST['userName'])
+                        && isset($_POST['userPassword'])
+                        && isset($_POST['userPasswordConfirm'])
+                    ) {
+                        if ($_POST['userPassword'] == $_POST['userPasswordConfirm']) {
+                            if (isset($_POST['userEmail'])) {
+                                $userEmail = $_POST['userEmail'];
+                            } else {
+                                $userEmail = null;
+                            }
+                            if (isset($_POST['authorName'])) {
+                                $authorName = $_POST['authorName'];
+                            } else {
+                                $authorName = null;
+                            }
+                            if (isset($_FILES['profilPictureUpload'])) {
+                                
+                                $backUserController -> uploadProfilPicture(
+                                    $_FILES['profilPictureUpload']
+                                );
+                            } else {
+                                $profilPicture = null;
+                            }
+                            
+                            $form = array(
+                                'id' => $_GET['id'],
+                                'userName' => $_POST['userName'],
+                                'password' =>  password_hash(
+                                    $_POST['userPassword'],
+                                    PASSWORD_DEFAULT
+                                ),
+                                'userEmail' => $userEmail,
+                                'authorName' => $authorName,
+                                'profilPicture' => $profilPicture,
+                                'type' => $_SESSION['user']->type()
+                            );
+
+                            $backUserController -> updateUser($form);
+                            
+                            $frontController = new \controller\FrontController;
+                            
+                            $frontController -> verifyUser(
+                                $_POST['userName'], 
+                                $_POST['userPassword']
+                            );
+                            header('Location: index.php?admin=profil&id=' . $_GET['id']);
+
+                        } else {
+                            $_SESSION['updateUserMsg'] = USER_NO_OK;
+                            header('Location: index.php?admin=profil&id=' . $_GET['id']);
+                        }
+
+                    } elseif (isset($_GET['c']) 
+                    ) {
+                        $backUserController -> profilView($_GET['id'], $_GET['c']);
+
+                    } else {
+                        $backUserController -> profilView($_GET['id']);
+                    }
+                } else {
+                    throw new \Exception(PAGE_NOT_EXIST);
+                }
+
             } else {
                 throw new \Exception(PAGE_NOT_EXIST);
-            }
+            } 
 
         } else {
             throw new \Exception(NO_ACCESS);

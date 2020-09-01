@@ -124,15 +124,13 @@ class FrontController extends Controller
     {
         $userManager = new \model\UserManager;
         $data = $userManager -> getUser($pseudo);
-
+        
         if ($data) {
             
             $user = new \model\User($data);
             
             if (password_verify($password, $user->password())) {
-
                 $_SESSION['user'] = $user;
-
                 header('Location: index.php?p=home');
                 exit();
 
