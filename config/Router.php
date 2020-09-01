@@ -393,7 +393,20 @@ class Router
 
             } elseif ($get == 'deleteuser') {  
                 if (isset($_GET['id'])) {
-                    $backUserController -> deleteUserView($_GET['id']);
+
+                    if (isset($_POST['validDeleteUser'])) {
+                        $affectedLine = $backUserController -> deleteUser($_GET['id']);
+                        if ($affectedLine == 1) {
+                            header('Location: index.php?admin=listusers');
+
+                        } else {
+                            throw new \Exception(USER_NO_DELETE);
+                        }
+                    
+                    } else {
+                        
+                        $backUserController -> deleteUserView($_GET['id']);
+                    }
 
                 } else {
                     throw new \Exception(PAGE_NOT_EXIST);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  lun. 31 août 2020 à 22:12
+-- Généré le :  mar. 01 sep. 2020 à 16:50
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -49,7 +49,6 @@ CREATE TABLE IF NOT EXISTS `comment` (
 
 INSERT INTO `comment` (`id`, `nameVisitor`, `content`, `commentDate`, `emailVisitor`, `validComment`, `user_id`, `post_id`) VALUES
 (1, 'xavier.techer', 'Emma, prise de dégoût, lui envoya, par-dessus l\'épaule, en lui tournant les talons.', '2020-07-16 07:07:17', 'jacques44@free.fr', 'TRUE', NULL, 4),
-(2, 'pbrunel', 'Le monsieur, ramenant l\'éventail, l\'offrit à la ville, depuis le cimetière des Bertaux.', '2020-07-18 14:07:38', 'olivier.marthe@free.fr', 'TRUE', NULL, 20),
 (3, 'maillot.honore', 'II Emma descendit quelques marches, et elle repassa par la rue Nationale, près de la.', '2020-07-14 12:07:57', 'qvincent@noos.fr', 'TRUE', NULL, 23),
 (4, 'marchand.antoinette', 'D\'ailleurs, n\'était-ce pas une feuille de papier. -- De grâce, restez! je vous jure.', '2020-08-05 23:08:04', 'david.pottier@gmail.com', 'TRUE', NULL, 2),
 (7, 'stephane93', 'Mais il n\'offrait pas grande prise à ces exaltations succédaient tout à coup. Des.', '2020-07-11 13:07:23', 'matanna@orange.fr', 'TRUE', NULL, 24),
@@ -76,7 +75,6 @@ INSERT INTO `comment` (`id`, `nameVisitor`, `content`, `commentDate`, `emailVisi
 (49, 'noel.marin', 'À huit heures, Justin venait le baiser au front: -- Quelle réponse apporter à M. le.', '2020-07-30 17:07:10', 'hhumbert@bouygtel.fr', 'TRUE', NULL, 24),
 (52, 'emaurice', 'Il répéta: -- D\'un autre! Et il la regardait, tout étonné par la côte d\'Argueil, à.', '2020-08-04 07:08:50', 'agodard@wanadoo.fr', 'TRUE', NULL, 19),
 (55, 'pierre.pauline', 'Athalie qui la rendit presque intéressante. Naturellement, par nonchalance; il en.', '2020-07-14 01:07:25', 'sebastien.bodin@voila.fr', 'TRUE', NULL, 6),
-(56, 'ferreira.gilbert', 'Cependant, secouant la sienne: -- T\'es-tu bien amusée hier? demanda-t-il. -- Oui. Alors.', '2020-07-18 19:07:55', 'gillet.suzanne@voila.fr', 'TRUE', NULL, 20),
 (59, 'llegoff', 'Lefrançois, en le voyant, fit de grandes raies minces, qui se brisaient à l\'angle des.', '2020-08-05 20:08:48', 'raymond72@hotmail.fr', 'TRUE', NULL, 9),
 (60, 'jcolas', 'Dodolphe..., je crois.» Elle frissonna. -- Tu reviendrais dimanche. Voyons, décide-toi!.', '2020-07-23 17:07:39', 'adele99@wanadoo.fr', 'TRUE', NULL, 6),
 (61, 'laurence48', 'Ah! c\'est fini! il faudrait en faire l\'analyse. Car il allait d\'un groupe à l\'autre. On.', '2020-07-14 05:07:01', 'wgosselin@hotmail.fr', 'TRUE', NULL, 23),
@@ -94,6 +92,28 @@ INSERT INTO `comment` (`id`, `nameVisitor`, `content`, `commentDate`, `emailVisi
 (173, 'Admin : Mat85', 'Encore un message de modération !!!!!', '2020-08-29 16:33:05', 'mathieu.bonhommeau@orange.fr', 'TRUE', NULL, 25),
 (174, 'Admin : Mat85', 'Un message de modération', '2020-08-29 16:37:51', 'mathieu.bonhommeau@orange.fr', 'TRUE', NULL, 11),
 (176, 'Admin : Mat85', 'Je mets ici un message de modération', '2020-08-29 16:42:06', 'mathieu.bonhommeau@orange.fr', 'TRUE', NULL, 21);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `membertype`
+--
+
+DROP TABLE IF EXISTS `membertype`;
+CREATE TABLE IF NOT EXISTS `membertype` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `membertype`
+--
+
+INSERT INTO `membertype` (`id`, `type`) VALUES
+(1, 'member'),
+(2, 'moderator'),
+(3, 'administrator');
 
 -- --------------------------------------------------------
 
@@ -130,7 +150,6 @@ INSERT INTO `post` (`id`, `title`, `chapo`, `content`, `lastDateModif`, `picture
 (16, 'L\'assurance de changer plus simplement', 'Pologne ou les Conférences de l\'abbé Frayssinous, et, le soir, malgré leur indépendance.', 'Aut aut aut iste provident sunt ut laboriosam. Ipsum et perspiciatis quibusdam odio. Delectus optio doloremque dolore magnam nihil. Sapiente mollitia cum laudantium. Eum corrupti nobis expedita aut. Sunt velit soluta sequi fugit tenetur laudantium. Eos ut non id. Commodi id eum adipisci aut. Non fuga incidunt quas ut provident fuga. Aperiam totam perspiciatis ea dolor placeat quae iusto. Omnis dolorem eligendi voluptatem. Voluptatem sunt odit reprehenderit vero error. Commodi expedita sed placeat voluptates alias occaecati sunt. Voluptates provident exercitationem neque ut. Harum ea autem dicta voluptas aut. Autem quod dolorem est est necessitatibus blanditiis sunt. Rem eum ipsam aspernatur alias cumque.', '2020-08-23 16:55:45', '', 'TRUE', 4),
 (18, 'L\'avantage d\'atteindre vos buts de manière sûre', 'Girard, que j\'ai promenée l\'autre jour. Ils sont venus un tas de farceurs qui se tourne.', 'Quo eveniet vel cumque excepturi consequatur. Dignissimos culpa officia praesentium non eos. Dolorum veritatis voluptate et similique nulla. Ex in ipsa voluptatum aut. Quasi qui consequatur et et suscipit aperiam. Autem nulla quis doloribus corporis. Possimus iure aperiam corporis optio numquam. Recusandae non quo tempore ut ducimus qui doloremque. Praesentium nobis blanditiis mollitia nemo omnis aut veritatis. Aut consequatur officia adipisci cupiditate. Odio placeat qui eveniet. Consequatur quaerat similique consectetur at deserunt porro ut. Esse explicabo tenetur id omnis et. Accusantium ratione nostrum et et. Excepturi aut quis esse iste.', '2020-08-26 19:49:01', '231548.jpg', 'TRUE', 4),
 (19, 'L\'assurance de rouler naturellement', 'Il n\'y a rien! -- Rassurez-vous, dit l\'apothicaire, la vue de ce qui passait pour gagner.', 'Quia rem eos voluptates est perspiciatis. Non perferendis deleniti quia ut et impedit. Quia esse eveniet facilis iste molestiae consequatur quo. Non ex fugit voluptas. Iste similique quo quia fugit. Laborum aspernatur corrupti vitae doloremque quas. Rem ut est atque. Nesciunt dolore delectus qui natus quae nihil tempore. Et aliquid officiis voluptas exercitationem pariatur. Eum et placeat soluta error aut. Veniam hic ratione ipsam saepe quia voluptatem ut. Itaque expedita facilis minima quasi veritatis quod consequatur. Consectetur ut aliquam facere ut fugiat quod ut qui. Eum reiciendis consequatur voluptas est quam. Quis et hic et. Et illum aspernatur sed. Beatae laborum et magni molestiae.', '2020-08-26 22:53:42', '', 'TRUE', 5),
-(20, 'La simplicité de rouler de manière efficace', 'Les halles, c\'est-à-dire un peu colorée par le charme de la Fresnaye, tué à la pointe.', 'Nulla reiciendis quisquam voluptas enim excepturi ipsam. Sit deserunt delectus modi placeat numquam. Nihil dolore ex sit qui amet. Officiis eos et nisi et tempora magnam asperiores. Ipsa esse eum aut natus ipsam. Quod sit esse illum voluptas. Aut assumenda et quam reiciendis natus velit occaecati architecto. Perferendis excepturi neque aperiam ut tenetur. Dolores fuga deserunt deserunt qui quis ea. Reprehenderit eligendi dolor ea hic ea harum. Incidunt numquam dolorem itaque et voluptatem recusandae. Rerum id ea laborum. Tempore quam aut numquam. Voluptas odio iusto eius consequatur et atque. In omnis expedita dolor blanditiis magni. Maiores consequuntur ut sint fuga ex recusandae pariatur voluptatem. Occaecati expedita eos vitae.', '0000-00-00 00:00:00', '', 'FALSE', 4),
 (21, 'Le pouvoir de changer avant-tout', 'Beauvoisine. C\'était une femme battue, dont aussitôt il s\'ouvrait dans son cabinet, prit.', 'Eos dolorem deserunt deleniti. Veniam ut at consequatur quia consequatur voluptas dolorem culpa. Provident odit eos atque quaerat tempora enim non. In accusamus et voluptas accusantium deserunt. Molestiae quidem enim animi quis eum rerum. Quibusdam quaerat vero et at. Accusamus perspiciatis quia officia ex veritatis qui quis. Et natus quis quibusdam minus. Consequatur ut voluptatum est reprehenderit laudantium tempore quasi. Illo dolores impedit iusto. Adipisci omnis et est consequuntur consequuntur. Animi dolorum consequatur unde necessitatibus aut et autem. Voluptas illo voluptatem enim voluptas eveniet. Dolorum voluptates magni distinctio unde ut perspiciatis consequatur. Quis autem dignissimos autem explicabo mollitia. Ea velit illo et totam dignissimos nobis velit.', '2020-08-23 16:57:00', '', 'TRUE', 5),
 (22, 'Le confort d\'atteindre vos buts en toute sécurité', 'Eh bien, fit Rodolphe en offrit un; elle refusa ses offres; il n\'insista pas; puis, au.', 'Eius repellat aut tempore qui animi nesciunt qui. Exercitationem eum eligendi recusandae sed officia mollitia. Beatae labore delectus iste illo. Quaerat consequatur fuga laboriosam est reprehenderit. Architecto debitis sed officia doloribus expedita nobis nulla provident. Non ratione consequatur dolorem molestias quia. Eligendi voluptates qui autem quo distinctio eius tempora. Animi ut suscipit nam optio est neque. Sapiente facilis et nihil rerum et est reiciendis. Non laborum harum ut ipsam earum repellat qui. Amet aliquid non dolorem eum asperiores aut. Quisquam labore quia quia minima tempora nesciunt quibusdam. Ut amet voluptatem neque. Ut omnis numquam unde fugiat voluptatum nulla.', '0000-00-00 00:00:00', '', 'FALSE', 5),
 (23, 'La simplicité de changer avant-tout', 'C\'est ainsi que, mardi, notre petite cité d\'Yonville s\'est vue le théâtre d\'une.', 'Ut quam accusamus qui tempora accusantium. Voluptatem omnis autem ea perspiciatis sint. Est et optio doloremque placeat non dolor excepturi. Est voluptatum sapiente sit maiores cupiditate doloremque. Ab autem distinctio aut vero. Nesciunt maiores consequuntur est iusto qui. Amet amet possimus quia est id. Quisquam rerum quia velit ipsa. Et nobis dignissimos enim id. Perferendis tenetur qui itaque minus. Ipsum nostrum assumenda minima consequatur. Possimus accusamus sequi sint aspernatur necessitatibus. Quibusdam eos at vitae dolorem est. Minima ut officia et nobis nulla aut sint. Ut eos laudantium dicta at aliquid. Ea nulla non aut reprehenderit. Facere nemo sunt rem sed eveniet aspernatur. Minus dolorem cupiditate quis dolorum.', '2020-07-05 16:33:16', 'online-942410_640.jpg', 'TRUE', 4),
@@ -180,7 +199,6 @@ INSERT INTO `user` (`id`, `userName`, `password`, `userEmail`, `profilPicture`, 
 (5, 'Yves', '5#s3p]qN;L', NULL, '', 'Alex Ribeiro', '2020-08-17 05:40:55', 4),
 (6, 'Claude', '._%O2;:;\"uH9R%l', NULL, '', 'Denis-Thibaut Renault', '2020-08-07 17:14:12', 6),
 (7, 'Juliette', 'Q0VF|+H$!=}P3]@-', NULL, '', 'Gérard Mathieu', '2020-08-14 02:20:12', 6),
-(8, 'Martine', 'YKyKB~S{<,1cR{KUH`', NULL, '', 'Jacques-André Legendre', '2020-08-01 18:36:13', 5),
 (9, 'Gilbert', 'CnRx1w?GG\\J&', NULL, '', 'Astrid Marie-Pichon', '2020-08-20 16:26:11', 5),
 (10, 'Jérôme', 'BM1@e]?c=*P<q}`B', NULL, '', 'Frédérique Daniel-Couturier', '2020-08-10 22:00:00', 6),
 (11, 'Sylvie', 'RBP#7Q0', NULL, '', 'Véronique de la Costa', '2020-08-20 02:30:44', 4),

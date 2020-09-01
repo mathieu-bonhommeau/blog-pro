@@ -21,7 +21,9 @@
         <hr class="d-none d-lg-block mb-2 ml-0" />
         {% for post in posts %}
             <div class="row mt-3 mb-3">
-                <div class="col-lg-1 align-self-center"><span class="badge badge-dark">{{post.id}}</span></div>
+                <div class="col-lg-1 align-self-center">
+                    <a href={{ 'index.php?p=post&id=' ~ post.id }} class="badge badge-dark">{{post.id}}</a>
+                </div>
                 <div class="col-lg-4 text-truncate align-self-center">{{ post.title }}</div>
                 <div class="col-lg-2 align-self-center">{{ post.authorName }}</div>
                 <div class="col-lg-2 align-self-center">{{ post.lastDateModif|date("d/m/Y") }}</div>

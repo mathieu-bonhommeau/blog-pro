@@ -65,6 +65,27 @@ class PostManager extends Manager
         return $data;   
     }
 
+    public function getUserPosts($user_Id)
+    {
+        $req = $this->db()->prepare(
+            'SELECT id, title,
+             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
+             published
+             FROM post
+             WHERE user_id = ?'
+        );
+        $req -> execute(array($user_Id));
+        while ($data = $req->fetch(\PDO::FETCH_ASSOC)) {
+            $posts[] = $data;
+        }
+
+        if (isset($posts)) {
+            return $posts;
+        } else {
+            return null;
+        }
+    }
+
     
     /**
      * Add new post 

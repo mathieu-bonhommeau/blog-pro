@@ -80,8 +80,11 @@ class BackUserController extends BackController
     public function deleteUserView($id)
     {
         $userManager = new \model\UserManager;
+        $postManager = new \model\PostManager;
+
         $data = $userManager -> getUser((int)$id);
-        
+        $posts = $postManager -> getUserPosts($id);
+
         $deleteUser = new \model\User($data);
 
         $this->twigInit();
@@ -90,9 +93,17 @@ class BackUserController extends BackController
         echo $this->twig->render(
             'backView/deleteUserView.twig', array(
                 'user' => $this->user,
-                'deleteUser' => $deleteUser 
+                'deleteUser' => $deleteUser,
+                'posts' => $posts 
             )
         );
         
     }
+
+    public function deleteUser($id)
+    {
+        $userManager = new \model\UserManager;
+        return $userManager -> deleteUser($id);
+    }
+
 }

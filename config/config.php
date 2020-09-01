@@ -31,6 +31,7 @@ define('COMMENT_NO_EXIST', 'Ce commentaire n\existe pas.');
 define('ADD_USER_OK', 'L\'utilisateur a bien été ajouté.');
 define('ADD_USER_NO_OK', 'L\ajout d\'utilisateur n\a pas fonctionné.');
 define('USER_NO_EXIST', 'Cet utilisateur n\'existe pas.');
+define('USER_NO_DELETE', 'L\utilisateur n\'a pas été supprimé.');
 
 //Uplaod authorized extensions
 
