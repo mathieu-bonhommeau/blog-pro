@@ -9,7 +9,12 @@ class BackPostController extends BackController
     public function backListPosts()
     {
         $postManager = new \model\PostManager;
-        $posts = $postManager -> getPosts();
+        
+        if ($_SESSION['user']->type() == 'administrator') {
+            $posts = $postManager -> getPosts();
+        } elseif ($_SESSION['user']->type() == 'author') {
+            $posts = $postManager -> getUserPosts($_SESSION['user']->id());
+        }
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line

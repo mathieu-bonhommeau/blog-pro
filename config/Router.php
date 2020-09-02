@@ -209,7 +209,10 @@ class Router
                 $backPostController -> deleteSession('previewPost');
                 $backController -> backHomePage();
 
-            } elseif ($get == 'post') {
+            } elseif ($get == 'post'
+                && ($_SESSION['user']->type() == 'administrator'
+                || $_SESSION['user']->type() == 'author')
+            ) {
                 $backPostController -> deleteSession('previewPost');
 
                 if (isset($_GET['published'])) {
@@ -229,7 +232,10 @@ class Router
                     $backPostController -> backListPosts();   
                 }
 
-            } elseif ($get == 'addpost') {
+            } elseif ($get == 'addpost'
+                && ($_SESSION['user']->type() == 'administrator'
+                || $_SESSION['user']->type() == 'author')
+            ) {
 
                 if (isset($_POST['addPost'])) {
             
@@ -326,9 +332,9 @@ class Router
                 }
             
             } elseif ($get == 'adduser' 
-                      && $_SESSION['user']->type() == 'administrator'
-                ) {
-
+                && $_SESSION['user']->type() == 'administrator'
+            ) {
+                $frontController = new \controller\FrontController;
                 if (isset($_POST['addUser'])) {
                 
                     if (isset($_POST['userName'])
@@ -348,6 +354,18 @@ class Router
                                 
                                 $affectedLine = $backUserController -> updateUser($form);
                                 
+                                if ($_SESSION['user']->id() == $_GET['id']) {
+                                    $frontController -> verifyUser(
+                                        $_POST['userName'], 
+                                        $_POST['userPassword']
+                                    );
+                                    header('Location: index.php?admin=backhome');
+                                }
+
+                                $frontController -> verifyUser(
+                                    $_POST['userName'], 
+                                    $_POST['userPassword']
+                                );
 
                             } else {
                                 $form = array(
@@ -390,10 +408,14 @@ class Router
                     $backUserController -> addUserView();
                 }
 
-            } elseif ($get == 'listusers') {
+            } elseif ($get == 'listusers'
+                && $_SESSION['user']->type() == 'administrator'
+            ) {
                 $backUserController -> listUsers();
 
-            } elseif ($get == 'deleteuser') {  
+            } elseif ($get == 'deleteuser'
+                && $_SESSION['user']->type() == 'administrator'
+            ) {  
                 if (isset($_GET['id'])) {
 
                     if (isset($_POST['validDeleteUser'])) {
@@ -435,7 +457,6 @@ class Router
                             if (isset($_FILES['profilPictureUpload'])
                                 && $_FILES['profilPictureUpload']['name'] != null
                             ) {
-                                dump($_FILES['profilPictureUpload']);
                                 $profilPicture = $backUserController ->
                                 uploadProfilPicture(
                                     $_FILES['profilPictureUpload']
@@ -475,8 +496,13 @@ class Router
                     } elseif (isset($_GET['c']) 
                     ) {
                         $backUserController -> profilView($_GET['id'], $_GET['c']);
+                    
+                    } elseif (isset($_POST['profilPictureChange'])) {
+                        $_SESSION['resetImage'] = 'reset';
+                        header('Location: index.php?admin=profil&id=' . $_GET['id'] . '&c=update');
 
                     } else {
+                        
                         $backUserController -> profilView($_GET['id']);
                     }
                 } else {

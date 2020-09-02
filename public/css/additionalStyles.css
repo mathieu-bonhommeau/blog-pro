@@ -94,3 +94,23 @@
     width: 8rem;
     height: 8rem;
   }
+
+   #logoMenu { 
+    width: 7rem;
+    height: 5rem;
+   }
+
+   #logoHome {
+    width: 14rem;
+    height: 12rem;
+   }
+
+   #myName {
+     font-size: 2rem;
+     letter-spacing: 0.5rem;
+   }
+
+   #myJob {
+    font-size: 3.5rem;
+    letter-spacing: 0.5rem;
+  }

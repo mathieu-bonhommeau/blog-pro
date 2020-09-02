@@ -27,7 +27,9 @@
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
                 <div class="container">
-                    <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
+                    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                        <img src="public/assets/img/logo.png" id="logoMenu" alt="logo" />
+                    </a>
                     {% if user.profilPicture is null %}
                         <img src="public/assets/img/userImg/profil.png" alt="Photo de profil" id="profilPictureMenu"/>
                     {% else %}
@@ -50,9 +52,13 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item"></li><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
+                            {% if user.type == 'administrator' or user.type == 'author' %}
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
+                            {% endif %}
                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=listcomments">Commentaires</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=listusers">Utilisateurs</a></li>
+                            {% if user.type == 'administrator' %}
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=listusers">Utilisateurs</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

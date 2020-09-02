@@ -9,9 +9,23 @@ class BackController extends Controller
     public function backHomePage()
     {
         $postManager = new \model\PostManager;
-        $nbrPosts = $postManager -> countPosts();
-        $lastDatePost = $postManager -> lastDatePost();
 
+        if ($_SESSION['user']->type() == 'administrator') {
+            $nbrPosts = $postManager -> countPosts();
+        } elseif ($_SESSION['user']->type() == 'author') {
+            $nbrPosts = $postManager -> countUserPosts($_SESSION['user']->id());
+        } else {
+            $nbrPosts = null;
+        }
+
+        if ($_SESSION['user']->type() == 'administrator') {
+            $lastDatePost = $postManager -> lastDatePost();
+        } elseif ($_SESSION['user']->type() == 'author') {
+            $lastDatePost = $postManager -> lastDateUserPost($_SESSION['user']->id());
+        } else {
+            $lastDatePost = null;
+        }
+        
         $commentManager = new \model\CommentManager;
         $nbrCommentNoValid = $commentManager -> nbrAllComments('FALSE');
         $lastDateComment = $commentManager -> lastDateComment();

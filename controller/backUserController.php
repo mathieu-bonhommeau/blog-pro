@@ -109,12 +109,21 @@ class BackUserController extends BackController
     public function profilView($id, $update=null)
     {
         $userManager = new \model\UserManager;
-        $userProfil = $userManager -> getUser((int)$id);
+        $data = $userManager -> getUser((int)$id);
+        $userProfil = new \model\User($data);
+
         if (isset($_SESSION['updateUserMsg'])) {
             $msg = $_SESSION['updateUserMsg'];
             unset($_SESSION['updateUserMsg']);
         } else {
             $msg = null;
+        }
+
+        if (isset($_SESSION['resetImage'])
+            && $_SESSION['resetImage'] == 'reset'
+        ) {
+            $userProfil->setprofilPicture(null);
+            unset($_SESSION['resetImage']);
         }
 
         $this->twigInit();
@@ -133,6 +142,20 @@ class BackUserController extends BackController
 
     public function uploadProfilPicture($picture)
     {
+        if (!empty($_SESSION['user']->profilPicture())) {
+            if (file_exists(
+                USER_IMG_DIRECTORY . 
+                basename($_SESSION['user']->profilPicture())
+            ) 
+            ) {
+                unlink(
+                    USER_IMG_DIRECTORY . basename(
+                        $_SESSION['user']->profilPicture()
+                    )
+                );
+            }
+        }
+
         if ($picture['error'] == 0  && $picture['size'] <= 2000000) {
             $fileInfo = pathinfo($picture['name']);
             
