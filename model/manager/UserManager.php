@@ -87,7 +87,7 @@ class UserManager extends Manager
 
         $req = $this->db()->prepare(
             'UPDATE user SET
-            userName = :userName, password = :password, 
+            userName = :userName, password = :password, userEmail = :userEmail, 
             profilPicture = :profilPicture, authorName = :authorName, 
             userType_id = :userType_id
             WHERE id = :id'
@@ -96,7 +96,8 @@ class UserManager extends Manager
             array(
                 'userName' => $user->userName(),
                 'password' => $user->password(),
-                'profilPicture' => $user->profilPicture(),
+                'userEmail' => $user->userEmail(),
+                'profilPicture' => basename($user->profilPicture()),
                 'authorName' => $user->authorName(),
                 'userType_id' => $userType,
                 'id' => $user->id()

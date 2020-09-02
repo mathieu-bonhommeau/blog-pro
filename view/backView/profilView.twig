@@ -19,7 +19,11 @@
                 <form class="form-group" method="post" action={{ 'index.php?admin=profil&id=' ~ user.id }} enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-2 text-left">
-                            <img src={{ userProfil.profilPicture }} alt="Photo de profil" id="profilPictureLarge" class="mb-4"/>
+                            {% if user.profilPicture is null %}
+                                <img src="public/assets/img/userImg/profil.png" alt="Photo de profil" id="profilPictureLarge"/>
+                            {% else %}
+                                <img src={{ constant('USER_IMG_DIRECTORY') ~ userProfil.profilPicture }} alt="Photo de profil" id="profilPictureLarge" class="mb-4"/>
+                            {% endif %}
                             {% if userProfil.type == 'administrator' %}
                                 <p class="col-lg-6 font-weight-bold">Administrateur</p>
                             {% elseif userProfil.type == 'author' %}

@@ -141,7 +141,17 @@ class BackUserController extends BackController
                     $picture['tmp_name'], 
                     USER_IMG_DIRECTORY . basename($picture['name'])
                 );
-                return basename($picture['name']);
+                rename(
+                    USER_IMG_DIRECTORY . basename(
+                        $picture['name']
+                    ), USER_IMG_DIRECTORY 
+                        . (string)time() 
+                        . '.' .$fileInfo['extension']
+                );
+
+                return USER_IMG_DIRECTORY 
+                    . (string)time() . '.' 
+                    . $fileInfo['extension'];
 
             } else {
                 throw new \Exception(UPLOAD_NO_OK);

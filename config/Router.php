@@ -325,7 +325,9 @@ class Router
                     $backCommentController -> listComments();
                 }
             
-            } elseif ($get == 'adduser') {
+            } elseif ($get == 'adduser' 
+                      && $_SESSION['user']->type() == 'administrator'
+                ) {
 
                 if (isset($_POST['addUser'])) {
                 
@@ -430,9 +432,12 @@ class Router
                             } else {
                                 $authorName = null;
                             }
-                            if (isset($_FILES['profilPictureUpload'])) {
-                                
-                                $backUserController -> uploadProfilPicture(
+                            if (isset($_FILES['profilPictureUpload'])
+                                && $_FILES['profilPictureUpload']['name'] != null
+                            ) {
+                                dump($_FILES['profilPictureUpload']);
+                                $profilPicture = $backUserController ->
+                                uploadProfilPicture(
                                     $_FILES['profilPictureUpload']
                                 );
                             } else {
@@ -448,7 +453,7 @@ class Router
                                 ),
                                 'userEmail' => $userEmail,
                                 'authorName' => $authorName,
-                                'profilPicture' => $profilPicture,
+                                'profilPicture' => basename($profilPicture),
                                 'type' => $_SESSION['user']->type()
                             );
 
