@@ -31,6 +31,12 @@
                     <a class="navbar-brand js-scroll-trigger" href="#page-top">
                         <img src="public/assets/img/logo.png" id="logoMenu" alt="logo" />
                     </a>
+                    {% if user is null %}
+                    <a class="navbar-brand js-scroll-trigger" href="mat.bonhommeau85@gmail.com">
+                        Mathieu Bonhommeau
+                    </a>
+                    {% endif %}
+                    
                     {% if user %}
                         {% if user.profilPicture is null %}
                             <img src="public/assets/img/userImg/profil.png" alt="Photo de profil" id="profilPictureMenu"/>
@@ -39,6 +45,9 @@
                         {% endif %}
                         <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.id }} id="adminProfil">{{user.userName}} </a>
                     {% endif %}
+
+                    
+
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
                         <i class="fas fa-bars"></i>
