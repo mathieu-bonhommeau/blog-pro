@@ -108,9 +108,29 @@
    #myName {
      font-size: 2rem;
      letter-spacing: 0.1rem;
+     
    }
 
    #myJob {
     font-size: 3.5rem;
     letter-spacing: 0.1rem;
   }
+  
+  .btn-primary {
+    background-color: #4A7276 !important;
+  }
+
+  .btn-primary:hover {
+    background-color: #1B3236 !important;
+  }
+
+  #about-text {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  
+  #myPhoto {
+    width: 13rem;
+    height: 15rem;
+    box-shadow: -2px -2px -2px #1B3236 ;
+  } 

@@ -109,7 +109,7 @@ class User
         
     }
 
-    public function setProfilPicture($profilPicture) 
+    public function setprofilPicture($profilPicture) 
     {
         if ($profilPicture == null ) {
             $this->_profilPicture = null;
