@@ -236,18 +236,19 @@ class Router
                 && ($_SESSION['user']->type() == 'administrator'
                 || $_SESSION['user']->type() == 'author')
             ) {
-
+                
                 if (isset($_POST['addPost'])) {
-            
+                    
                     if (isset($_GET['id'])) { 
                         $form = $backPostController -> dataInputPost($_GET['id']);
+                        
                     } else {
                         
-                        $form = $backPostController -> dataInputPost();
-                        
+                        $form = $backPostController -> dataInputPost();   
                     }
                     
                     $form['published'] = 'TRUE';
+                   
                     $backPostController -> addPostView($form);
 
                 } elseif (isset($_POST['preview'])) {
@@ -273,8 +274,10 @@ class Router
                 } elseif (isset($_GET['id'])) {
                     if (isset($_SESSION['previewPost'])) {
                         $updatePost = $_SESSION['previewPost'];
+                        
                     } else {
                         $updatePost = $backPostController  -> updatePost($_GET['id']);
+                        
                         $_SESSION['previewPost'] = $updatePost;
                     }
                     
@@ -282,8 +285,8 @@ class Router
                     
                 } elseif (isset($_SESSION['previewPost'])) {
                     $previewPost = $_SESSION['previewPost'];
-                    
                     $backPostController  -> addPostView($form=null, $msg=null, $previewPost);
+                    
                 
                 } else {
                     if (isset($_SESSION['addPostMsg'])) {
@@ -292,6 +295,7 @@ class Router
 
                     } else {
                         $backPostController -> addPostView();
+                        
                     } 
                 }
 

@@ -41,7 +41,9 @@ class BackPostController extends BackController
                 $this -> resultPost($result[0], $result[1]);
 
             } else {
+                
                 $result = $postManager -> updatePost($newPost);
+                
                 $this -> resultPost($result, $newPost->id());
             }
         }
@@ -64,24 +66,28 @@ class BackPostController extends BackController
             $data = $postManager -> getPost($id);
             $newPost = new \model\Post($data);
             
-            if ($newPost->published() == 'TRUE' 
-                && (isset($_SESSION['previewPost']) 
-                && isset($_SESSION['oldImage']) 
-                && basename(
-                    $_SESSION['previewPost']->picture()
-                ) != $_SESSION['oldImage'])
-            ) {
-                unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
+            if ($newPost->published() == 'TRUE') {
+        
+                if (isset($_SESSION['previewPost']) 
+                    && isset($_SESSION['oldImage'])
+                ) {
+                    if (basename($_SESSION['previewPost']->picture())  != $_SESSION['oldImage']
+                    ) {
+                        unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
+                    }
+                }
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?p=post&id=' . $newPost->id());
                 exit();
-                
+
             } else {
+                
                 $_SESSION['addPostMsg'] = MSG_SAVE;
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?admin=addpost');
                 exit();
             }
+
         } else {
             $_SESSION['addPostMsg'] = POST_NO_OK;
             header('Location: index.php?admin=addpost');
@@ -155,6 +161,7 @@ class BackPostController extends BackController
                 'picture' => $path,
                 'published' => 'FALSE'   
             );
+            
             return $form;
             
         } else {
@@ -314,16 +321,14 @@ class BackPostController extends BackController
 
     public function deleteSession($name) 
     {
-        if (isset($_SESSION[$name])
-            && (file_exists($_SESSION[$name] -> picture()))
-        ) {
-            $postManager = new \model\PostManager;
-            $result = $postManager -> getPostImg(
-                basename($_SESSION[$name] -> picture())
-            );
-            if ($result == 0) {
-                unlink($_SESSION[$name] -> picture());
-            } 
+        if (isset($_SESSION[$name])) {
+            if (file_exists($_SESSION[$name] -> picture())) {
+                $postManager = new \model\PostManager;
+                $result = $postManager -> getPostImg(basename($_SESSION[$name] -> picture()));
+                if ($result == 0) {
+                    unlink($_SESSION[$name] -> picture());
+                } 
+            }
             unset($_SESSION[$name]);
         }
     }
