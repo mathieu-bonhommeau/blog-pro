@@ -176,12 +176,13 @@ class BackPostController extends BackController
             $post -> setPublished('TRUE');
             
             $affectedLine = $postManager -> updatePost($post);
-            if ($affectedLine == 1) {
-                if ($_GET['c'] == 'valid') {
-                    header('Location: index.php?p=post&id=' . $id . '&c=valid'); 
-                } else {
+
+            if ($affectedLine == 1 && $_GET['c'] == 'valid') {
+                header('Location: index.php?p=post&id=' . $id . '&c=valid');
+
+            } elseif ($affectedLine == 1 && $_GET['c'] != 'valid') {
                     header('Location: index.php?admin=post');
-                }
+                    
             } else {
                 throw new \Exception(POST_NO_OK);
             }
