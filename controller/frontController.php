@@ -54,33 +54,34 @@ class FrontController extends Controller
         $dataPost = $postManager -> getPost($id); 
         if ($dataPost) {    
             $post = new \model\Post($dataPost);
-
+            
             if ($post->published() == 'FALSE' 
                 && $backManageComment != 'valid'
                 && $backManageComment != 'ok'
                 && $backManageComment != 'moderate'
             ) {
+                echo 'rrrrrrrr';
                 throw new \Exception(PAGE_NOT_EXIST);
-            } else {
-                $commentManager = new \model\CommentManager;
-                $dataComment = $commentManager -> getComments($id);
-                $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
-                $this->twigInit();
-                $this->twig->addExtension(new Twig_Extensions_Extension_Text());
-                echo $this->twig->render(
-                    'frontView/postView.twig', array(
-                        'post' => $post,
-                        'comments' => $dataComment,
-                        'nbrComments' => $nbrComments['COUNT(*)'],
-                        'commentMsg' => $msg,
-                        'user' => $this->user,
-                        'backManageComment' => $backManageComment
-                    )
-                );
-            }
-        } else {
-            throw new \Exception(PAGE_NOT_EXIST); 
-        }        
+            } 
+
+            $commentManager = new \model\CommentManager;
+            $dataComment = $commentManager -> getComments($id);
+            $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
+            $this->twigInit();
+            $this->twig->addExtension(new Twig_Extensions_Extension_Text());
+            echo $this->twig->render(
+                'frontView/postView.twig', array(
+                    'post' => $post,
+                    'comments' => $dataComment,
+                    'nbrComments' => $nbrComments['COUNT(*)'],
+                    'commentMsg' => $msg,
+                    'user' => $this->user,
+                    'backManageComment' => $backManageComment
+                )
+            );
+            return;
+        } 
+        throw new \Exception(PAGE_NOT_EXIST);       
     }
 
     public function addNewComment(array $form)
