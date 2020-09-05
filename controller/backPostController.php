@@ -72,11 +72,9 @@ class BackPostController extends BackController
                 ) != $_SESSION['oldImage'])
             ) {
                 unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
-                
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?p=post&id=' . $newPost->id());
                 exit();
-
             } else {
                 
                 $_SESSION['addPostMsg'] = MSG_SAVE;
@@ -84,7 +82,6 @@ class BackPostController extends BackController
                 header('Location: index.php?admin=addpost');
                 exit();
             }
-
         } else {
             $_SESSION['addPostMsg'] = POST_NO_OK;
             header('Location: index.php?admin=addpost');
