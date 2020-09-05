@@ -142,25 +142,21 @@ class BackUserController extends BackController
 
     public function uploadProfilPicture($picture)
     {
-        if (!empty($_SESSION['user']->profilPicture())) {
-            if (file_exists(
-                USER_IMG_DIRECTORY . 
-                basename($_SESSION['user']->profilPicture())
-            ) 
-            ) {
-                unlink(
-                    USER_IMG_DIRECTORY . basename(
-                        $_SESSION['user']->profilPicture()
-                    )
-                );
-            }
+        if (!empty($_SESSION['user']->profilPicture()) 
+            && (file_exists(
+                USER_IMG_DIRECTORY . basename($_SESSION['user']->profilPicture())
+            ))
+        ) {
+            unlink(
+                USER_IMG_DIRECTORY . basename($_SESSION['user']->profilPicture())
+            );
         }
         if ($picture['error'] == 0 && $picture['size'] <= 2000000
             && (in_array(
                 pathinfo($picture['name'])['extension'], AUTHORIZED_EXTENSIONS
             ))
         ) {
-            $new = move_uploaded_file(
+            move_uploaded_file(
                 $picture['tmp_name'], 
                 USER_IMG_DIRECTORY . basename($picture['name'])
             );
@@ -172,7 +168,6 @@ class BackUserController extends BackController
             );
             return USER_IMG_DIRECTORY . (string)time() . '.' 
                 . pathinfo($picture['name'])['extension'];
-    
         } else {
             throw new \Exception(UPLOAD_NO_OK);
         }
