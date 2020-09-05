@@ -68,12 +68,11 @@ class BackPostController extends BackController
         
                 if (isset($_SESSION['previewPost']) 
                     && isset($_SESSION['oldImage'])
+                    && (basename($_SESSION['previewPost']->picture())  != $_SESSION['oldImage'])
                 ) {
-                    if (basename($_SESSION['previewPost']->picture())  != $_SESSION['oldImage']
-                    ) {
                         unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
-                    }
                 }
+                
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?p=post&id=' . $newPost->id());
                 exit();
