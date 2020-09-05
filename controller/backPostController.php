@@ -115,23 +115,23 @@ class BackPostController extends BackController
 
     public function dataInputPost($id=null)
     {
-        if (empty($_POST['titlePost'])
-            && empty($_POST['chapoPost'])
-            && empty($_POST['contentPost'])
+        if ((empty($_POST['titlePost']) 
+            && empty($_POST['chapoPost']) 
+            && empty($_POST['contentPost'])) 
+            && (isset($_SESSION['previewPost']))
         ) {
-            if (isset($_SESSION['previewPost'])) {
-                $_POST['titlePost'] = $_SESSION['previewPost']->title();
-                $_POST['chapoPost'] = $_SESSION['previewPost']->chapo();
-                $_POST['contentPost'] = $_SESSION['previewPost']->content();
-            }
+            $_POST['titlePost'] = $_SESSION['previewPost']->title();
+            $_POST['chapoPost'] = $_SESSION['previewPost']->chapo();
+            $_POST['contentPost'] = $_SESSION['previewPost']->content();  
         }
+
         if (!empty($_POST['titlePost'])
             && !empty($_POST['chapoPost'])
             && !empty($_POST['contentPost'])
         ) {
             if (empty($_FILES['imgPost']['name'])) {
                 $path = $this->managePostImage();
-                
+                return;
             } else {
                 $path =  $this -> uploadFile($_FILES['imgPost']);  
             }
@@ -281,7 +281,6 @@ class BackPostController extends BackController
                 );
                 return 'tmp/' . basename($imgPost['name']);
             }
-            throw new \Exception(UPLOAD_NO_OK);
         } 
         throw new \Exception(UPLOAD_NO_OK);      
     }
