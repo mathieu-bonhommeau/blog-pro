@@ -60,7 +60,6 @@ class FrontController extends Controller
                 && $backManageComment != 'ok'
                 && $backManageComment != 'moderate'
             ) {
-                echo 'rrrrrrrr';
                 throw new \Exception(PAGE_NOT_EXIST);
             } 
 
