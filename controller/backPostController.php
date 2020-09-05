@@ -185,20 +185,19 @@ class BackPostController extends BackController
             $post = new \model\Post($data);
             $_SESSION['oldImage'] = basename($post->picture());
 
-            if ($post->picture() != null) {
-                if (!file_exists('tmp/')) {
-                    mkdir('tmp/');
-                }
-                if (file_exists(POST_IMG_DIRECTORY . $post->picture())) {
-                    copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
-                    $post->setPicture('tmp/' . 'tmp' . $post->picture());
-                } 
+            if ($post->picture() != null 
+                && file_exists(POST_IMG_DIRECTORY . $post->picture())
+            ) {
+                $this -> verifTmpFolder();
+                copy(
+                    POST_IMG_DIRECTORY . $post->picture(), 'tmp/' 
+                    . 'tmp' . $post->picture()
+                );
+                $post->setPicture('tmp/' . 'tmp' . $post->picture());
             }
             return $post;
-
-        } else {
-            throw new \Exception(POST_NO_EXIST); 
-        }
+        } 
+        throw new \Exception(POST_NO_EXIST);  
     }
 
     public function deleteView($id)
