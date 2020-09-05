@@ -64,7 +64,7 @@ class Message
         if ($emailControl) {
             $this->_email = $email;
         } else {
-            throw new Exception(INVALID_EMAIL);
+            throw new\Exception(INVALID_EMAIL);
         }
     }
     
@@ -74,17 +74,23 @@ class Message
         $this->_message = $message;
     }
 
-    public function sendMessage()
+    public function sendMessage($email)
     {
         $header="MIME-Version: 1.0\r\n";
         $header.= HEADER_MAIL."\n";
         $header.='Content-Type:text/html; charset="uft-8"'."\n";
         $header.='Content-Transfer-Encoding: 8bit';
 
-        $to = EMAIL;
+        $to = $email;
         $subject = 'De ' . $this->inputFirstName() . ' ' . $this->inputName();
-        $message = $this->inputMessage() . 
-        '<br />' . 'mail : ' . $this->inputEmail();
+
+        if (isset($_GET['delete'])) {
+            $inputEmail = '<br />' . 'mail : ' . SUPPORT_EMAIL;
+        } else {
+            $inputEmail = '<br />' . 'mail : ' . $this->inputEmail();
+        }
+
+        $message = $this->inputMessage() . $inputEmail;
 
         $mail = mail($to, $subject, $message, $header);
         return $mail;

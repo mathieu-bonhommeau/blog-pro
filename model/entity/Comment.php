@@ -175,6 +175,7 @@ class Comment
 
         if ($emailControl) {
             $this->_emailVisitor = $emailVisitor;
+            
         } else {
             throw new \Exception(INVALID_EMAIL);
         }

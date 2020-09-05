@@ -9,7 +9,12 @@ class BackPostController extends BackController
     public function backListPosts()
     {
         $postManager = new \model\PostManager;
-        $posts = $postManager -> getPosts();
+        
+        if ($_SESSION['user']->type() == 'administrator') {
+            $posts = $postManager -> getPosts();
+        } elseif ($_SESSION['user']->type() == 'author') {
+            $posts = $postManager -> getUserPosts($_SESSION['user']->id());
+        }
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -64,7 +69,7 @@ class BackPostController extends BackController
                 if (isset($_SESSION['previewPost']) 
                     && isset($_SESSION['oldImage'])
                 ) {
-                    if (basename($_SESSION['previewPost'])  != $_SESSION['oldImage']
+                    if (basename($_SESSION['previewPost']->picture())  != $_SESSION['oldImage']
                     ) {
                         unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
                     }
@@ -124,13 +129,17 @@ class BackPostController extends BackController
         ) {
             if (empty($_FILES['imgPost']['name'])) {
                 
-                if (isset($_SESSION['previewPost'])) {
+                if (isset($_SESSION['previewPost']) 
+                    && $_SESSION['previewPost']->picture() != null
+                ) {
                     $path = basename($_SESSION['previewPost']->picture());
                     
                     if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
                         $fileInfo = pathinfo($path);
                         $newName = (string)time() . '.' .$fileInfo['extension'];
-                        
+                        if (!file_exists('tmp/')) {
+                            mkdir('tmp/');
+                        }
                         rename('tmp/'. $path, POST_IMG_DIRECTORY . $newName);
                         $_SESSION['previewPost'] -> setPicture(POST_IMG_DIRECTORY . $newName);
                     }
@@ -169,8 +178,11 @@ class BackPostController extends BackController
             
             $affectedLine = $postManager -> updatePost($post);
             if ($affectedLine == 1) {
-                header('Location: index.php?admin=post');
-
+                if ($_GET['c'] == 'valid') {
+                    header('Location: index.php?p=post&id=' . $id . '&c=valid'); 
+                } else {
+                    header('Location: index.php?admin=post');
+                }
             } else {
                 throw new \Exception(POST_NO_OK);
             }
@@ -189,8 +201,14 @@ class BackPostController extends BackController
             $_SESSION['oldImage'] = basename($post->picture());
 
             if ($post->picture() != null) {
-                copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
-                $post->setPicture('tmp/' . 'tmp' . $post->picture());
+                if (!file_exists('tmp/')) {
+                    mkdir('tmp/');
+                }
+                if (file_exists(POST_IMG_DIRECTORY . $post->picture())) {
+                    copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
+                    $post->setPicture('tmp/' . 'tmp' . $post->picture());
+                }
+                
             }
             return $post;
 
@@ -251,6 +269,9 @@ class BackPostController extends BackController
 
     public function uploadFile($imgPost=null)
     {  
+        if (!file_exists('tmp/')) {
+            mkdir('tmp/');
+        }
         if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000) {
             echo preg_match('#[^/\:.]#', $imgPost['name']);
             $fileInfo = pathinfo($imgPost['name']);
@@ -282,7 +303,9 @@ class BackPostController extends BackController
     public function imgChange()
     {
         if (isset($_SESSION['previewPost'])) {
-            unlink($_SESSION['previewPost'] -> picture());
+            if (file_exists($_SESSION['previewPost'] -> picture())) {
+                unlink($_SESSION['previewPost'] -> picture());
+            }
             $_SESSION['previewPost']->setPicture(null);
             $this -> addPostView($form=null, $msg=null, $_SESSION['previewPost']);
         }  

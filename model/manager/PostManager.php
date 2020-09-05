@@ -65,6 +65,28 @@ class PostManager extends Manager
         return $data;   
     }
 
+    public function getUserPosts($user_Id)
+    {
+        $req = $this->db()->prepare(
+            'SELECT post.id, post.title, user.authorName,
+             UNIX_TIMESTAMP(post.lastDateModif) AS lastDateModif,
+             published
+             FROM post
+             INNER JOIN user ON post.user_id = user.id
+             WHERE post.user_id = ?'
+        );
+        $req -> execute(array($user_Id));
+        while ($data = $req->fetch(\PDO::FETCH_ASSOC)) {
+            $posts[] = $data;
+        }
+
+        if (isset($posts)) {
+            return $posts;
+        } else {
+            return null;
+        }
+    }
+
     
     /**
      * Add new post 
@@ -150,12 +172,36 @@ class PostManager extends Manager
         return $countPosts['COUNT(*)'];
     }
 
+    public function countUserPosts($user_id)
+    {
+        $req = $this->db()->prepare(
+            'SELECT COUNT(*) 
+             FROM post
+             WHERE user_id = ?'
+        );
+        $req -> execute(array($user_id));
+        $countPosts = $req->fetch();
+        return $countPosts['COUNT(*)'];
+    }
+
     public function lastDatePost()
     {
         $req = $this->db()->query(
             'SELECT MAX(lastDateModif) FROM post
              WHERE published = \'TRUE\''
         );
+        $lastDateModif = $req->fetch();
+        return $lastDateModif['MAX(lastDateModif)'];
+    }
+
+    public function lastDateUserPost($user_id)
+    {
+        $req = $this->db()->prepare(
+            'SELECT MAX(lastDateModif) FROM post
+             WHERE published = \'TRUE\'
+             AND user_id = ?'
+        );
+        $req -> execute(array($user_id));
         $lastDateModif = $req->fetch();
         return $lastDateModif['MAX(lastDateModif)'];
     }

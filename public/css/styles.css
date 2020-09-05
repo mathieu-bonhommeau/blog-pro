@@ -9925,11 +9925,11 @@ button.bg-black:focus {
 }
 
 .text-primary {
-  color: #64a19d !important;
+  color: #4A7276 !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
-  color: #467370 !important;
+  color: #1B3236 !important;
 }
 
 .text-secondary {
@@ -10175,7 +10175,7 @@ body {
   }
   #mainNav .navbar-brand {
     padding: 0.5rem 0;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.75);
   }
   #mainNav .nav-link {
     transition: none;
@@ -10228,7 +10228,7 @@ body {
   height: auto;
   min-height: 35rem;
   padding: 15rem 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000000 100%), url("../assets/img/bg-masthead.jpg");
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.0) 50% ,rgba(0, 0, 0, 0.5) 90%, #000000 100%), url("../assets/img/code-4333398_1920.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -10239,7 +10239,7 @@ body {
   font-size: 2.5rem;
   line-height: 2.5rem;
   letter-spacing: 0.8rem;
-  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3));
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
           background-clip: text;
@@ -10247,6 +10247,10 @@ body {
 .masthead h2 {
   max-width: 20rem;
   font-size: 1rem;
+  background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
 }
 @media (min-width: 768px) {
   .masthead h1 {
@@ -10272,14 +10276,15 @@ body {
 
 .about-section {
   padding-top: 10rem;
-  background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0.9) 75%, rgba(0, 0, 0, 0.8) 100%);
+  padding-bottom: 10rem;
+  background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0.7) 75%, rgba(0, 0, 0, 1) 100%), url("../assets/img/network-4851119_1920.jpg");;
 }
 .about-section p {
   margin-bottom: 5rem;
 }
 
 .projects-section {
-  padding: 10rem 0;
+  padding: 10rem 0; 
 }
 .projects-section .featured-text {
   padding: 2rem;
@@ -10287,7 +10292,7 @@ body {
 @media (min-width: 992px) {
   .projects-section .featured-text {
     padding: 0 0 0 2rem;
-    border-left: 0.5rem solid #64a19d;
+    border-left: 0.5rem solid #4A7276;
   }
 }
 .projects-section .project-text {
@@ -10307,7 +10312,7 @@ body {
 
 .signup-section {
   padding: 10rem 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 75%, #000000 100%), url("../assets/img/bg-signup.jpg");
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 1) 75%, #000000 100%), url("../assets/img/network-4851119_1920.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;

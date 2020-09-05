@@ -2,23 +2,21 @@
 <html lang="en">
 
     <head>
-        {% block head %}
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <meta name="description" content="" />
-            <meta name="author" content="" />
-            <title></title>
-            <link rel="icon" type="image/x-icon" href="public/assets/img/favicon.ico" />
-            <!-- Font Awesome icons (free version)-->
-            <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-            <!-- Google fonts-->
-            <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-            <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-            <!-- Core theme CSS (includes Bootstrap)-->
-            <link href="public/css/styles.css" rel="stylesheet" />
-            <!-- CSS styles additional-->
-            <link href="public/css/additionalStyles.css" rel="stylesheet" />
-        {% endblock %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{% block title %}Blog pro de Mathieu Bonhommeau{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="public/assets/img/logo.png" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="public/css/styles.css" rel="stylesheet" />
+        <!-- CSS styles additional-->
+        <link href="public/css/additionalStyles.css" rel="stylesheet" />
     </head>
 
     <body id="page-top">
@@ -28,10 +26,26 @@
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
                 <div class="container">
                     
-                    <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
-                    {% if user %}
-                        <span class="navbar-brand js-scroll-trigger" id="user">Photo de profil + {{user.userName}}</span>
+                    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                        <img src="public/assets/img/logo.png" id="logoMenu" alt="logo" />
+                    </a>
+                    {% if user is null %}
+                    <a class="navbar-brand js-scroll-trigger" href="mat.bonhommeau85@gmail.com">
+                        Mathieu Bonhommeau
+                    </a>
                     {% endif %}
+                    
+                    {% if user %}
+                        {% if user.profilPicture is null %}
+                            <img src="public/assets/img/userImg/profil.png" alt="Photo de profil" id="profilPictureMenu"/>
+                        {% else %}
+                            <img src={{ constant('USER_IMG_DIRECTORY') ~ user.profilPicture }} alt="Photo de profil" id="profilPictureMenu" class="ml-5"/>
+                        {% endif %}
+                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.id }} id="adminProfil">{{user.userName}} </a>
+                    {% endif %}
+
+                    
+
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
                         <i class="fas fa-bars"></i>
@@ -91,31 +105,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="social d-flex justify-content-center">
-                        <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
-                    </div>
+                    
                 </div>
             </section>
             
             <footer class="footer bg-black small text-center text-white-50">
-                <div class="row">
-                    <div class="col-lg-12">
-
-                        {% if user %}
-                            <div class="container text-left mb-3"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
-                            <div class="container text-left"><a href="index.php?admin=backhome" id="admin">Accéder au BackOffice >>>></a></div>
-                        {% else %}
-                            <div class="container text-left mb-3"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
-                        {% endif %}
-
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            {% if user %}
+                                <div class="container text-left mb-3"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
+                                <div class="container text-left mb-3"><a href="index.php?p=connect">Changer d'utilisateur</a></div>
+                                <div class="container text-left"><a href="index.php?admin=backhome" id="admin">Accéder au BackOffice >></a></div>
+                            {% else %}
+                                <div class="container text-left mb-3"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="social d-flex justify-content-center">
+                                <a class="mx-2" href="https://www.linkedin.com/in/mathieu-bonhommeau-155640128/" target="_blank"><i class="fab fa-circle fa-stack-2x fa-linkedin-in"></i></a>
+                                <a class="mx-2" href="https://github.com/matanna" target="_blank"><i class="fab fa-circle fa-stack-2x fa-github"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="container text-right mb-3"><a href="index.php">Accueil >></a></div>
+                            <div class="container text-right mb-3"><a href="index.php?p=listposts">Tous les articles >></a></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container text-center">Copyright © Tous droits réservé</div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="container text-center">Copyright © Your Website 2020</div>
-                </div>
-                
+            </div>
                
             </footer>
         {% endblock %}

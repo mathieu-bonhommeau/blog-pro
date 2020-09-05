@@ -1,14 +1,31 @@
 {% extends "frontView/templateFront.twig" %}
 
+{% block title %}Blog pro de Mathieu Bonhommeau{% endblock %}
+
 {% block content %}
 
     <!-- Masthead-->
     <header class="masthead">
         <div class="container d-flex h-100 align-items-center">
-            <div class="mx-auto text-center">
-                <h1 class="mx-auto my-0 text-uppercase">Nom Prenom</h1>
-                <h2 class="text-white-50 mx-auto mt-2 mb-5">Phrase d'accroche</h2>
-                <a class="btn btn-primary js-scroll-trigger" href="#about">CV</a>
+            <div class="mx-auto text-center ">
+                <div class="row d-flex align-items-center">
+                    <div class="col-lg-12">
+                        <h1 class="mx-auto my-0 text-uppercase" id="myJob">DEVELOPPEUR WEB</h1>  
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-lg-12 text-center">
+                        <img src="public/assets/img/logo.png" id="logoHome" alt="logo" />
+                        <h2 class="mx-auto my-0 text-uppercase mb-5" id="myName">MATHIEU BONHOMMEAU</h2>
+                    </div>
+                </div>
+                <p class="text-white-50 text-uppercase">Développeur mais surtout <strong>Passionné</strong> et <strong>Investi</strong></p>
+                <p class="text-white-50 mx-auto mb-5 text-uppercase">Travaillons ensemble sur vos projets !</p>
+                <a class="btn btn-primary js-scroll-trigger mb-5" href="public/assets/cv/CV_MBonhommeau.pdf" target="_blank">Mon CV</a>
+                <div class="social d-flex justify-content-center">
+                    <a class="mx-2" href="https://www.linkedin.com/in/mathieu-bonhommeau-155640128/" target="_blank"><i class="fab fa-circle fa-stack-2x fa-linkedin-in"></i></a>
+                    <a class="mx-2" href="https://github.com/matanna" target="_blank"><i class="fab fa-circle fa-stack-2x fa-github"></i></a>
+                </div>
             </div>
         </div>
     </header>
@@ -17,16 +34,23 @@
     <section class="about-section text-center" id="about">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h2 class="text-white mb-4">A propos de l'auteur</h2>
-                <p class="text-white-50">
-                    Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
-                    <a href="https://startbootstrap.com/template-overviews/grayscale/">the preview page</a>
-                    . The theme is open source, and you can use it for any purpose, personal or commercial.
+            <h2 class="text-white text-center mb-5 col-lg-12">Présentation</h2>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4"><img src="public/assets/img/aboutPhoto.jpg" alt="My photo" id="myPhoto" /></div>
+            <div class="col-lg-8">
+                <p class="text-white-50" id="about-text">
+                    Après avoir travaillé pendant 15 ans dans l'industrie du verre dont 4 en tant que Chef d'atelier, 
+                    j'ai pris la décision de me réorienter vers LE DEVELOPPEMENT WEB, domaine qui me passionne depuis toujours.<br />
+                    Ces années d'expérience m'ont permis d'appréhender toutes les fascettes de la relation Client - Fournisseur tant au niveau de la qualité du produit vendu, 
+                    qu'au niveau du respect des délais de livraison. <br />
+                    Ce sont ces valeurs qui forment les bases de mon activité de dévelopeur web.<br /><br />
+                    Bonne visite !<br /><br />
+                    MATHIEU BONHOMMEAU
                 </p>
             </div>
         </div>
-        <img class="img-fluid" src="public/assets/img/ipad.png" alt="" />  
     </div>
     </section>
 
@@ -37,8 +61,8 @@
         {% for key, post in posts %}
             {% if key == 0 %}
                 <div class="row align-items-center no-gutters mb-4 mb-lg-5 post">
-                    <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
-                    <div class="col-xl-4 col-lg-5">
+                    <div class="col-xl-7 col-lg-6"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                    <div class="col-xl-5 col-lg-6">
                         <div class="featured-text text-center text-lg-left">
                             <h4>{{ post.title }}</h4>
                             <div class="row justify-content-center no-gutters">

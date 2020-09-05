@@ -1,21 +1,14 @@
 <?php
 
 namespace controller;
+
+use Faker\ValidGenerator;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
 class FrontController extends Controller 
 { 
-
-    private $_msg;
-
-
-
-    public function msg()
-    {
-        return $this->_msg;
-    }
-
+    
     public function homePage($msg=null)
     {
         $postManager = new \model\PostManager;
@@ -53,23 +46,35 @@ class FrontController extends Controller
 
     public function postView($id, $msg=null)
     {
+        if (isset($_GET['c'])) {
+            $backManageComment = $_GET['c'];
+        } else {
+            $backManageComment = null;
+        }
+
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
-
+        
         if ($dataPost == false) {
             throw new \Exception(PAGE_NOT_EXIST);
-
+            
         } else {
+            
             $post = new \model\Post($dataPost);
 
-            if ($post->published() == 'FALSE') {
+            if ($post->published() == 'FALSE' 
+                && $backManageComment != 'valid'
+                && $backManageComment != 'ok'
+                && $backManageComment != 'moderate'
+            ) {
                 throw new \Exception(PAGE_NOT_EXIST);
 
             } else {
+                
                 $commentManager = new \model\CommentManager;
                 $dataComment = $commentManager -> getComments($id);
                 $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
-
+                
                 $this->twigInit();
                 $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
                 $this->twig->addExtension(new Twig_Extensions_Extension_Text());
@@ -80,28 +85,12 @@ class FrontController extends Controller
                         'comments' => $dataComment,
                         'nbrComments' => $nbrComments['COUNT(*)'],
                         'commentMsg' => $msg,
-                        'user' => $this->user
+                        'user' => $this->user,
+                        'backManageComment' => $backManageComment
                     )
                 );
             }
         }      
-    }
-
-    public function sendMessage(array $form)
-    {
-        foreach ($form as $key => $value) {
-            $form[$key] = htmlspecialchars($form[$key]);
-        }
-
-        $message = new \model\Message($form);
-        $mail = $message -> sendMessage();
-
-        if ($mail) {
-            $msg = MSG_OK;
-        } else {
-            $msg = MSG_NO_OK;
-        }
-        $this->_msg = $msg;
     }
 
     public function addNewComment(array $form)
@@ -135,18 +124,25 @@ class FrontController extends Controller
     {
         $userManager = new \model\UserManager;
         $data = $userManager -> getUser($pseudo);
-
+        
         if ($data) {
-
+            
             $user = new \model\User($data);
 
-            if ($user -> password() == $password) {
-
+            if ($_GET['admin'] == 'adduser'
+                && $password == $user->password()
+            ) {
                 $_SESSION['user'] = $user;
-
                 header('Location: index.php?p=home');
                 exit();
 
+            } elseif ($_GET['admin'] != 'adduser'
+                && password_verify($password, $user->password())
+            ) { 
+                $_SESSION['user'] = $user;
+                header('Location: index.php?p=home');
+                exit();
+                
             } else {
                 return USER_NO_OK;
             }

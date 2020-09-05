@@ -2,11 +2,22 @@
 
 //CONSTANTS
 
+//Database config
+define('HOST', 'mysql:host=localhost');
+define('PORT', 'port=3308');
+define('DBNAME', 'dbname=blog_pro');
+define('CHARSET', 'charset=utf8');
+define('USER', 'root');
+define('PASSWORD', '');
+
+
 //Directory posts images
 define('POST_IMG_DIRECTORY', 'public/assets/img/postImg/');
+define('USER_IMG_DIRECTORY', 'public/assets/img/userImg/');
+
 
 //Email parameters
-define('EMAIL', 'mathieu.bonhommeau@orange.fr');
+define('SUPPORT_EMAIL', 'mathieu.bonhommeau@orange.fr');
 define('HEADER_MAIL', 'From:"MatDev.com"<support@matdev.com>');
 
 //Messages
@@ -17,6 +28,8 @@ define('EMPTY_FIELDS', 'Veuillez remplir tous les champs');
 define('PAGE_NOT_EXIST', 'Cette page n\existe pas');
 define('MSG_TOO_LONG', 'Votre message ne doit pas dépasser 700 caractères');
 define('WAIT_VALID_COMMENT', 'Votre commentaire a bien été envoyé et est en attente de validation');
+define('NO_VALID_COMMENT', 'Le commentaire est déjà validé ou n\'existe pas');
+define('VALID_COMMENT', 'Le commentaire est validé');
 define('USER_NO_OK', 'L\'identifiant ou le mot de passe est incorrect');
 define('NO_ACCESS', 'Vous n\'avez pas accès à cette page !');
 define('POST_NO_OK', 'L\'article n\' a pas pu être ajouté !');
@@ -24,6 +37,12 @@ define('UPLOAD_NO_OK', 'L\'upload du fichier n\'a pas fonctionné');
 define('MSG_SAVE', 'Votre article est bien enregistré mais non publié');
 define('POST_NO_EXIST', 'Cet article n\existe pas');
 define('POST_NO_SUP', 'L\'article n\' a pas pu être supprimé !');
+define('NO_VALID_COMMENT_EMAIL', 'Votre commentaire a été supprimé.');
+define('COMMENT_NO_EXIST', 'Ce commentaire n\existe pas.');
+define('ADD_USER_OK', 'L\'utilisateur a bien été ajouté.');
+define('ADD_USER_NO_OK', 'L\ajout d\'utilisateur n\a pas fonctionné.');
+define('USER_NO_EXIST', 'Cet utilisateur n\'existe pas.');
+define('USER_NO_DELETE', 'L\utilisateur n\'a pas été supprimé.');
 
 //Uplaod authorized extensions
 

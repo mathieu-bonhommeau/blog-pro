@@ -20,7 +20,7 @@ try
         $router -> runBackPage($_GET['admin']);
 
     } else {
-        
+    
         $frontController = new \controller\FrontController;
         $frontController -> homePage();
     }   

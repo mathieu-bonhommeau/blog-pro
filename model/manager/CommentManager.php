@@ -42,16 +42,25 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
-    public function getAllComments($validComment)
+    public function getAllComments($validComment=null, $try=null)
     {
-        $req = $this->db()->prepare(
-            'SELECT id, nameVisitor, content, 
+        if ($validComment == null) {
+            $inputReq = null;
+        } else {
+            $inputReq = 'WHERE validComment = "' . $validComment . '"';
+        }
+
+        if ($try == null || ($try != 'post_id' && $try != 'nameVisitor')) {
+            $try = 'commentDate';
+        }
+
+        $req = $this->db()->query(
+            'SELECT id, nameVisitor, content, emailVisitor, 
             UNIX_TIMESTAMP(commentDate) AS commentDate,
             validComment,user_id, post_id
-            FROM comment
-            WHERE  validComment = ?'
+            FROM comment ' . $inputReq . 
+            ' ORDER BY ' . $try . ' DESC'
         );
-        $req -> execute(array($validComment));
         return $req;
     }
 
@@ -74,7 +83,7 @@ class CommentManager extends Manager
         $req = $this->db()->prepare(
             'SELECT id, nameVisitor, content, 
             UNIX_TIMESTAMP(commentDate) AS commentDate,
-            validComment, user_id, post_id
+            emailVisitor, validComment, user_id, post_id
             FROM comment
             WHERE id = ?'
         );
@@ -97,6 +106,17 @@ class CommentManager extends Manager
             'DELETE FROM comment WHERE post_id = ?'
         );
         $req ->execute(array($post_id));
+        return $req->rowCount();
+    }
+
+    public function updateComment($id)
+    {
+        $req = $this->db()->prepare(
+            'UPDATE comment 
+             SET validComment = \'TRUE\' 
+             WHERE id = ?'
+        );
+        $req -> execute(array($id));
         return $req->rowCount();
     }
 

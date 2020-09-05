@@ -2,23 +2,21 @@
 <html lang="en">
 
     <head>
-        {% block head %}
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <meta name="description" content="" />
-            <meta name="author" content="" />
-            <title></title>
-            <link rel="icon" type="image/x-icon" href="public/assets/img/favicon.ico" />
-            <!-- Font Awesome icons (free version)-->
-            <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-            <!-- Google fonts-->
-            <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-            <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-            <!-- Core theme CSS (includes Bootstrap)-->
-            <link href="public/css/styles.css" rel="stylesheet" />
-            <!-- CSS styles additional-->
-            <link href="public/css/additionalStyles.css" rel="stylesheet" />
-        {% endblock %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{% block title %}Blog Pro de Mathieu Bonhommeau{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="public/assets/img/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="public/css/styles.css" rel="stylesheet" />
+        <!-- CSS styles additional-->
+        <link href="public/css/additionalStyles.css" rel="stylesheet" />
     </head>
 
     <body id="page-top">
@@ -27,7 +25,24 @@
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
                 <div class="container">
-                    <a class="navbar-brand js-scroll-trigger" href="#page-top">Logo</a>
+                    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                        <img src="public/assets/img/logo.png" id="logoMenu" alt="logo" />
+                    </a>
+                    {% if user.profilPicture is null %}
+                        <img src="public/assets/img/userImg/profil.png" alt="Photo de profil" id="profilPictureMenu"/>
+                    {% else %}
+                        <img src={{ constant('USER_IMG_DIRECTORY') ~ user.profilPicture }} alt="Photo de profil" id="profilPictureMenu" class="ml-5"/>
+                    {% endif %}
+                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.id }} id="adminProfil">
+                        {{user.userName}} : 
+                       {% if user.type == 'administrator' %}
+                           Administrateur
+                       {% elseif user.type == 'author' %}
+                           Auteur
+                       {% elseif user.type == 'moderator' %} 
+                           Modérateur
+                       {% endif %}
+                   </a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
                         <i class="fas fa-bars"></i>
@@ -35,10 +50,13 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item"></li><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=comment">Commentaires</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=user">Utilisateurs</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=profil">Photo de profil + {{user.userName}}: {{ user.type }}</a></li>
+                            {% if user.type == 'administrator' or user.type == 'author' %}
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
+                            {% endif %}
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=listcomments">Commentaires</a></li>
+                            {% if user.type == 'administrator' %}
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=listusers">Utilisateurs</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -54,19 +72,78 @@
         {% block footer %}
 
             
-            <footer class="footer bg-black small text-center text-white-50">
+        <section class="contact-section bg-black">
+            <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Addresse</h4>
+                                <hr class="my-4" />
+                                <div class="small text-black-50">8, l'Ouche Grise - 85260 La Copechagnière</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-envelope text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Email</h4>
+                                <hr class="my-4" />
+                                <div class="small text-black-50"><a href="#!">mat.bonhommeau85@gmail.com</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <div class="card py-4 h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                                <h4 class="text-uppercase m-0">Tel</h4>
+                                <hr class="my-4" />
+                                <div class="small text-black-50">06 47 15 76 04</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="footer bg-black small text-center text-white-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        {% if user %}
                             <div class="container text-left mb-3"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
-                            <div class="container text-left"><a href="index.php" id="admin">Retour au site >>>></a></div>
+                            <div class="container text-left mb-3"><a href="index.php?p=connect">Changer d'utilisateur</a></div>
+                            <div class="container text-left"><a href="index.php" id="admin">Retour au site >></a></div>
+                        {% else %}
+                            <div class="container text-left mb-3"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="social d-flex justify-content-center">
+                            <a class="mx-2" href="https://www.linkedin.com/in/mathieu-bonhommeau-155640128/" target="_blank"><i class="fab fa-circle fa-stack-2x fa-linkedin-in"></i></a>
+                            <a class="mx-2" href="https://github.com/matanna" target="_blank"><i class="fab fa-circle fa-stack-2x fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        {% if user %}
+                            {% if user.type == 'administrator' or user.type == 'author' %}
+                                <div class="container text-right mb-3"><a href="index.php?admin=post">Liste des articles >></a></div>
+                            {% endif %}
+                            <div class="container text-right mb-3"><a href="index.php?admin=listcomments">Liste des commentaires >></a></div>
+                            {% if user.type == 'administrator' %}
+                                <div class="container text-right mb-3"><a href="index.php?admin=listusers">Liste des utilisateurs >></a></div>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="container text-center">Copyright © Your Website 2020</div>
+                    <div class="container text-center">Copyright © Tous droits réservé</div>
                 </div>
-                
-               
-            </footer>
+            </div>
+        </footer>
         {% endblock %}
         
         <!-- Bootstrap core JS-->
