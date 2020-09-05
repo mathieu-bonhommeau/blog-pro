@@ -269,33 +269,33 @@ class BackPostController extends BackController
         if (!file_exists('tmp/')) {
             mkdir('tmp/');
         }
-        if ($imgPost['error'] == 0  && $imgPost['size'] <= 20) {
-            //echo preg_match('#[^/\:.]#', $imgPost['name']);
+        if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000) {
             
             if (in_array(
                 pathinfo($imgPost['name'])['extension'], AUTHORIZED_EXTENSIONS
-            )
+            ) && (isset($_POST['addPost']) || isset($_POST['notPublished']))
             ) {
-                if (isset($_POST['addPost']) || isset($_POST['notPublished'])) {
-                    $new = move_uploaded_file(
-                        $imgPost['tmp_name'], 
-                        POST_IMG_DIRECTORY . basename($imgPost['name'])
-                    );
-                    rename(
-                        POST_IMG_DIRECTORY . basename($imgPost['name']), 
-                        POST_IMG_DIRECTORY . (string)time() . '.' 
-                        . pathinfo($imgPost['name'])['extension']
-                    );
-                    return POST_IMG_DIRECTORY . (string)time() . '.' 
-                    . pathinfo($imgPost['name'])['extension'];
+                move_uploaded_file(
+                    $imgPost['tmp_name'], 
+                    POST_IMG_DIRECTORY . basename($imgPost['name'])
+                );
+                rename(
+                    POST_IMG_DIRECTORY . basename($imgPost['name']), 
+                    POST_IMG_DIRECTORY . (string)time() . '.' 
+                    . pathinfo($imgPost['name'])['extension']
+                );
+                return POST_IMG_DIRECTORY . (string)time() . '.' 
+                . pathinfo($imgPost['name'])['extension'];
 
-                } elseif (isset($_POST['preview'])) {
-                    $new = move_uploaded_file(
-                        $imgPost['tmp_name'], 
-                        'tmp/' . basename($imgPost['name'])
-                    );
-                    return 'tmp/' . basename($imgPost['name']);
-                }
+            } elseif (in_array(
+                pathinfo($imgPost['name'])['extension'], AUTHORIZED_EXTENSIONS
+            ) && isset($_POST['preview'])
+            ) {
+                move_uploaded_file(
+                    $imgPost['tmp_name'], 
+                    'tmp/' . basename($imgPost['name'])
+                );
+                return 'tmp/' . basename($imgPost['name']);
             }
             throw new \Exception(UPLOAD_NO_OK);
         } 
