@@ -312,14 +312,16 @@ class BackPostController extends BackController
 
     public function deleteSession($name) 
     {
-        if (isset($_SESSION[$name])) {
-            if (file_exists($_SESSION[$name] -> picture())) {
-                $postManager = new \model\PostManager;
-                $result = $postManager -> getPostImg(basename($_SESSION[$name] -> picture()));
-                if ($result == 0) {
-                    unlink($_SESSION[$name] -> picture());
-                } 
-            }
+        if (isset($_SESSION[$name])
+            && (file_exists($_SESSION[$name] -> picture()))
+        ) {
+            $postManager = new \model\PostManager;
+            $result = $postManager -> getPostImg(
+                basename($_SESSION[$name] -> picture())
+            );
+            if ($result == 0) {
+                unlink($_SESSION[$name] -> picture());
+            } 
             unset($_SESSION[$name]);
         }
     }

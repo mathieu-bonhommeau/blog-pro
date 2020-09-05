@@ -50,36 +50,36 @@ class BackCommentController extends BackController
     public function deleteComment($id)
     {
         $commentManager = new \model\CommentManager;
+        $addMsgEmail = null;
 
         if (isset($_SESSION['comment'])) {
-            $comment = $_SESSION['comment'];
 
             if ((isset($_POST['addMsgEmail']))) {
                 $addMsgEmail = $_POST['addMsgEmail'];
-            } else {
-                $addMsgEmail = null;
-            }
-
-            $affectedLine = $commentManager -> deleteComment($comment->id());
+            } 
+            $affectedLine = $commentManager -> deleteComment(
+                $_SESSION['comment']->id()
+            );
             
             if ($affectedLine == 1) {
                 
-                $message = $comment->nameVisitor() . ', '
+                $message = $_SESSION['comment']->nameVisitor() . ', '
                  . NO_VALID_COMMENT_EMAIL
-                 . ' : <p>' . $comment->content() . '</p>'
+                 . ' : <p>' . $_SESSION['comment']->content() . '</p>'
                  . '<p>' . $addMsgEmail . '</p>'
                  . $_SESSION['user']->userName() . ' : '
                  . $_SESSION['user']->type() . '</p>';
                  
                 $data = array(
                     'inputName' => $_SESSION['user']->userName(),
-                    'inputEmail' => $comment->emailVisitor(),
+                    'inputEmail' => $_SESSION['comment']->emailVisitor(),
                     'inputMessage' => $message
-
                 );
             
                 $controller = new \controller\Controller;
-                $controller -> sendMessage($data, $comment-> emailVisitor());
+                $controller -> sendMessage(
+                    $data, $_SESSION['comment']-> emailVisitor()
+                );
 
             } else {
                 throw new \Exception(COMMENT_NO_EXIST);
