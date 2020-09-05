@@ -142,15 +142,8 @@ class BackUserController extends BackController
 
     public function uploadProfilPicture($picture)
     {
-        if (!empty($_SESSION['user']->profilPicture()) 
-            && (file_exists(
-                USER_IMG_DIRECTORY . basename($_SESSION['user']->profilPicture())
-            ))
-        ) {
-            unlink(
-                USER_IMG_DIRECTORY . basename($_SESSION['user']->profilPicture())
-            );
-        }
+        $this -> deleteOldProfilPicture();
+
         if ($picture['error'] == 0 && $picture['size'] <= 2000000
             && (in_array(
                 pathinfo($picture['name'])['extension'], AUTHORIZED_EXTENSIONS
@@ -170,6 +163,19 @@ class BackUserController extends BackController
                 . pathinfo($picture['name'])['extension'];
         } else {
             throw new \Exception(UPLOAD_NO_OK);
+        }
+    }
+
+    public function deleteOldProfilPicture() 
+    {
+        if (!empty($_SESSION['user']->profilPicture()) 
+            && (file_exists(
+                USER_IMG_DIRECTORY . basename($_SESSION['user']->profilPicture())
+            ))
+        ) {
+            unlink(
+                USER_IMG_DIRECTORY . basename($_SESSION['user']->profilPicture())
+            );
         }
     }
 }
