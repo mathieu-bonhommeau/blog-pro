@@ -266,9 +266,8 @@ class BackPostController extends BackController
 
     public function uploadFile($imgPost=null)
     {  
-        if (!file_exists('tmp/')) {
-            mkdir('tmp/');
-        }
+        $this -> verifTmpFolder();
+
         if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000) {
             
             if (in_array(
@@ -326,6 +325,13 @@ class BackPostController extends BackController
                 unlink($_SESSION[$name] -> picture());
             } 
             unset($_SESSION[$name]);
+        }
+    }
+
+    public function verifTmpFolder()
+    {
+        if (!file_exists('tmp/')) {
+            mkdir('tmp/');
         }
     }
 }
