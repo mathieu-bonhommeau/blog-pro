@@ -94,7 +94,7 @@ class BackCommentController extends BackController
     public function listComments($try=null)
     {
         $commentManager = new \model\CommentManager;
-        $comments = $commentManager -> getAllComments($validComment=null, $try);
+        $comments = $commentManager -> getAllComments(null, $try);
     
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line

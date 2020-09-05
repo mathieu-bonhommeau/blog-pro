@@ -63,9 +63,11 @@ class Message
 
         if ($emailControl) {
             $this->_email = $email;
-        } else {
-            throw new\Exception(INVALID_EMAIL);
-        }
+            return;
+        } 
+            
+        throw new\Exception(INVALID_EMAIL);
+    
     }
     
     public function setInputMessage($message)

@@ -115,11 +115,11 @@ class Comment
      * 
      * @return void
      */
-    public function setId($id)
+    public function setId($commentId)
     {
-        $id = (int)$id;
-        if ($id > 0) {
-            $this->_id = $id;
+        $commentId = (int)$commentId;
+        if ($commentId > 0) {
+            $this->_id = $commentId;
         }
     }
     

@@ -15,13 +15,9 @@ class BackController extends Controller
 
         if ($_SESSION['user']->type() == 'administrator') {
             $nbrPosts = $postManager -> countPosts();
-        } elseif ($_SESSION['user']->type() == 'author') {
-            $nbrPosts = $postManager -> countUserPosts($_SESSION['user']->id());
-        } 
-
-        if ($_SESSION['user']->type() == 'administrator') {
             $lastDatePost = $postManager -> lastDatePost();
         } elseif ($_SESSION['user']->type() == 'author') {
+            $nbrPosts = $postManager -> countUserPosts($_SESSION['user']->id());
             $lastDatePost = $postManager -> lastDateUserPost(
                 $_SESSION['user']->id()
             );
@@ -36,17 +32,14 @@ class BackController extends Controller
         $lastAddedUser = $userManager->lastAddedUser();
 
         $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
 
         echo $this->twig->render(
             'backView/backHomeView.twig', array(
-                'user' => $this->user,
-                'nbrPosts' => $nbrPosts,
+                'user' => $this->user,'nbrPosts' => $nbrPosts,
                 'lastDatePost' => $lastDatePost,
                 'nbrCommentNoValid' => $nbrCommentNoValid,
                 'lastDateComment' => $lastDateComment,
-                'nbrUser' => $nbrUser,
-                'lastAddedUser' => $lastAddedUser
+                'nbrUser' => $nbrUser,'lastAddedUser' => $lastAddedUser
             )
         );
     }

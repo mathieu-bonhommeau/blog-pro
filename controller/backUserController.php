@@ -77,13 +77,13 @@ class BackUserController extends BackController
         return $userManager -> updateUser($user);
     }
 
-    public function deleteUserView($id)
+    public function deleteUserView($userId)
     {
         $userManager = new \model\UserManager;
         $postManager = new \model\PostManager;
 
-        $data = $userManager -> getUser((int)$id);
-        $posts = $postManager -> getUserPosts($id);
+        $data = $userManager -> getUser((int)$userId);
+        $posts = $postManager -> getUserPosts($userId);
 
         $deleteUser = new \model\User($data);
 
@@ -100,16 +100,16 @@ class BackUserController extends BackController
         
     }
 
-    public function deleteUser($id)
+    public function deleteUser($userId)
     {
         $userManager = new \model\UserManager;
-        return $userManager -> deleteUser($id);
+        return $userManager -> deleteUser($userId);
     }
 
-    public function profilView($id, $update=null)
+    public function profilView($userId, $update=null)
     {
         $userManager = new \model\UserManager;
-        $data = $userManager -> getUser((int)$id);
+        $data = $userManager -> getUser((int)$userId);
         $userProfil = new \model\User($data);
 
         if (isset($_SESSION['updateUserMsg'])) {

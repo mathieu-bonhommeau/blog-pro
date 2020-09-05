@@ -75,8 +75,8 @@ class BackPostController extends BackController
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?p=post&id=' . $newPost->id());
                 exit();
-            } else {
                 
+            } else {
                 $_SESSION['addPostMsg'] = MSG_SAVE;
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?admin=addpost');
@@ -167,25 +167,25 @@ class BackPostController extends BackController
     {
         $postManager = new \model\PostManager;
         $data = $postManager -> getPost($id);
-
         if ($data) {
             $post = new \model\Post($data);
             $post -> setPublished('TRUE');
             
             $affectedLine = $postManager -> updatePost($post);
-
+            
             if ($affectedLine == 1 && $_GET['c'] == 'valid') {
-                header('Location: index.php?p=post&id=' . $id . '&c=valid');
+                
+                header('Location: index.php?p=post&id=' . $id);
 
             } elseif ($affectedLine == 1 && $_GET['c'] != 'valid') {
-                    header('Location: index.php?admin=post');
-
-            } else {
-                throw new \Exception(POST_NO_OK);
+                
+                header('Location: index.php?admin=post');
             }
-        } else {
-            throw new \Exception(POST_NO_EXIST);
-        }
+            throw new \Exception(POST_NO_OK); 
+            return;   
+        } 
+        throw new \Exception(POST_NO_EXIST);
+        
     }
 
     public function updatePost($id)
