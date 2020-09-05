@@ -47,14 +47,11 @@ class FrontController extends Controller
     public function postView($id, $msg=null)
     {
         $backManageComment = null;
-
         if (isset($_GET['c'])) {
             $backManageComment = $_GET['c'];
         } 
-
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
-        
         if ($dataPost) {    
             $post = new \model\Post($dataPost);
 
@@ -65,14 +62,11 @@ class FrontController extends Controller
             ) {
                 throw new \Exception(PAGE_NOT_EXIST);
             } else {
-                
                 $commentManager = new \model\CommentManager;
                 $dataComment = $commentManager -> getComments($id);
                 $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
-                
                 $this->twigInit();
                 $this->twig->addExtension(new Twig_Extensions_Extension_Text());
-
                 echo $this->twig->render(
                     'frontView/postView.twig', array(
                         'post' => $post,
@@ -84,7 +78,6 @@ class FrontController extends Controller
                     )
                 );
             }
-
         } else {
             throw new \Exception(PAGE_NOT_EXIST); 
         }        
