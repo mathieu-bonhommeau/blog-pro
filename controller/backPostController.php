@@ -68,13 +68,13 @@ class BackPostController extends BackController
             
             if ($newPost->published() == 'TRUE') {
         
-                if (isset($_SESSION['previewPost']) 
-                    && isset($_SESSION['oldImage'])
+                if ((isset($_SESSION['previewPost']) 
+                    && isset($_SESSION['oldImage']))
+                    && (basename(
+                        $_SESSION['previewPost']->picture()
+                    )  != $_SESSION['oldImage'])
                 ) {
-                    if (basename($_SESSION['previewPost']->picture())  != $_SESSION['oldImage']
-                    ) {
-                        unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
-                    }
+                    unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);  
                 }
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?p=post&id=' . $newPost->id());
@@ -87,12 +87,10 @@ class BackPostController extends BackController
                 header('Location: index.php?admin=addpost');
                 exit();
             }
-
-        } else {
-            $_SESSION['addPostMsg'] = POST_NO_OK;
-            header('Location: index.php?admin=addpost');
-            exit();
-        }
+        } 
+        $_SESSION['addPostMsg'] = POST_NO_OK;
+        header('Location: index.php?admin=addpost');
+        exit();    
     }
 
     public function previewPost(array $form)
@@ -148,6 +146,7 @@ class BackPostController extends BackController
                 'published' => 'FALSE'   
             );
             return $form;
+
         }
         $_SESSION['addPostMsg'] = EMPTY_FIELDS;
         header('Location: index.php?admin=addpost');
