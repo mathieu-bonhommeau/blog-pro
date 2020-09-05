@@ -137,13 +137,10 @@ class BackPostController extends BackController
             }
             $form = array(
                 'id' => $id,
-                'title' => $_POST['titlePost'],
-                'chapo' => $_POST['chapoPost'],
-                'content' => $_POST['contentPost'],
-                'picture' => $path,
+                'title' => $_POST['titlePost'],'chapo' => $_POST['chapoPost'],
+                'content' => $_POST['contentPost'],'picture' => $path,
                 'published' => 'FALSE'   
             );
-            
             return $form;
             
         } else {
@@ -324,16 +321,23 @@ class BackPostController extends BackController
 
     public function deleteSession($name) 
     {
-        if (isset($_SESSION[$name])) {
-            if (file_exists($_SESSION[$name] -> picture())) {
-                $postManager = new \model\PostManager;
-                $result = $postManager -> getPostImg(basename($_SESSION[$name] -> picture()));
-                if ($result == 0) {
-                    unlink($_SESSION[$name] -> picture());
-                } 
+        if (isset($_SESSION[$name]) && (file_exists($_SESSION[$name] -> picture()))
+        ) {
+            $postManager = new \model\PostManager;
+            $result = $postManager -> getPostImg(basename($_SESSION[$name] -> picture()));
+            if ($result == 0) {
+                unlink($_SESSION[$name] -> picture());
             }
             unset($_SESSION[$name]);
+            return; 
         }
+        if (isset($_SESSION[$name]) && (!file_exists($_SESSION[$name] -> picture()))
+        ) {
+            unset($_SESSION[$name]);
+            return;
+        }
+        return;      
+        
     }
 
     public function verifTmpFolder()
