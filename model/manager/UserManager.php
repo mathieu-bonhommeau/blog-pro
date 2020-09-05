@@ -74,16 +74,21 @@ class UserManager extends Manager
         return $req->rowCount();
     }
 
-    public function updateUser(User $user) 
+    public function getTypeId($userType)
     {
         $req = $this->db()->prepare(
             'SELECT id 
              FROM usertype
              WHERE type = ?'
         );
-        $req -> execute(array($user->type()));
+        $req -> execute(array($userType));
         $data = $req->fetch(\PDO::FETCH_ASSOC);
-        $userType = $data['id'];
+        return $data['id'];
+    }
+
+    public function updateUser(User $user) 
+    {
+        $userTypeId = $this->getTypeId($user->type());
 
         $req = $this->db()->prepare(
             'UPDATE user SET
@@ -99,7 +104,7 @@ class UserManager extends Manager
                 'userEmail' => $user->userEmail(),
                 'profilPicture' => basename($user->profilPicture()),
                 'authorName' => $user->authorName(),
-                'userType_id' => $userType,
+                'userType_id' => $userTypeId,
                 'id' => $user->id()
             )
         );
