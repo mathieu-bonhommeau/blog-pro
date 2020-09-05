@@ -69,8 +69,7 @@ class BackPostController extends BackController
             if ($newPost->published() == 'TRUE') {
         
                 if ((isset($_SESSION['previewPost']) 
-                    && isset($_SESSION['oldImage']))
-                    && (basename(
+                    && isset($_SESSION['oldImage'])) && (basename(
                         $_SESSION['previewPost']->picture()
                     )  != $_SESSION['oldImage'])
                 ) {
