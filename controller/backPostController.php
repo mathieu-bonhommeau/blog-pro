@@ -148,11 +148,9 @@ class BackPostController extends BackController
                 'published' => 'FALSE'   
             );
             return $form;
-            
-        } else {
-            $_SESSION['addPostMsg'] = EMPTY_FIELDS;
-            header('Location: index.php?admin=addpost');
         }
+        $_SESSION['addPostMsg'] = EMPTY_FIELDS;
+        header('Location: index.php?admin=addpost');
     }
 
     public function publishedPost($id) 

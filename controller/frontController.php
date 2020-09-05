@@ -127,7 +127,6 @@ class FrontController extends Controller
                 header('Location: index.php?p=home');
                 exit();   
             } 
-            return USER_NO_OK;
         } 
         return  USER_NO_OK;  
     }
