@@ -8,20 +8,7 @@ class BackController extends Controller
 {
     public function backHomePage()
     {
-        $postManager = new \model\PostManager;
-        
-        $nbrPosts = null;
-        $lastDatePost = null;
-
-        if ($_SESSION['user']->type() == 'administrator') {
-            $nbrPosts = $postManager -> countPosts();
-            $lastDatePost = $postManager -> lastDatePost();
-        } elseif ($_SESSION['user']->type() == 'author') {
-            $nbrPosts = $postManager -> countUserPosts($_SESSION['user']->id());
-            $lastDatePost = $postManager -> lastDateUserPost(
-                $_SESSION['user']->id()
-            );
-        } 
+        $infos = $this -> backHomePostBadge();
         
         $commentManager = new \model\CommentManager;
         $nbrCommentNoValid = $commentManager -> nbrAllComments('FALSE');
@@ -35,12 +22,34 @@ class BackController extends Controller
 
         echo $this->twig->render(
             'backView/backHomeView.twig', array(
-                'user' => $this->user,'nbrPosts' => $nbrPosts,
-                'lastDatePost' => $lastDatePost,
+                'user' => $this->user,'nbrPosts' => $infos['nbrPosts'],
+                'lastDatePost' => $infos['lastDatePost'],
                 'nbrCommentNoValid' => $nbrCommentNoValid,
                 'lastDateComment' => $lastDateComment,
                 'nbrUser' => $nbrUser,'lastAddedUser' => $lastAddedUser
             )
         );
+    }
+
+    public function backHomePostBadge()
+    {
+        $postManager = new \model\PostManager;
+
+        $infos['nbrPosts'] = null;
+        $infos['lastDatePost'] = null;
+
+        if ($_SESSION['user']->type() == 'administrator') {
+            $infos['nbrPosts'] = $postManager -> countPosts();
+            $infos['lastDatePost'] = $postManager -> lastDatePost();
+
+        } elseif ($_SESSION['user']->type() == 'author') {
+            $infos['nbrPosts'] = $postManager -> countUserPosts(
+                $_SESSION['user']->id()
+            );
+            $infos['lastDatePost'] = $postManager -> lastDateUserPost(
+                $_SESSION['user']->id()
+            );
+        }
+        return $infos;
     }
 }
