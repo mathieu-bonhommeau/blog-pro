@@ -125,16 +125,10 @@ class FrontController extends Controller
             ) {
                 $_SESSION['user'] = $user;
                 header('Location: index.php?p=home');
-                exit();
-                
-            } else {
-                return USER_NO_OK;
-            }
-
-        } else {
-            return  USER_NO_OK;
-        }
+                exit();   
+            } 
+            return USER_NO_OK;
+        } 
+        return  USER_NO_OK;  
     }
-
-
 }
