@@ -64,14 +64,14 @@ class BackPostController extends BackController
             $data = $postManager -> getPost($id);
             $newPost = new \model\Post($data);
             
-            if ($newPost->published() == 'TRUE') {
-        
-                if (isset($_SESSION['previewPost']) 
-                    && isset($_SESSION['oldImage'])
-                    && (basename($_SESSION['previewPost']->picture())  != $_SESSION['oldImage'])
-                ) {
-                        unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
-                }
+            if ($newPost->published() == 'TRUE' 
+                && (isset($_SESSION['previewPost']) 
+                && isset($_SESSION['oldImage']) 
+                && basename(
+                    $_SESSION['previewPost']->picture()
+                ) != $_SESSION['oldImage'])
+            ) {
+                unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);
                 
                 $this -> deleteSession('previewPost');
                 header('Location: index.php?p=post&id=' . $newPost->id());
