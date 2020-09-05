@@ -155,33 +155,26 @@ class BackUserController extends BackController
                 );
             }
         }
-
-        if ($picture['error'] == 0  && $picture['size'] <= 2000000) {
-            $fileInfo = pathinfo($picture['name']);
-            
-            if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
-                $new = move_uploaded_file(
-                    $picture['tmp_name'], 
-                    USER_IMG_DIRECTORY . basename($picture['name'])
-                );
-                rename(
-                    USER_IMG_DIRECTORY . basename(
-                        $picture['name']
-                    ), USER_IMG_DIRECTORY 
-                        . (string)time() 
-                        . '.' .$fileInfo['extension']
-                );
-
-                return USER_IMG_DIRECTORY 
-                    . (string)time() . '.' 
-                    . $fileInfo['extension'];
-
-            } else {
-                throw new \Exception(UPLOAD_NO_OK);
-            }
+        if ($picture['error'] == 0 && $picture['size'] <= 2000000
+            && (in_array(
+                pathinfo($picture['name'])['extension'], AUTHORIZED_EXTENSIONS
+            ))
+        ) {
+            $new = move_uploaded_file(
+                $picture['tmp_name'], 
+                USER_IMG_DIRECTORY . basename($picture['name'])
+            );
+            rename(
+                USER_IMG_DIRECTORY . basename(
+                    $picture['name']
+                ), USER_IMG_DIRECTORY . (string)time() 
+                    . '.' .pathinfo($picture['name'])['extension']
+            );
+            return USER_IMG_DIRECTORY . (string)time() . '.' 
+                . pathinfo($picture['name'])['extension'];
+    
         } else {
             throw new \Exception(UPLOAD_NO_OK);
         }
     }
-
 }
