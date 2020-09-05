@@ -182,7 +182,7 @@ class BackPostController extends BackController
 
             } elseif ($affectedLine == 1 && $_GET['c'] != 'valid') {
                     header('Location: index.php?admin=post');
-                    
+
             } else {
                 throw new \Exception(POST_NO_OK);
             }
@@ -273,17 +273,24 @@ class BackPostController extends BackController
             mkdir('tmp/');
         }
         if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000) {
-            echo preg_match('#[^/\:.]#', $imgPost['name']);
-            $fileInfo = pathinfo($imgPost['name']);
-            if (in_array($fileInfo['extension'], AUTHORIZED_EXTENSIONS)) {
-
+            //echo preg_match('#[^/\:.]#', $imgPost['name']);
+            
+            if (in_array(
+                pathinfo($imgPost['name'])['extension'], AUTHORIZED_EXTENSIONS
+            )
+            ) {
                 if (isset($_POST['addPost']) || isset($_POST['notPublished'])) {
                     $new = move_uploaded_file(
                         $imgPost['tmp_name'], 
                         POST_IMG_DIRECTORY . basename($imgPost['name'])
                     );
-                    rename(POST_IMG_DIRECTORY . basename($imgPost['name']), POST_IMG_DIRECTORY . (string)time() . '.' .$fileInfo['extension']);
-                    return POST_IMG_DIRECTORY . (string)time() . '.' . $fileInfo['extension'];
+                    rename(
+                        POST_IMG_DIRECTORY . basename($imgPost['name']), 
+                        POST_IMG_DIRECTORY . (string)time() . '.' 
+                        . pathinfo($imgPost['name'])['extension']
+                    );
+                    return POST_IMG_DIRECTORY . (string)time() . '.' 
+                    . pathinfo($imgPost['name'])['extension'];
 
                 } elseif (isset($_POST['preview'])) {
                     $new = move_uploaded_file(
