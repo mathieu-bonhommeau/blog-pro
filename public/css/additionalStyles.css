@@ -134,3 +134,7 @@
     height: 250px;
     box-shadow: -2px -2px 2px #1B3236 ;
   } 
+
+  .fa-stack-1x, .fa-stack-2x {
+    position: inherit;
+  }

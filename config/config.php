@@ -2,6 +2,15 @@
 
 //CONSTANTS
 
+//Database config
+define('HOST', 'mysql:host=localhost');
+define('PORT', 'port=3308');
+define('DBNAME', 'dbname=blog_pro');
+define('CHARSET', 'charset=utf8');
+define('USER', 'root');
+define('PASSWORD', '');
+
+
 //Directory posts images
 define('POST_IMG_DIRECTORY', 'public/assets/img/postImg/');
 define('USER_IMG_DIRECTORY', 'public/assets/img/userImg/');

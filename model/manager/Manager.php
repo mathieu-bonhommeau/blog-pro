@@ -16,9 +16,10 @@ class Manager
      */
     public function __construct()
     {
+        $connect = HOST . ';' . PORT . ';' . DBNAME . ';' . CHARSET . ';';
         $db = new \PDO(
-            'mysql:host=localhost;port=3308;dbname=blog_pro;charset=utf8',
-            'root', '', array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION)
+            $connect, USER, PASSWORD, 
+            array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION) 
         );
         $this->setDb($db);
     }
