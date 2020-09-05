@@ -269,7 +269,7 @@ class BackPostController extends BackController
         if (!file_exists('tmp/')) {
             mkdir('tmp/');
         }
-        if ($imgPost['error'] == 0  && $imgPost['size'] <= 2000000) {
+        if ($imgPost['error'] == 0  && $imgPost['size'] <= 20) {
             //echo preg_match('#[^/\:.]#', $imgPost['name']);
             
             if (in_array(
@@ -296,12 +296,10 @@ class BackPostController extends BackController
                     );
                     return 'tmp/' . basename($imgPost['name']);
                 }
-            } else {
-                throw new \Exception(UPLOAD_NO_OK);
             }
-        } else {
             throw new \Exception(UPLOAD_NO_OK);
-        }
+        } 
+        throw new \Exception(UPLOAD_NO_OK);      
     }
 
     public function imgChange()
