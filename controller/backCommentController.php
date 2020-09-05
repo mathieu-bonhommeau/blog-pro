@@ -60,31 +60,35 @@ class BackCommentController extends BackController
             $affectedLine = $commentManager -> deleteComment(
                 $_SESSION['comment']->id()
             );
-            
-            if ($affectedLine == 1) {
-                
-                $message = $_SESSION['comment']->nameVisitor() . ', '
-                 . NO_VALID_COMMENT_EMAIL
-                 . ' : <p>' . $_SESSION['comment']->content() . '</p>'
-                 . '<p>' . $addMsgEmail . '</p>'
-                 . $_SESSION['user']->userName() . ' : '
-                 . $_SESSION['user']->type() . '</p>';
-                 
-                $data = array(
-                    'inputName' => $_SESSION['user']->userName(),
-                    'inputEmail' => $_SESSION['comment']->emailVisitor(),
-                    'inputMessage' => $message
-                );
-            
-                $controller = new \controller\Controller;
-                $controller -> sendMessage(
-                    $data, $_SESSION['comment']-> emailVisitor()
-                );
-
-            } else {
-                throw new \Exception(COMMENT_NO_EXIST);
-            }
+            $this -> deleteCommentMail($affectedLine, $addMsgEmail);
         }   
+    }
+
+    public function deleteCommentMail($affectedLine, $addMsgEmail)
+    {
+        if ($affectedLine == 1) {
+                
+            $message = $_SESSION['comment']->nameVisitor() . ', '
+             . NO_VALID_COMMENT_EMAIL
+             . ' : <p>' . $_SESSION['comment']->content() . '</p>'
+             . '<p>' . $addMsgEmail . '</p>'
+             . $_SESSION['user']->userName() . ' : '
+             . $_SESSION['user']->type() . '</p>';
+             
+            $data = array(
+                'inputName' => $_SESSION['user']->userName(),
+                'inputEmail' => $_SESSION['comment']->emailVisitor(),
+                'inputMessage' => $message
+            );
+        
+            $controller = new \controller\Controller;
+            $controller -> sendMessage(
+                $data, $_SESSION['comment']-> emailVisitor()
+            );
+
+        } else {
+            throw new \Exception(COMMENT_NO_EXIST);
+        }
     }
 
     public function listComments($try=null)

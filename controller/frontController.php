@@ -46,17 +46,16 @@ class FrontController extends Controller
 
     public function postView($id, $msg=null)
     {
+        $backManageComment = null;
+
         if (isset($_GET['c'])) {
             $backManageComment = $_GET['c'];
-        } else {
-            $backManageComment = null;
-        }
+        } 
+
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($id); 
         
-        if ($dataPost == false) {
-            throw new \Exception(PAGE_NOT_EXIST);   
-        } else {
+        if ($dataPost) {    
             $post = new \model\Post($dataPost);
 
             if ($post->published() == 'FALSE' 
@@ -85,7 +84,10 @@ class FrontController extends Controller
                     )
                 );
             }
-        }      
+
+        } else {
+            throw new \Exception(PAGE_NOT_EXIST); 
+        }        
     }
 
     public function addNewComment(array $form)
@@ -121,19 +123,13 @@ class FrontController extends Controller
         $data = $userManager -> getUser($pseudo);
         
         if ($data) {
-            
             $user = new \model\User($data);
 
-            if ($_GET['admin'] == 'adduser'
-                && $password == $user->password()
+            if (($_GET['admin'] == 'adduser' && $password == $user->password())
+                || ($_GET['admin'] != 'adduser' && password_verify(
+                    $password, $user->password()
+                ))
             ) {
-                $_SESSION['user'] = $user;
-                header('Location: index.php?p=home');
-                exit();
-
-            } elseif ($_GET['admin'] != 'adduser'
-                && password_verify($password, $user->password())
-            ) { 
                 $_SESSION['user'] = $user;
                 header('Location: index.php?p=home');
                 exit();
