@@ -113,7 +113,7 @@ class BackPostController extends BackController
         $_SESSION['previewPost'] = $newPost;
     }
 
-    public function dataInputPost($id=null)
+    public function inputPostTest() 
     {
         if ((empty($_POST['titlePost']) 
             && empty($_POST['chapoPost']) 
@@ -124,6 +124,12 @@ class BackPostController extends BackController
             $_POST['chapoPost'] = $_SESSION['previewPost']->chapo();
             $_POST['contentPost'] = $_SESSION['previewPost']->content();  
         }
+        return;
+    }
+
+    public function dataInputPost($id=null)
+    {
+        $this -> inputPostTest();
 
         if (!empty($_POST['titlePost'])
             && !empty($_POST['chapoPost'])
@@ -131,7 +137,7 @@ class BackPostController extends BackController
         ) {
             if (empty($_FILES['imgPost']['name'])) {
                 $path = $this->managePostImage();
-                return;
+    
             } else {
                 $path =  $this -> uploadFile($_FILES['imgPost']);  
             }
