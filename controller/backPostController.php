@@ -130,26 +130,8 @@ class BackPostController extends BackController
             && !empty($_POST['contentPost'])
         ) {
             if (empty($_FILES['imgPost']['name'])) {
+                $path = $this->managePostImage();
                 
-                if (isset($_SESSION['previewPost']) 
-                    && $_SESSION['previewPost']->picture() != null
-                ) {
-                    $path = basename($_SESSION['previewPost']->picture());
-                    
-                    if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
-                        $fileInfo = pathinfo($path);
-                        $newName = (string)time() . '.' .$fileInfo['extension'];
-                        if (!file_exists('tmp/')) {
-                            mkdir('tmp/');
-                        }
-                        rename('tmp/'. $path, POST_IMG_DIRECTORY . $newName);
-                        $_SESSION['previewPost'] -> setPicture(POST_IMG_DIRECTORY . $newName);
-                    }
-                    $path = $_SESSION['previewPost']->picture();
-                    
-                } else {
-                    $path = null;    
-                }
             } else {
                 $path =  $this -> uploadFile($_FILES['imgPost']);  
             }
@@ -211,8 +193,7 @@ class BackPostController extends BackController
                 if (file_exists(POST_IMG_DIRECTORY . $post->picture())) {
                     copy(POST_IMG_DIRECTORY . $post->picture(), 'tmp/' . 'tmp' . $post->picture());
                     $post->setPicture('tmp/' . 'tmp' . $post->picture());
-                }
-                
+                } 
             }
             return $post;
 
@@ -306,6 +287,28 @@ class BackPostController extends BackController
             throw new \Exception(UPLOAD_NO_OK);
         } 
         throw new \Exception(UPLOAD_NO_OK);      
+    }
+
+    public function managePostImage() 
+    {
+        if (isset($_SESSION['previewPost']) 
+            && $_SESSION['previewPost']->picture() != null
+        ) {
+            $path = basename($_SESSION['previewPost']->picture());
+                    
+            if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
+                $newName = (string)time() . '.' .pathinfo($path)['extension'];
+
+                $this-> verifTmpFolder();
+
+                rename('tmp/'. $path, POST_IMG_DIRECTORY . $newName);
+                $_SESSION['previewPost'] -> setPicture(
+                    POST_IMG_DIRECTORY . $newName
+                );
+            }
+            return $_SESSION['previewPost']->picture();            
+        } 
+        return null;           
     }
 
     public function imgChange()
