@@ -213,7 +213,7 @@ class Router
             $backPostController = new \controller\backPostController;
             $backCommentController = new \controller\BackCommentController;
             $backUserController = new \controller\backUserController;
-            $backImagePostController = new \controller\BackPostImageController;
+            $backImageController = new \controller\BackPImgController;
 
             if ($get == 'backhome') {
                 $backPostController -> deleteSession('previewPost');
@@ -279,7 +279,7 @@ class Router
                     $backPostController -> addPostView($form);
 
                 } elseif (isset($_POST['imgChange'])) {
-                    $backImagePostController  -> imgChange();
+                    $backImageController  -> imgChange();
 
                 } elseif (isset($_GET['id'])) {
                     if (isset($_SESSION['previewPost'])) {

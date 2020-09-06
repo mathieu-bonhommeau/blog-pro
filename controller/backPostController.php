@@ -124,7 +124,7 @@ class BackPostController extends BackController
 
     public function dataInputPost($id=null)
     {
-        $backImagePostController = new \controller\BackPostImageController;
+        $backImageController = new \controller\BackPImgController;
         $this -> inputPostTest();
 
         if (!empty($_POST['titlePost'])
@@ -132,10 +132,10 @@ class BackPostController extends BackController
             && !empty($_POST['contentPost'])
         ) {
             if (empty($_FILES['imgPost']['name'])) {
-                $path = $backImagePostController->managePostImage();
+                $path = $backImageController->managePostImage();
     
             } else {
-                $path =  $backImagePostController -> uploadFile($_FILES['imgPost']);  
+                $path =  $backImageController -> uploadFile($_FILES['imgPost']);  
             }
             $form = array(
                 'id' => $id,

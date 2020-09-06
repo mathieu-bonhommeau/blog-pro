@@ -4,7 +4,7 @@ namespace controller;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
-class BackPostImageController extends BackPostController
+class BackPImgController extends BackPostController
 {
     public function uploadFile($imgPost=null)
     {  
