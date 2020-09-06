@@ -262,27 +262,34 @@ class BackPostController extends BackController
 
         if (isset($_POST['addPost']) || isset($_POST['notPublished'])
         ) {
-            move_uploaded_file(
-                $imgPost['tmp_name'], 
-                POST_IMG_DIRECTORY . basename($imgPost['name'])
-            );
-            rename(
-                POST_IMG_DIRECTORY . basename($imgPost['name']), 
-                POST_IMG_DIRECTORY . (string)time() . '.' 
-                . pathinfo($imgPost['name'])['extension']
-            );
+            $this -> moveFile($imgPost, POST_IMG_DIRECTORY);
+            $this -> renameFile($imgPost, POST_IMG_DIRECTORY);
             return POST_IMG_DIRECTORY . (string)time() . '.' 
             . pathinfo($imgPost['name'])['extension'];
         } 
         
         if (isset($_POST['preview'])
         ) {
-            move_uploaded_file(
-                $imgPost['tmp_name'], 
-                'tmp/' . basename($imgPost['name'])
-            );
+            $this -> moveFile($imgPost, 'tmp/');
             return 'tmp/' . basename($imgPost['name']);
         }      
+    }
+
+    public function moveFile($imgPost,$directory)
+    {
+        move_uploaded_file(
+            $imgPost['tmp_name'], 
+            $directory . basename($imgPost['name'])
+        );
+    }
+
+    public function renameFile($imgPost, $directory)
+    {
+        rename(
+            $directory . basename($imgPost['name']), 
+            $directory . (string)time() . '.' 
+            . pathinfo($imgPost['name'])['extension']
+        );
     }
 
     public function managePostImage() 
