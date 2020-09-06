@@ -62,34 +62,32 @@ class BackPostController extends BackController
     {
         $postManager = new \model\PostManager;
 
-        if ($affectedLines == 1) {
-            $data = $postManager -> getPost($id);
-            $newPost = new \model\Post($data);
-            
-            if ($newPost->published() == 'TRUE') {
-        
-                if ((isset($_SESSION['previewPost']) 
-                    && isset($_SESSION['oldImage'])) && (basename(
-                        $_SESSION['previewPost']->picture()
-                    )  != $_SESSION['oldImage'])
-                ) {
-                    unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);  
-                }
-                $this -> deleteSession('previewPost');
-                header('Location: index.php?p=post&id=' . $newPost->id());
-                exit();
+        if ($affectedLines != 1) {
+            $_SESSION['addPostMsg'] = POST_NO_OK;
+            header('Location: index.php?admin=addpost');
+            exit(); 
+        }
 
-            } else {
-                
-                $_SESSION['addPostMsg'] = MSG_SAVE;
-                $this -> deleteSession('previewPost');
-                header('Location: index.php?admin=addpost');
-                exit();
-            }
-        } 
-        $_SESSION['addPostMsg'] = POST_NO_OK;
-        header('Location: index.php?admin=addpost');
-        exit();    
+        $data = $postManager -> getPost($id);
+        $newPost = new \model\Post($data);
+            
+        if ($newPost->published() != 'TRUE') {
+            $_SESSION['addPostMsg'] = MSG_SAVE;
+            $this -> deleteSession('previewPost');
+            header('Location: index.php?admin=addpost');
+            exit();
+        }
+
+        if ((isset($_SESSION['previewPost']) 
+            && isset($_SESSION['oldImage'])) && (basename(
+                $_SESSION['previewPost']->picture()
+            )  != $_SESSION['oldImage'])
+        ) {
+            unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);  
+        }
+        $this -> deleteSession('previewPost');
+        header('Location: index.php?p=post&id=' . $newPost->id());
+        exit();     
     }
 
     public function previewPost(array $form)
