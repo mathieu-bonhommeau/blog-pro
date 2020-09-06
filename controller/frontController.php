@@ -71,11 +71,10 @@ class FrontController extends Controller
         $this->twigInit();
         $this->twig->addExtension(new Twig_Extensions_Extension_Text());
         echo $this->twig->render(
-            'frontView/postView.twig', array(
-                'post' => $post, 'comments' => $dataComment,
-                'nbrComments' => $nbrComments['COUNT(*)'],
-                'commentMsg' => $msg, 'user' => $this->user,
-                'backManageComment' => $backManageComment
+            'frontView/postView.twig', array('post' => $post, 
+            'comments' => $dataComment,'nbrComments' => $nbrComments['COUNT(*)'],
+            'commentMsg' => $msg, 'user' => $this->user,
+            'backManageComment' => $backManageComment
             )
         );   
     }

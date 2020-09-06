@@ -1,28 +1,29 @@
 #submitMessage {
   width: 100%;
-} 
-#nameVisitor, #comment {
+}
+ #nameVisitor, 
+#comment {
   font-size: 0.85em;
-} 
+}
 #commentDate {
   font-size: 0.6em;
-}  
+}
 #submitComment {
   text-transform: none;
   padding: 0.75rem 1rem;
-} 
+}
 .post:nth-child(2n+1) {
   flex-direction: row;
-} 
+}
 .post:nth-child(2n+1) > .reverse {
   text-align: left;
-}  
+}
 .post {
   flex-direction: row-reverse;
-} 
+}
 .post:nth-child(2n+0) > .reverse {
   text-align: right;
-} 
+}
 #connect {
   font-weight: normal !important;
   font-size: 1rem !important;
@@ -54,7 +55,7 @@
   font-size: 0.85em;
 }
 .projects-section {
-  min-height: 700px; 
+  min-height: 700px;
 }
 #profilPicture {
   border-radius: 50%;
@@ -74,7 +75,7 @@
   width: 8rem;
   height: 8rem;
 }
-#logoMenu { 
+#logoMenu {
   width: 7rem;
   height: 5rem;
 }
@@ -84,7 +85,7 @@
 }
 #myName {
   font-size: 2rem;
-  letter-spacing: 0.1rem;   
+  letter-spacing: 0.1rem;
 }
 #myJob {
   font-size: 3.5rem;
@@ -104,7 +105,7 @@
   width: 230px;
   height: 250px;
   box-shadow: -2px -2px 2px #1B3236 ;
-} 
+}
 .fa-stack-1x, .fa-stack-2x {
   position: inherit;
 }
