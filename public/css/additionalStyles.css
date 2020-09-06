@@ -29,7 +29,7 @@
 
 .post:nth-child(2n+1) > .reverse {
   text-align: left;
-  }
+}
 
 .post:nth-child(2n+0) > .reverse {
   text-align: right;
@@ -135,9 +135,10 @@
 #myPhoto {
   width: 230px;
   height: 250px;
-  box-shadow: -2px -2px 2px #1b3236 ;
+  box-shadow: -2px -2px 2px #1b3236;
 }
 
-.fa-stack-1x, .fa-stack-2x {
+  .fa-stack-1x,
+.fa-stack-2x {
   position: inherit;
 }
