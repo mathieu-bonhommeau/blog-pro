@@ -41,7 +41,7 @@
                         {% else %}
                             <img src={{ constant('USER_IMG_DIRECTORY') ~ user.profilPicture }} alt="Photo de profil" id="profilPictureMenu" class="ml-5"/>
                         {% endif %}
-                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.id }} id="adminProfil">{{user.userName}} </a>
+                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.userId }} id="adminProfil">{{user.userName}} </a>
                     {% endif %}
 
                     

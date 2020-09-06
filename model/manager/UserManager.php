@@ -6,7 +6,7 @@ class UserManager extends Manager
 { 
     public function getUsers()
     {
-        $req = $this->db()->query(
+        $req = $this->database()->query(
             'SELECT user.id, user.userName, user.password, 
             user.profilPicture, user.authorName, user.registerDate, usertype.type
             FROM user
@@ -19,7 +19,7 @@ class UserManager extends Manager
     public function getUser($info)
     {
         if (is_int($info)) {
-            $req = $this->db()->prepare(
+            $req = $this->database()->prepare(
                 'SELECT user.id, user.userName, user.password, user.userEmail, 
                 user.profilPicture, user.authorName, user.registerDate, usertype.type
                 FROM user
@@ -29,7 +29,7 @@ class UserManager extends Manager
             $req -> execute(array($info));
 
         } elseif (is_string($info)) {
-            $req = $this->db()->prepare(
+            $req = $this->database()->prepare(
                 'SELECT user.id, user.userName, user.password, user.userEmail, 
                 user.profilPicture, user.authorName, user.registerDate, usertype.type
                 FROM user
@@ -46,7 +46,7 @@ class UserManager extends Manager
 
     public function addUser(User $user) 
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'SELECT id 
              FROM usertype
              WHERE type = ?'
@@ -55,7 +55,7 @@ class UserManager extends Manager
         $data = $req->fetch(\PDO::FETCH_ASSOC);
         $userType = $data['id'];
 
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'INSERT INTO user 
             (userName, password, profilPicture, 
              authorName, registerDate, userType_id)
@@ -76,7 +76,7 @@ class UserManager extends Manager
 
     public function getTypeId($userType)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'SELECT id 
              FROM usertype
              WHERE type = ?'
@@ -90,7 +90,7 @@ class UserManager extends Manager
     {
         $userTypeId = $this->getTypeId($user->type());
 
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'UPDATE user SET
             userName = :userName, password = :password, userEmail = :userEmail, 
             profilPicture = :profilPicture, authorName = :authorName, 
@@ -105,24 +105,24 @@ class UserManager extends Manager
                 'profilPicture' => basename($user->profilPicture()),
                 'authorName' => $user->authorName(),
                 'userType_id' => $userTypeId,
-                'id' => $user->id()
+                'id' => $user->userId()
             )
         );
         return $req->rowCount();
     }
 
-    public function deleteUser($id)
+    public function deleteUser($userId)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'DELETE FROM user WHERE id = ?'
         );
-        $req -> execute(array($id));
+        $req -> execute(array($userId));
         return $req->rowCount();
     }
 
     public function countUser()
     {
-        $req = $this->db()->query('SELECT COUNT(*) FROM user');
+        $req = $this->database()->query('SELECT COUNT(*) FROM user');
 
         $data = $req->fetch();
         return $data['COUNT(*)'];
@@ -130,7 +130,7 @@ class UserManager extends Manager
 
     public function lastAddedUser()
     {
-        $req = $this->db()->query(
+        $req = $this->database()->query(
             'SELECT userName, registerDate FROM user
                 WHERE registerDate = (
                     SELECT MAX(registerDate) 

@@ -8,18 +8,18 @@ class BackUserController extends BackController
 {
     public function addUserView($form=null)
     {
+        $msg = null;
+        $updateUser = null;
+
         if (isset($_SESSION['addUserMsg'])) {
             $msg = $_SESSION['addUserMsg'];
             unset($_SESSION['addUserMsg']);
-        } else {
-            $msg = null;
-        }
+        } 
 
         if ($form != null) {
             $updateUser = new \model\User($form);
-        } else {
-            $updateUser = null;
-        }
+        } 
+        
         $_SESSION['updateUser'] = $updateUser;
 
         $this->twigInit();

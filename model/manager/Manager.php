@@ -8,7 +8,7 @@ namespace model;
 
 class Manager 
 { 
-    private $_db;
+    private $_database;
 
     /**
      * Database connexion 
@@ -17,26 +17,26 @@ class Manager
     public function __construct()
     {
         $connect = HOST . ';' . PORT . ';' . DBNAME . ';' . CHARSET . ';';
-        $db = new \PDO(
+        $database = new \PDO(
             $connect, USER, PASSWORD, 
             array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION) 
         );
-        $this->setDb($db);
+        $this->setDatabase($database);
     }
 
     /**
      * Getters
      */
-    public function db()
+    public function database()
     {
-        return $this->_db;
+        return $this->_database;
     }
 
     /**
      * Setters
      */
-    private function setDb($db)
+    private function setDatabase($database)
     {
-        $this->_db = $db;
+        $this->_database = $database;
     }
 }

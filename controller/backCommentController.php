@@ -22,17 +22,17 @@ class BackCommentController extends BackController
         );
     }
 
-    public function updateComment($id)
+    public function updateComment($commentId)
     {
         $commentManager = new \model\CommentManager;
-        $affectedLine =  $commentManager -> updateComment($id); 
+        $affectedLine =  $commentManager -> updateComment($commentId); 
         return $affectedLine;
     }
 
-    public function deleteCommentView($id)
+    public function deleteCommentView($commentId)
     {
         $commentManager = new \model\CommentManager;
-        $data = $commentManager -> getComment($id);
+        $data = $commentManager -> getComment($commentId);
         $comment = new \model\Comment($data);
 
         $this->twigInit();
@@ -47,7 +47,7 @@ class BackCommentController extends BackController
         $_SESSION['comment'] = $comment;
     }
 
-    public function deleteComment($id)
+    public function deleteComment()
     {
         $commentManager = new \model\CommentManager;
         $addMsgEmail = null;
@@ -58,7 +58,7 @@ class BackCommentController extends BackController
                 $addMsgEmail = $_POST['addMsgEmail'];
             } 
             $affectedLine = $commentManager -> deleteComment(
-                $_SESSION['comment']->id()
+                $_SESSION['comment']->commentId()
             );
             $this -> deleteCommentMail($affectedLine, $addMsgEmail);
         }   
@@ -85,10 +85,11 @@ class BackCommentController extends BackController
             $controller -> sendMessage(
                 $data, $_SESSION['comment']-> emailVisitor()
             );
+            return;
 
-        } else {
-            throw new \Exception(COMMENT_NO_EXIST);
         }
+        throw new \Exception(COMMENT_NO_EXIST);
+        
     }
 
     public function listComments($try=null)

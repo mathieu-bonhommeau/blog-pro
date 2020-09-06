@@ -4,7 +4,7 @@ namespace model;
 
 class Comment 
 {
-    private $_id;
+    private $_commentId;
     private $_nameVisitor;
     private $_content;
     private $_commentDate;
@@ -48,9 +48,9 @@ class Comment
      *
      * @return int
      */
-    public function id()
+    public function commentId()
     {
-         return $this->_id;
+         return $this->_commentId;
     }
     
     /**
@@ -115,11 +115,11 @@ class Comment
      * 
      * @return void
      */
-    public function setId($commentId)
+    public function setcommentId($commentId)
     {
         $commentId = (int)$commentId;
         if ($commentId > 0) {
-            $this->_id = $commentId;
+            $this->_commentId = $commentId;
         }
     }
     

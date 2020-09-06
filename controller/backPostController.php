@@ -13,7 +13,7 @@ class BackPostController extends BackController
         if ($_SESSION['user']->type() == 'administrator') {
             $posts = $postManager -> getPosts();
         } elseif ($_SESSION['user']->type() == 'author') {
-            $posts = $postManager -> getUserPosts($_SESSION['user']->id());
+            $posts = $postManager -> getUserPosts($_SESSION['user']->userId());
         }
 
         $this->twigInit();
@@ -36,7 +36,7 @@ class BackPostController extends BackController
             $newPost = new \model\Post($form);
             $postManager = new \model\PostManager;
             
-            if ($newPost->id() == null) {
+            if ($newPost->postId() == null) {
                 $result = $postManager -> addPost($newPost);
                 $this -> resultPost($result[0], $result[1]);
 
@@ -44,7 +44,7 @@ class BackPostController extends BackController
                 
                 $result = $postManager -> updatePost($newPost);
                 
-                $this -> resultPost($result, $newPost->id());
+                $this -> resultPost($result, $newPost->postId());
             }
         }
         $this->twigInit();
@@ -86,7 +86,7 @@ class BackPostController extends BackController
             unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);  
         }
         $this -> deleteSession('previewPost');
-        header('Location: index.php?p=post&id=' . $newPost->id());
+        header('Location: index.php?p=post&id=' . $newPost->postId());
         exit();     
     }
 
@@ -228,16 +228,16 @@ class BackPostController extends BackController
         }      
     }
 
-    public function deletePost($id)
+    public function deletePost($postId)
     {
         $postManager = new \model\PostManager;
-        $data = $postManager -> getPost($id);
+        $data = $postManager -> getPost($postId);
         $post = new \model\Post($data);
 
         $commentManager = new \model\CommentManager;
-        $commentManager->deletePostComments($id);
+        $commentManager->deletePostComments($postId);
         
-        $affectedLines = $postManager->deletePost($id);
+        $affectedLines = $postManager->deletePost($postId);
 
         if ($affectedLines == 1) {
             unlink(POST_IMG_DIRECTORY . basename($post->picture()));

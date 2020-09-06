@@ -8,7 +8,7 @@ namespace model;
 
 class Post
 { 
-    private $_id;
+    private $_postId;
     private $_title;
     private $_chapo;
     private $_content;
@@ -51,9 +51,9 @@ class Post
      * 
      * @return int
      */
-    public function id()
+    public function postId()
     {
-        return $this->_id;
+        return $this->_postId;
     }
     
     /**
@@ -124,11 +124,11 @@ class Post
      * 
      * @return void
      */
-    public function setId($id)
+    public function setPostId($postId)
     {
-        $id = (int)$id;
-        if ($id > 0) {
-            $this->_id = $id;
+        $postId = (int)$postId;
+        if ($postId > 0) {
+            $this->_postId = $postId;
         }
     }
     

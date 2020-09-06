@@ -4,7 +4,7 @@ namespace model;
 
 class User 
 { 
-    private $_id;
+    private $_userId;
     private $_userName;
     private $_password;
     private $_userEmail;
@@ -31,9 +31,9 @@ class User
         }
     }
 
-    public function id()
+    public function userId()
     {
-        return $this->_id;
+        return $this->_userId;
     }
 
     public function userName()
@@ -71,10 +71,10 @@ class User
         return $this->_type;
     }
 
-    public function setId($id)
+    public function setUserId($userId)
     {
-        $id = (int)$id;
-        $this->_id = $id;
+        $userId = (int)$userId;
+        $this->_userId = $userId;
     }
 
     public function setUserName($userName)

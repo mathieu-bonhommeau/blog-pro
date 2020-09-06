@@ -83,7 +83,7 @@ class Message
         $header.='Content-Type:text/html; charset="uft-8"'."\n";
         $header.='Content-Transfer-Encoding: 8bit';
 
-        $to = $email;
+        $toEmail = $email;
         $subject = 'De ' . $this->inputFirstName() . ' ' . $this->inputName();
 
         if (isset($_GET['delete'])) {
@@ -94,7 +94,7 @@ class Message
 
         $message = $this->inputMessage() . $inputEmail;
 
-        $mail = mail($to, $subject, $message, $header);
+        $mail = mail($toEmail, $subject, $message, $header);
         return $mail;
         
     } 

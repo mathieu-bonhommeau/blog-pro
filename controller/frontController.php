@@ -44,14 +44,14 @@ class FrontController extends Controller
         );
     }
 
-    public function postView($id, $msg=null)
+    public function postView($postId, $msg=null)
     {
         $backManageComment = null;
         if (isset($_GET['c'])) {
             $backManageComment = $_GET['c'];
         } 
         $postManager = new \model\PostManager;
-        $dataPost = $postManager -> getPost($id);
+        $dataPost = $postManager -> getPost($postId);
 
         if (!$dataPost) {  
             throw new \Exception(PAGE_NOT_EXIST);  
@@ -61,13 +61,14 @@ class FrontController extends Controller
         
         if ($post->published() == 'FALSE' && $backManageComment != 'valid'
             && $backManageComment != 'ok' && $backManageComment != 'moderate'
+            && $backManageComment != 'list'
         ) {
             throw new \Exception(PAGE_NOT_EXIST);
         } 
 
         $commentManager = new \model\CommentManager;
-        $dataComment = $commentManager -> getComments($id);
-        $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
+        $dataComment = $commentManager -> getComments($postId);
+        $nbrComments = $commentManager -> nbrComments($postId, 'TRUE');
         $this->twigInit();
         $this->twig->addExtension(new Twig_Extensions_Extension_Text());
         echo $this->twig->render(
@@ -121,16 +122,14 @@ class FrontController extends Controller
         if (($_GET['admin'] == 'adduser' && $password == $user->password())
         ) {
             $_SESSION['user'] = $user;
-            header('Location: index.php?p=home');
-            exit();   
+            header('Location: index.php?p=home'); 
         } 
         if ($_GET['admin'] != 'adduser' && password_verify(
             $password, $user->password()
         )         
         ) {
             $_SESSION['user'] = $user;
-            header('Location: index.php?p=home');
-            exit();   
+            header('Location: index.php?p=home');   
         }     
     }
 }

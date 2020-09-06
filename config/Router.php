@@ -34,7 +34,6 @@ class Router
                 $_SESSION['msg'] = $msg;
 
                 header('Location: index.php?p=home#signup'); 
-                exit();
 
             } else {
 
@@ -291,7 +290,7 @@ class Router
                         $_SESSION['previewPost'] = $updatePost;
                     }
                     
-                    $backPostController  -> addPostView($form=null, $msg=null, $updatePost);
+                    $backPostController  -> addPostView($form=null, null, $updatePost);
                     
                 } elseif (isset($_SESSION['previewPost'])) {
                     $previewPost = $_SESSION['previewPost'];
@@ -372,7 +371,7 @@ class Router
                                 unset($_SESSION['updateUser']);
                                 $affectedLine = $backUserController -> updateUser($form);
                                 
-                                if ($_SESSION['user']->id() == $_GET['id']) {
+                                if ($_SESSION['user']->userId() == $_GET['id']) {
                                     
                                     $frontController -> verifyUser(
                                         $_POST['userName'], 

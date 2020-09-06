@@ -45,10 +45,10 @@ class BackController extends Controller
 
         } elseif ($_SESSION['user']->type() == 'author') {
             $infos['nbrPosts'] = $postManager -> countUserPosts(
-                $_SESSION['user']->id()
+                $_SESSION['user']->userId()
             );
             $infos['lastDatePost'] = $postManager -> lastDateUserPost(
-                $_SESSION['user']->id()
+                $_SESSION['user']->userId()
             );
         }
         return $infos;

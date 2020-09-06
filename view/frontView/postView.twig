@@ -20,7 +20,7 @@
             </h2>
         </div>
         <div class="col-lg-6 text-right">
-            <form method="post" action={{ 'index.php?p=post&id=' ~ post.id  ~ '&c=valid' }}>
+            <form method="post" action={{ 'index.php?p=post&id=' ~ post.postId  ~ '&c=valid' }}>
                 <button type="submit" name="publishedPost" class="btn btn-secondary">Publier</button>
             </form>
         </div>
@@ -49,7 +49,7 @@
         {% endif %}
         
         <!--Add a new comment-->
-        <form class="form-group" action="index.php?p=post&amp;id={{ post.id }}" method="post">
+        <form class="form-group" action="index.php?p=post&amp;id={{ post.postId }}" method="post">
             <div class="form-row">
                 <div class="col">
                     {% if backManageComment == 'moderate' %}

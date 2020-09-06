@@ -20,7 +20,7 @@ class CommentManager extends Manager
      * @return int Number affected lines
      */
     public function addComment(\model\Comment $comment) {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'INSERT INTO comment (
             nameVisitor, content, commentDate, 
             emailVisitor, validComment, user_id, post_id
@@ -54,7 +54,7 @@ class CommentManager extends Manager
             $try = 'commentDate';
         }
 
-        $req = $this->db()->query(
+        $req = $this->database()->query(
             'SELECT id, nameVisitor, content, emailVisitor, 
             UNIX_TIMESTAMP(commentDate) AS commentDate,
             validComment,user_id, post_id
@@ -66,7 +66,7 @@ class CommentManager extends Manager
 
     public function getComments($post_id)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'SELECT id, nameVisitor, content, 
             UNIX_TIMESTAMP(commentDate) AS commentDate,
             validComment,user_id, post_id
@@ -78,51 +78,51 @@ class CommentManager extends Manager
         return $req;
     }
 
-    public function getComment($id)
+    public function getComment($CommnentId)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'SELECT id, nameVisitor, content, 
             UNIX_TIMESTAMP(commentDate) AS commentDate,
             emailVisitor, validComment, user_id, post_id
             FROM comment
             WHERE id = ?'
         );
-        $req -> execute(array($id));
+        $req -> execute(array($CommnentId));
         return $req->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function deleteComment($id)
+    public function deleteComment($CommnentId)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'DELETE FROM comment WHERE id = ?'
         );
-        $req -> execute(array($id));
+        $req -> execute(array($CommnentId));
         return $req->rowCount();
     }
 
     public function deletePostComments($post_id)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'DELETE FROM comment WHERE post_id = ?'
         );
         $req ->execute(array($post_id));
         return $req->rowCount();
     }
 
-    public function updateComment($id)
+    public function updateComment($commentId)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'UPDATE comment 
              SET validComment = \'TRUE\' 
              WHERE id = ?'
         );
-        $req -> execute(array($id));
+        $req -> execute(array($commentId));
         return $req->rowCount();
     }
 
     public function nbrComments($post_id, $validComment)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'SELECT COUNT(*) FROM comment 
              WHERE post_id = ? AND validComment = ? '
         );
@@ -132,7 +132,7 @@ class CommentManager extends Manager
 
     public function nbrAllComments($validComment)
     {
-        $req = $this->db()->prepare(
+        $req = $this->database()->prepare(
             'SELECT COUNT(*) FROM comment 
              WHERE validComment = ? '
         );
@@ -143,7 +143,7 @@ class CommentManager extends Manager
 
     public function lastDateComment()
     {
-        $req = $this->db()->query(
+        $req = $this->database()->query(
             'SELECT MAX(commentDate) FROM comment'
         );
         $lastDateComment = $req->fetch();
