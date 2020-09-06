@@ -1,13 +1,16 @@
 #submitMessage {
   width: 100%;
 }
- #nameVisitor, 
+
+#nameVisitor, 
 #comment {
   font-size: 0.85em;
 }
+
 #commentDate {
   font-size: 0.6em;
 }
+
 #submitComment {
   text-transform: none;
   padding: 0.75rem 1rem;
@@ -28,17 +31,20 @@
   font-weight: normal !important;
   font-size: 1rem !important;
   border: 1px black;
-} 
+}
+
 #user {
   font-size: 1.2rem !important;
   font-weight: 400 !important;
 }
+
 .text-blue {
   color: #6610f2;
 }
 #labelImgPost::after {
   content: "Parcourir";
 }
+
 .btn-sm {
   padding: 0.25rem 0.5rem !important;
   width: 70%;
