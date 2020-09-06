@@ -51,36 +51,33 @@ class FrontController extends Controller
             $backManageComment = $_GET['c'];
         } 
         $postManager = new \model\PostManager;
-        $dataPost = $postManager -> getPost($id); 
-        if ($dataPost) {    
-            $post = new \model\Post($dataPost);
-            
-            if ($post->published() == 'FALSE' 
-                && $backManageComment != 'valid'
-                && $backManageComment != 'ok'
-                && $backManageComment != 'moderate'
-            ) {
-                throw new \Exception(PAGE_NOT_EXIST);
-            } 
+        $dataPost = $postManager -> getPost($id);
 
-            $commentManager = new \model\CommentManager;
-            $dataComment = $commentManager -> getComments($id);
-            $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
-            $this->twigInit();
-            $this->twig->addExtension(new Twig_Extensions_Extension_Text());
-            echo $this->twig->render(
-                'frontView/postView.twig', array(
-                    'post' => $post,
-                    'comments' => $dataComment,
-                    'nbrComments' => $nbrComments['COUNT(*)'],
-                    'commentMsg' => $msg,
-                    'user' => $this->user,
-                    'backManageComment' => $backManageComment
-                )
-            );
-            return;
+        if (!$dataPost) {  
+            throw new \Exception(PAGE_NOT_EXIST);  
+        }
+
+        $post = new \model\Post($dataPost);
+        
+        if ($post->published() == 'FALSE' && $backManageComment != 'valid'
+            && $backManageComment != 'ok' && $backManageComment != 'moderate'
+        ) {
+            throw new \Exception(PAGE_NOT_EXIST);
         } 
-        throw new \Exception(PAGE_NOT_EXIST);       
+
+        $commentManager = new \model\CommentManager;
+        $dataComment = $commentManager -> getComments($id);
+        $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
+        $this->twigInit();
+        $this->twig->addExtension(new Twig_Extensions_Extension_Text());
+        echo $this->twig->render(
+            'frontView/postView.twig', array(
+                'post' => $post, 'comments' => $dataComment,
+                'nbrComments' => $nbrComments['COUNT(*)'],
+                'commentMsg' => $msg, 'user' => $this->user,
+                'backManageComment' => $backManageComment
+            )
+        );   
     }
 
     public function addNewComment(array $form)
