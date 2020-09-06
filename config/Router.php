@@ -348,28 +348,28 @@ class Router
                     ) {
                         
                         if ($_POST['userPassword'] == $_POST['userPasswordConfirm'] ) {
-                            if (isset($_GET['id'])) {
+                            if (isset($_GET['id']) && isset($_SESSION['updateUser'])) {
                                 $form = array(
                                     'id' => $_GET['id'],
                                     'userName' => $_POST['userName'],
                                     'password' => $_POST['userPassword'],
+                                    'userEmail' => $_SESSION['updateUser']->userEmail(),
+                                    'profilPicture' => $_SESSION['updateUser']->profilPicture(),
+                                    'authorName' => $_SESSION['updateUser']->authorName(),
                                     'type' => $_POST['userType'] 
                                 );
                                 
+                                unset($_SESSION['updateUser']);
                                 $affectedLine = $backUserController -> updateUser($form);
                                 
                                 if ($_SESSION['user']->id() == $_GET['id']) {
+                                    
                                     $frontController -> verifyUser(
                                         $_POST['userName'], 
                                         $_POST['userPassword']
                                     );
                                     header('Location: index.php?admin=backhome');
                                 }
-
-                                $frontController -> verifyUser(
-                                    $_POST['userName'], 
-                                    $_POST['userPassword']
-                                );
 
                             } else {
                                 $form = array(
@@ -447,27 +447,29 @@ class Router
                         && isset($_POST['userPassword'])
                         && isset($_POST['userPasswordConfirm'])
                     ) {
+                        $userEmail = null;
+                        $authorName = null;
+                        $profilPicture = null;
+
                         if ($_POST['userPassword'] == $_POST['userPasswordConfirm']) {
                             if (isset($_POST['userEmail'])) {
                                 $userEmail = $_POST['userEmail'];
-                            } else {
-                                $userEmail = null;
-                            }
+                            } 
+
                             if (isset($_POST['authorName'])) {
                                 $authorName = $_POST['authorName'];
-                            } else {
-                                $authorName = null;
-                            }
+                            } 
+
                             if (isset($_FILES['profilPictureUpload'])
                                 && $_FILES['profilPictureUpload']['name'] != null
                             ) {
                                 $profilPicture = $backUserController ->
                                 uploadProfilPicture(
                                     $_FILES['profilPictureUpload']
-                                );
-                            } else {
-                                $profilPicture = null;
-                            }
+                                ); 
+                            } elseif (isset($_POST['profilPictureUpload'])) {
+                                $profilPicture = $_POST['profilPictureUpload'];
+                            } 
                             
                             $form = array(
                                 'id' => $_GET['id'],

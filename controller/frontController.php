@@ -117,17 +117,19 @@ class FrontController extends Controller
         
         if ($data) {
             $user = new \model\User($data);
-
-            if (($_GET['admin'] == 'adduser' && $password == $user->password())
-                || ($_GET['admin'] != 'adduser' && password_verify(
-                    $password, $user->password()
-                ))
-            ) {
-                $_SESSION['user'] = $user;
-                header('Location: index.php?p=home');
-                exit();   
-            } 
+        } else {
+            return  USER_NO_OK; 
+        }
+        
+        if (($_GET['admin'] == 'adduser' && $password == $user->password())
+            || ($_GET['admin'] != 'adduser' && password_verify(
+                $password, $user->password()
+            ))
+        ) {
+            $_SESSION['user'] = $user;
+            header('Location: index.php?p=home');
+            exit();   
         } 
-        return  USER_NO_OK;  
+            
     }
 }

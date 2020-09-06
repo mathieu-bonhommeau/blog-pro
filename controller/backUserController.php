@@ -20,6 +20,7 @@ class BackUserController extends BackController
         } else {
             $updateUser = null;
         }
+        $_SESSION['updateUser'] = $updateUser;
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -72,6 +73,7 @@ class BackUserController extends BackController
     public function updateUser($form)
     {
         $userManager = new \model\UserManager;
+
         $user = new \model\User($form);
         
         return $userManager -> updateUser($user);
