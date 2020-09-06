@@ -1,143 +1,143 @@
-  #submitMessage {
-    width: 100%;
-  }
+#submitMessage {
+  width: 100%;
+}
 
- #nameVisitor {
+#nameVisitor {
   font-size: 0.85em;
-  }
+}
 
-  #comment {
+#comment {
   font-size: 0.85em;
+}
+
+#commentDate {
+  font-size: 0.6em;
+}
+
+#submitComment {
+  text-transform: none;
+  padding: 0.75rem 1rem;
+}
+
+.post {
+  flex-direction: row-reverse;
+}
+
+.post:nth-child(2n+1) {
+  flex-direction: row;
+}
+
+.post:nth-child(2n+1) > .reverse {
+  text-align: left;
   }
 
-  #commentDate {
-    font-size: 0.6em;
-  }
+.post:nth-child(2n+0) > .reverse {
+  text-align: right;
+}
 
-  #submitComment {
-    text-transform: none;
-    padding: 0.75rem 1rem;
-  }
+#connect {
+  font-weight: normal !important;
+  font-size: 1rem !important;
+  border: 1px black;
+}
 
-  .post:nth-child(2n+1) {
-    flex-direction: row;
-  }
+#user {
+  font-size: 1.2rem !important;
+  font-weight: 400 !important;
+}
 
-  .post {
-    flex-direction: row-reverse;
-  }
+.text-blue {
+  color: #6610f2;
+}
 
-  .post:nth-child(2n+1) > .reverse {
-    text-align: left;
-    }
+#labelImgPost::after {
+  content: "Parcourir";
+}
 
-  .post:nth-child(2n+0) > .reverse {
-    text-align: right;
-  }
+.btn-sm {
+  padding: 0.25rem 0.5rem !important;
+  width: 70%;
+  text-transform: none;
+}
 
-  #connect {
-    font-weight: normal !important;
-    font-size: 1rem !important;
-    border: 1px black;
-  }
+.btn-img {
+  padding: 5px 10px;
+  text-transform: none;
+}
 
-  #user {
-    font-size: 1.2rem !important;
-    font-weight: 400 !important;
-  }
+#imgPost {
+  color: grey;
+}
 
-  .text-blue {
-    color: #6610f2;
-  }
+.text-size-sm {
+  font-size: 0.85em;
+}
 
-  #labelImgPost::after {
-    content: "Parcourir";
-  }
+.projects-section {
+  min-height: 700px;
+}
 
-  .btn-sm {
-    padding: 0.25rem 0.5rem !important;
-    width: 70%;
-    text-transform: none;
-  }
+#profilPicture {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+}
 
-  .btn-img {
-    padding: 5px 10px;
-    text-transform: none;
-  }
+#profilPictureMenu {
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+}
 
-  #imgPost {
-    color: grey;
-  }
+#adminProfil {
+  padding: 1rem 0.75rem !important;
+}
 
-  .text-size-sm {
-    font-size: 0.85em;
-  }
+#profilPictureLarge {
+  border-radius: 50%;
+  width: 8rem;
+  height: 8rem;
+}
 
-  .projects-section {
-    min-height: 700px;
-  }
+#logoMenu {
+  width: 7rem;
+  height: 5rem;
+}
 
-  #profilPicture {
-    border-radius: 50%;
-    width: 5rem;
-    height: 5rem;
-  }
+#logoHome {
+  width: 14rem;
+  height: 12rem;
+}
 
-  #profilPictureMenu {
-    border-radius: 50%;
-    width: 4rem;
-    height: 4rem;
-  }
+#myName {
+  font-size: 2rem;
+  letter-spacing: 0.1rem;
+}
 
-  #adminProfil {
-    padding: 1rem 0.75rem !important;
-  }
+#myJob {
+  font-size: 3.5rem;
+  letter-spacing: 0.1rem;
+}
 
-  #profilPictureLarge {
-    border-radius: 50%;
-    width: 8rem;
-    height: 8rem;
-  }
+.btn-primary {
+  background-color: #4a7276 !important;
+}
 
-  #logoMenu {
-    width: 7rem;
-    height: 5rem;
-  }
+.btn-primary:hover {
+  background-color: #1b3236 !important;
+}
 
-  #logoHome {
-    width: 14rem;
-    height: 12rem;
-  }
+#about-text {
+  text-align: justify;
+  text-justify: inter-word;
+}
 
-  #myName {
-    font-size: 2rem;
-    letter-spacing: 0.1rem;
-  }
+#myPhoto {
+  width: 230px;
+  height: 250px;
+  box-shadow: -2px -2px 2px #1b3236 ;
+}
 
-  #myJob {
-    font-size: 3.5rem;
-    letter-spacing: 0.1rem;
-  }
-
-  .btn-primary {
-    background-color: #4a7276 !important;
-  }
-
-  .btn-primary:hover {
-    background-color: #1b3236 !important;
-  }
-
-  #about-text {
-    text-align: justify;
-    text-justify: inter-word;
-  }
-
-  #myPhoto {
-    width: 230px;
-    height: 250px;
-    box-shadow: -2px -2px 2px #1b3236 ;
-  }
-  
-  .fa-stack-1x, .fa-stack-2x {
-    position: inherit;
-  }
+.fa-stack-1x, .fa-stack-2x {
+  position: inherit;
+}
