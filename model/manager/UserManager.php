@@ -7,7 +7,7 @@ class UserManager extends Manager
     public function getUsers()
     {
         $req = $this->database()->query(
-            'SELECT user.id, user.userName, user.password, 
+            'SELECT user.id, user.userName, user.password, user.userEmail,
             user.profilPicture, user.authorName, user.registerDate, usertype.type
             FROM user
             INNER JOIN usertype ON user.userType_id = usertype.id

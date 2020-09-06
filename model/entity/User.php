@@ -71,7 +71,7 @@ class User
         return $this->_type;
     }
 
-    public function setUserId($userId)
+    public function setId($userId)
     {
         $userId = (int)$userId;
         $this->_userId = $userId;

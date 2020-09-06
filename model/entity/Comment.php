@@ -115,7 +115,7 @@ class Comment
      * 
      * @return void
      */
-    public function setcommentId($commentId)
+    public function setId($commentId)
     {
         $commentId = (int)$commentId;
         if ($commentId > 0) {

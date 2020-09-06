@@ -47,7 +47,6 @@ class BackUserController extends BackController
     {
         $userManager = new \model\UserManager;
         $users = $userManager -> getUsers();
-
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
         echo $this->twig->render(

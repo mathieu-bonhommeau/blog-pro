@@ -124,6 +124,7 @@ class BackPostController extends BackController
 
     public function dataInputPost($id=null)
     {
+        $backImagePostController = new \controller\BackPostImageController;
         $this -> inputPostTest();
 
         if (!empty($_POST['titlePost'])
@@ -131,10 +132,10 @@ class BackPostController extends BackController
             && !empty($_POST['contentPost'])
         ) {
             if (empty($_FILES['imgPost']['name'])) {
-                $path = $this->managePostImage();
+                $path = $backImagePostController->managePostImage();
     
             } else {
-                $path =  $this -> uploadFile($_FILES['imgPost']);  
+                $path =  $backImagePostController -> uploadFile($_FILES['imgPost']);  
             }
             $form = array(
                 'id' => $id,
@@ -181,6 +182,7 @@ class BackPostController extends BackController
         
         if ($data) {
             $post = new \model\Post($data);
+            
             $_SESSION['oldImage'] = basename($post->picture());
 
             if ($post->picture() != null 
@@ -248,82 +250,7 @@ class BackPostController extends BackController
         }
     }
 
-    public function uploadFile($imgPost=null)
-    {  
-        $this -> verifTmpFolder();
-
-        if (!($imgPost['error'] == 0  && $imgPost['size'] <= 2000000)) {
-            throw new \Exception(UPLOAD_NO_OK);
-        }
-        if (!in_array(pathinfo($imgPost['name'])['extension'], AUTHORIZED_EXTENSIONS)
-        ) {
-            throw new \Exception(UPLOAD_NO_OK);
-        }
-
-        if (isset($_POST['addPost']) || isset($_POST['notPublished'])
-        ) {
-            $this -> moveFile($imgPost, POST_IMG_DIRECTORY);
-            $this -> renameFile($imgPost, POST_IMG_DIRECTORY);
-            return POST_IMG_DIRECTORY . (string)time() . '.' 
-            . pathinfo($imgPost['name'])['extension'];
-        } 
-        
-        if (isset($_POST['preview'])
-        ) {
-            $this -> moveFile($imgPost, 'tmp/');
-            return 'tmp/' . basename($imgPost['name']);
-        }      
-    }
-
-    public function moveFile($imgPost,$directory)
-    {
-        move_uploaded_file(
-            $imgPost['tmp_name'], 
-            $directory . basename($imgPost['name'])
-        );
-    }
-
-    public function renameFile($imgPost, $directory)
-    {
-        rename(
-            $directory . basename($imgPost['name']), 
-            $directory . (string)time() . '.' 
-            . pathinfo($imgPost['name'])['extension']
-        );
-    }
-
-    public function managePostImage() 
-    {
-        if (isset($_SESSION['previewPost']) 
-            && $_SESSION['previewPost']->picture() != null
-        ) {
-            $path = basename($_SESSION['previewPost']->picture());
-                    
-            if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
-                $newName = (string)time() . '.' .pathinfo($path)['extension'];
-
-                $this-> verifTmpFolder();
-
-                rename('tmp/'. $path, POST_IMG_DIRECTORY . $newName);
-                $_SESSION['previewPost'] -> setPicture(
-                    POST_IMG_DIRECTORY . $newName
-                );
-            }
-            return $_SESSION['previewPost']->picture();            
-        } 
-        return null;           
-    }
-
-    public function imgChange()
-    {
-        if (isset($_SESSION['previewPost'])) {
-            if (file_exists($_SESSION['previewPost'] -> picture())) {
-                unlink($_SESSION['previewPost'] -> picture());
-            }
-            $_SESSION['previewPost']->setPicture(null);
-            $this -> addPostView($form=null, $msg=null, $_SESSION['previewPost']);
-        }  
-    }
+   
 
     public function deleteSession($name) 
     {

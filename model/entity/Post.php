@@ -124,7 +124,7 @@ class Post
      * 
      * @return void
      */
-    public function setPostId($postId)
+    public function setId($postId)
     {
         $postId = (int)$postId;
         if ($postId > 0) {
