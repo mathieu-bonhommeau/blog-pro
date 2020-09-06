@@ -28,7 +28,7 @@ class Autoloader
 
             $fileName = $directory . $className . '.php';
             if (file_exists($fileName)) {
-                include_once $fileName;
+                include $fileName;
             }
         }
     }

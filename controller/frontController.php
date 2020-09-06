@@ -108,6 +108,7 @@ class FrontController extends Controller
 
     public function verifyUser($pseudo, $password)
     {
+        
         $userManager = new \model\UserManager;
         $data = $userManager -> getUser($pseudo);
         

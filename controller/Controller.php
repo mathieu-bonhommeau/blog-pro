@@ -46,4 +46,12 @@ class Controller
         }
         $this->msg = $msg;
     }
+
+    public function sessionControl($name)
+    {
+        if (isset($_SESSION[$name])) {
+            return true;
+        }
+        return false;
+    }
 }

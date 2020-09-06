@@ -17,9 +17,9 @@ class Router
                     && !empty($_POST['inputMessage'])
                 ) {
                     $form = array('inputName' => $_POST['inputName'], 
-                                'inputFirstName' => $_POST['inputFirstName'], 
-                                'inputEmail' => $_POST['inputEmail'], 
-                                'inputMessage' => $_POST['inputMessage']
+                            'inputFirstName' => $_POST['inputFirstName'], 
+                            'inputEmail' => $_POST['inputEmail'], 
+                            'inputMessage' => stripslashes($_POST['inputMessage'])
                     );
                     
                     $msg = $this -> runSendMessage($form); 
@@ -36,7 +36,8 @@ class Router
             } else {
 
                 if (isset($_SESSION['msg'])) {
-                    $frontController -> homePage($_SESSION['msg']);
+                    $msg = $_SESSION['msg'];
+                    $frontController -> homePage($msg);
                     unset($_SESSION['msg']);
 
                 } else {
@@ -62,7 +63,8 @@ class Router
                     && ($_GET['c']=='ok' || $_GET['c']=='moderate')
                 ) {
                     if (isset($_GET['cid'])) {
-                        $backCommentController -> updateComment($_GET['cid']);
+                        $cid = $_GET['cid'];
+                        $backCommentController -> updateComment($cid);
                     }
                     $frontController -> postView($_GET['id']);
 

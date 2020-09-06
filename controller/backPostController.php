@@ -112,7 +112,7 @@ class BackPostController extends BackController
     {
         if ((empty($_POST['titlePost']) 
             && empty($_POST['chapoPost']) 
-            && empty($_POST['contentPost'])) 
+            && empty(filter_input(INPUT_POST, 'contentPost', FILTER_SANITIZE_SPECIAL_CHARS))) 
             && (isset($_SESSION['previewPost']))
         ) {
             $_POST['titlePost'] = $_SESSION['previewPost']->title();

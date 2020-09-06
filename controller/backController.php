@@ -34,6 +34,7 @@ class BackController extends Controller
     public function backHomePostBadge()
     {
         $postManager = new \model\PostManager;
+        
 
         $infos['nbrPosts'] = null;
         $infos['lastDatePost'] = null;
