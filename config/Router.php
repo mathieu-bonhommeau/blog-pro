@@ -19,7 +19,10 @@ class Router
                     $form = array('inputName' => $_POST['inputName'], 
                             'inputFirstName' => $_POST['inputFirstName'], 
                             'inputEmail' => $_POST['inputEmail'], 
-                            'inputMessage' => stripslashes($_POST['inputMessage'])
+                            'inputMessage' => filter_input(
+                                INPUT_POST, 'inputMessage', 
+                                FILTER_SANITIZE_SPECIAL_CHARS
+                            )
                     );
                     
                     $msg = $this -> runSendMessage($form); 
@@ -63,8 +66,13 @@ class Router
                     && ($_GET['c']=='ok' || $_GET['c']=='moderate')
                 ) {
                     if (isset($_GET['cid'])) {
-                        $cid = $_GET['cid'];
-                        $backCommentController -> updateComment($cid);
+                    
+                        $backCommentController -> updateComment(
+                            filter_input(
+                                INPUT_GET, 'cid',
+                                FILTER_SANITIZE_SPECIAL_CHARS
+                            )
+                        );
                     }
                     $frontController -> postView($_GET['id']);
 
