@@ -69,16 +69,18 @@ class RouterBack
                 } elseif (isset($_GET['id'])) {
                     $form = $backUserController -> getUpdateUser($_GET['id']);
                     $backUserController -> addUserView($form);
+                    return;
                     
                 } else {
-                
                     $backUserController -> addUserView();
+                    return;
                 }
 
             } elseif ($get == 'listusers'
                 && $_SESSION['user']->type() == 'administrator'
             ) {
                 $backUserController -> listUsers();
+                return;
 
             } elseif ($get == 'deleteuser'
                 && $_SESSION['user']->type() == 'administrator'
