@@ -27,6 +27,30 @@ class BackPostController extends BackController
         );
     }
 
+    public function backListPostsAction()
+    {
+        if (isset($_GET['published'])) {
+            $this -> publishedPost($_GET['published']);
+            return; 
+        }   
+        if (isset($_GET['delete'])) { 
+            if (isset($_POST['validDelete'])) {
+                $this -> deletePost($_GET['delete']);
+                return;
+
+            } elseif (isset($_POST['cancelDelete'])) {    
+                header('Location: index.php?admin=post');
+                exit();  
+
+            } else {
+                $this -> deleteView($_GET['delete']);
+                return;  
+            }    
+        }
+        $this -> backListPosts();
+           
+    }
+
     public function addPostView(
         array $form=null, 
         $msg=null, 

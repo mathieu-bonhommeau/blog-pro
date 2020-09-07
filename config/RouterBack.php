@@ -16,29 +16,15 @@ class RouterBack
             if ($get == 'backhome') {
                 $backPostController -> deleteSession('previewPost');
                 $backController -> backHomePage();
+                return;
 
             } elseif ($get == 'post'
                 && ($_SESSION['user']->type() == 'administrator'
                 || $_SESSION['user']->type() == 'author')
             ) {
                 $backPostController -> deleteSession('previewPost');
-
-                if (isset($_GET['published'])) {
-                    $backPostController -> publishedPost($_GET['published']);    
-
-                } elseif (isset($_GET['delete'])) {
-                    if (isset($_POST['validDelete'])) {
-                        $backPostController -> deletePost($_GET['delete']);
-
-                    } elseif (isset($_POST['cancelDelete'])) {    
-                        header('Location: index.php?admin=post');
-                        
-                    } else {
-                        $backPostController -> deleteView($_GET['delete']);   
-                    }
-                } else { 
-                    $backPostController -> backListPosts();   
-                }
+                $backPostController -> backListPostsAction();
+                return;
 
             } elseif ($get == 'addpost'
                 && ($_SESSION['user']->type() == 'administrator'
