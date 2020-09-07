@@ -82,6 +82,8 @@ class BackPostController extends BackController
         );
     }
 
+    
+
     public function resultPost($affectedLines, $id) 
     {
         $postManager = new \model\PostManager;

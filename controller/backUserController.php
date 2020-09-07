@@ -39,8 +39,69 @@ class BackUserController extends BackController
         $user = new \model\User($form);
         
         return $userManager -> addUser($user); 
-        
+    }
 
+    public function testAdduser()
+    {
+        if ($_POST['userPassword'] != $_POST['userPasswordConfirm'] ) {
+            $_SESSION['addUserMsg'] = USER_NO_OK;
+            header('Location: index.php?admin=adduser');
+            exit();
+        }
+
+        if (isset($_GET['id']) && isset($_SESSION['updateUser'])) {
+            
+            $affectedLine = $this -> testUpdateUser();
+
+        } else {
+            $form = array(
+                'userName' => $_POST['userName'],
+                'password' => password_hash(
+                    $_POST['userPassword'], 
+                    PASSWORD_DEFAULT
+                ),
+                'type' => $_POST['userType'] 
+            );
+            $affectedLine = $this -> addUser($form);
+        }
+            
+        if ($affectedLine == 1 ) {
+            $_SESSION['addUserMsg'] = ADD_USER_OK;
+            header('Location: index.php?admin=adduser');
+            exit();
+        } 
+        $_SESSION['addUserMsg'] = ADD_USER_NO_OK;
+        header('Location: index.php?admin=adduser');
+        exit();   
+    }
+
+    public function testUpdateUser()
+    {
+        $frontController = new \controller\FrontController;
+        
+        $form = array(
+            'id' => $_GET['id'],
+            'userName' => $_POST['userName'],
+            'password' => $_POST['userPassword'],
+            'userEmail' => $_SESSION['updateUser']->userEmail(),
+            'profilPicture' => $_SESSION['updateUser']->profilPicture(),
+            'authorName' => $_SESSION['updateUser']->authorName(),
+            'type' => $_POST['userType'] 
+        );
+          
+        unset($_SESSION['updateUser']);
+        $affectedLine = $this -> updateUser($form);
+         
+        if ($_SESSION['user']->userId() == $_GET['id']) { 
+            
+            $frontController -> verifyUser(
+                $_POST['userName'], 
+                $_POST['userPassword']
+            );
+            header('Location: index.php?admin=backhome');
+            exit();
+        }
+        return $affectedLine;
     }
 
     public function listUsers()

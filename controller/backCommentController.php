@@ -107,5 +107,52 @@ class BackCommentController extends BackController
             )
         );
     }
+
+    public function validDeleteComment()
+    {
+        if (isset($_POST['cancelDeleteComment'])) {
+            if (isset($_GET['del'])) {  
+                header('Location: index.php?admin=listcomments');
+                exit();
+            }
+            header('Location: index.php?admin=validcomment');
+            exit();
+        }
+        
+        if (isset($_POST['validDeleteComment'])) {
+            $this -> deleteComment($_GET['delete']);
+
+            if (isset($_GET['del'])) {  
+                header('Location: index.php?admin=listcomments');
+                exit();
+            } 
+            header('Location: index.php?admin=validcomment');
+            exit();
+        }
+
+        $this -> deleteCommentView($_GET['delete']);
+        return;
+    }
+
+    public function listCommentsAction()
+    {
+        if (isset($_POST['byPost'])) {
+            $this -> listComments('post_id');
+            return;
+        } 
+
+        if (isset($_POST['byDate'])) {
+            $this -> listComments('commentDate');
+            return;
+        } 
+        
+        if (isset($_POST['byName'])) {
+            $this -> listComments('nameVisitor');
+            return;
+        } 
+
+        $this -> listComments();
+        return;
+    }
 }
 
