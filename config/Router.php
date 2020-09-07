@@ -10,43 +10,36 @@ class Router
 
             $frontController = new \controller\FrontController;
 
-            if (isset($_POST['submitMessage'])) {
-                if (!empty($_POST['inputName']) 
-                    && !empty($_POST['inputFirstName']) 
-                    && !empty($_POST['inputEmail']) 
-                    && !empty($_POST['inputMessage'])
-                ) {
-                    $form = array('inputName' => $_POST['inputName'], 
-                            'inputFirstName' => $_POST['inputFirstName'], 
-                            'inputEmail' => $_POST['inputEmail'], 
-                            'inputMessage' => filter_input(
-                                INPUT_POST, 'inputMessage', 
-                                FILTER_SANITIZE_SPECIAL_CHARS
-                            )
-                    );
-                    
-                    $msg = $this -> runSendMessage($form); 
-                
-                } else {
-                    $msg = EMPTY_FIELDS;
-                }
-
-                $_SESSION['msg'] = $msg;
-
-                header('Location: index.php?p=home#signup'); 
-
+            if (!isset($_POST['submitMessage']) && isset($_SESSION['msg'])) {
+                $msg = $_SESSION['msg'];
+                $frontController -> homePage($msg);
+                unset($_SESSION['msg']);
+                return;
             } else {
+                $frontController -> homePage();
+            }   
 
-                if (isset($_SESSION['msg'])) {
-                    $msg = $_SESSION['msg'];
-                    $frontController -> homePage($msg);
-                    unset($_SESSION['msg']);
+            if (!empty($_POST['inputName']) 
+                && !empty($_POST['inputFirstName']) 
+                && !empty($_POST['inputEmail']) 
+                && !empty($_POST['inputMessage'])
+            ) {
+                $form = array('inputName' => $_POST['inputName'], 
+                        'inputFirstName' => $_POST['inputFirstName'], 
+                        'inputEmail' => $_POST['inputEmail'], 
+                        'inputMessage' => filter_input(
+                            INPUT_POST, 'inputMessage', 
+                            FILTER_SANITIZE_SPECIAL_CHARS
+                        )
+                );
+                $msg = $this -> runSendMessage($form); 
 
-                } else {
-                    $frontController -> homePage();
-                }
-                
-            }
+            } 
+            $msg = EMPTY_FIELDS;
+            $_SESSION['msg'] = $msg;
+
+            header('Location: index.php?p=home#signup'); 
+            exit();
 
             
         } elseif ($get == 'listposts') {

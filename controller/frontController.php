@@ -118,20 +118,22 @@ class FrontController extends Controller
         } else {
             return  USER_NO_OK; 
         }
-        
-        if (($_GET['admin'] == 'adduser' && $password == $user->password())
-        ) {
-            $_SESSION['user'] = $user;
-            header('Location: index.php?p=home');
-            exit(); 
-        } 
-        if ($_GET['admin'] != 'adduser' && password_verify(
+
+        if (!isset($_GET['admin']) && password_verify(
             $password, $user->password()
         )         
         ) {
             $_SESSION['user'] = $user;
             header('Location: index.php?p=home');
-            exit();   
-        }     
+            exit();
+        }
+
+        if (($_GET['admin'] == 'adduser' && $password == $user->password())
+        ) {
+            $_SESSION['user'] = $user;
+            header('Location: index.php?p=home');
+            exit();
+        } 
+             
     }
 }
