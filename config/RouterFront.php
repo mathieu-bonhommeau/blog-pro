@@ -6,15 +6,13 @@ class RouterFront
 { 
     public function runFrontPage($get)
     {
-        $getId = filter_input(INPUT_GET, 'id');
+        $var = new \config\GlobalVar;
 
         if ($get == 'home') {
 
             $frontController = new \controller\FrontController;
 
-            $postSubmitMessage = filter_input(INPUT_POST, 'submitMessage');
-
-            if (isset($postSubmitMessage)) {
+            if ($var->issetPost('submitMessage')) {
                 $form = $frontController -> testInputMessage();   
                 $msg = $frontController -> runSendMessage($form); 
                 $_SESSION['msg'] = $msg;
@@ -36,26 +34,26 @@ class RouterFront
             $frontController -> listPostsView(); 
             return;
             
-        } elseif ($get == 'post' && isset($getId)) {
+        } elseif ($get == 'post' && $var->issetGet('id')) {
 
             $frontController = new \controller\FrontController;
-            $getC = filter_input(INPUT_GET, 'C');
-            $getSubmitComment = filter_input(INPUT_POST, 'submitComment');
 
-            if (isset($getC) 
-                && ($getC == 'ok' || $getC == 'moderate')
+            //$getSubmitComment = filter_input(INPUT_POST, 'submitComment');
+
+            if ($var->issetGet('c') 
+                && ($var->get('c') == 'ok' || $var->get('c') == 'moderate')
             ) {
                 $frontController -> validComment();
-                $frontController -> postView($getId);
+                $frontController -> postView($var->get('id'));
                 return;
 
-            } elseif (isset($getSubmitComment)) {
+            } elseif ($var->issetGet('submitComment')) {
                 
                 $msg = $frontController -> testInputComment('FALSE', null);
                 $_SESSION['commentMsg'] = $msg;
                 header(
                     'Location: index.php?p=post&id=' 
-                    . $getId . '#comments'
+                    . $var->get('id') . '#comments'
                 );
                 exit();
             
