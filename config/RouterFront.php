@@ -71,7 +71,7 @@ class RouterFront
                 return;
             } 
                 
-            if (isset($_SESSION['commentMsg'])) {
+            if ($var->issetSession('commentMsg')) {
                 $frontController -> postView(
                     $var->get('id'), $var->session('commentMsg')
                 );
