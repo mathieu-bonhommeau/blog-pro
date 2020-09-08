@@ -42,6 +42,11 @@ class GlobalVar
         }
     }
 
+    public function setSession($index, $value) 
+    {
+        return $_SESSION[$index] = $value;
+    }
+
     public function issetSession($index)
     {
         $index = htmlspecialchars($index);

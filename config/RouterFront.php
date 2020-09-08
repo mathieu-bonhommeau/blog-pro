@@ -14,8 +14,8 @@ class RouterFront
 
             if ($var->issetPost('submitMessage')) {
                 $form = $frontController -> testInputMessage();   
-                $msg = $frontController -> runSendMessage($form); 
-                $_SESSION['msg'] = $msg;
+                $msg = $frontController -> runSendMessage($form);
+                $var -> setSession('msg', $msg);
                 header('Location: index.php?p=home#signup'); 
                 return;
             } 
@@ -23,7 +23,6 @@ class RouterFront
                 $msg = $var->session('msg');
                 $frontController -> homePage($msg);
                 $var->unsetSession('msg');
-               
                 return;
             } 
             $frontController -> homePage();
@@ -48,64 +47,64 @@ class RouterFront
                 $frontController -> postView($var->get('id'));
                 return;
 
-            } elseif ($var->issetGet('submitComment')) {
+            } elseif ($var->issetPost('submitComment')) {
                 
                 $msg = $frontController -> testInputComment('FALSE', null);
-                $_SESSION['commentMsg'] = $msg;
+                $var -> setSession('commentMsg', $msg);
                 header(
                     'Location: index.php?p=post&id=' 
                     . $var->get('id') . '#comments'
                 );
                 exit();
             
-            } elseif (isset($_POST['submitModerateComment'])) {
+            } elseif ($var->issetPost('submitModerateComment')) {
 
                 $msg = $frontController -> testInputComment('TRUE', 1);
-                $_SESSION['commentMsg'] = $msg;
-                header('Location: index.php?p=post&id=' . $_GET['id'] . '&c=ok');
+                $var -> setSession('msg', $msg);
+                header('Location: index.php?p=post&id=' . $var->get('id') . '&c=ok');
                 exit();
 
-            } elseif (isset($_POST['publishedPost'])) {
+            } elseif ($var->issetPost('publishedPost')) {
                 
                 $backPostController = new \controller\BackPostController;
-                $backPostController -> publishedPost($_GET['id']);
+                $backPostController -> publishedPost($var->get('id'));
                 return;
             } 
                 
             if (isset($_SESSION['commentMsg'])) {
                 $frontController -> postView(
-                    $_GET['id'], $_SESSION['commentMsg']
+                    $var->get('id'), $var->session('commentMsg')
                 );
-                unset($_SESSION['commentMsg']);
+                $var -> unsetSession('commentMsg');
                 return;
             } 
 
-            $frontController -> postView($_GET['id']);
+            $frontController -> postView($var->get('id'));
             return;
 
         } elseif ($get == 'connect') {
             
             $frontController = new \controller\FrontController;
 
-            if (isset($_POST['submitConnect'])) {
+            if ($var->issetPost('submitConnect')) {
                 
-                $msgConnect = $frontController -> testInputConnect();    
-                $_SESSION['msgConnect'] = $msgConnect;
+                $msgConnect = $frontController -> testInputConnect();
+                $var -> setSession('msgConnect', $msgConnect);    
                 header('Location: index.php?p=connect');
                 exit();
             } 
             
-            if (isset($_SESSION['msgConnect'])) {
+            if ($var->issetSession('msgConnect')) {
 
-                $frontController -> connectView($_SESSION['msgConnect']);
-                unset($_SESSION['msgConnect']);
+                $frontController -> connectView($var->session('msgConnect'));
+                $var -> unsetSession('msgConnect');
                 return;
             } 
             $frontController -> connectView();
                
         } elseif ($get == 'disconnect') {
 
-            unset($_SESSION['user']);
+            $var -> unsetSession('user');
             header('Location: index.php');
         }
 
