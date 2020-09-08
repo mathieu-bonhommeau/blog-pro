@@ -25,6 +25,11 @@ class GlobalVar
         return filter_input(INPUT_POST, $index);
     }
 
+    public function setPost($index, $value) 
+    {
+        return $_POST[$index] = $value;
+    }
+
     public function issetPost($index)
     {
         $index = htmlspecialchars($index);
@@ -40,6 +45,16 @@ class GlobalVar
         $index = htmlspecialchars($index);
         $post =  filter_input(INPUT_POST, $index);
         if (!empty($post)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function emptyPost($index)
+    {
+        $index = htmlspecialchars($index);
+        $post =  filter_input(INPUT_POST, $index);
+        if (empty($post)) {
             return true;
         }
         return false;

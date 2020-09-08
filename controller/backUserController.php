@@ -8,19 +8,21 @@ class BackUserController extends BackController
 {
     public function addUserView($form=null)
     {
+        $var = new \config\GlobalVar;
+
         $msg = null;
         $updateUser = null;
 
-        if (isset($_SESSION['addUserMsg'])) {
-            $msg = $_SESSION['addUserMsg'];
-            unset($_SESSION['addUserMsg']);
+        if ($var->issetSession('addUserMsg')) {
+            $msg = $var->session('addUserMsg');
+            $var->unsetSession('addUserMsg');
         } 
 
         if ($form != null) {
             $updateUser = new \model\User($form);
         } 
         
-        $_SESSION['updateUser'] = $updateUser;
+        $var->setSession('updateUser', $updateUser);
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -43,34 +45,36 @@ class BackUserController extends BackController
 
     public function testAdduser()
     {
-        if ($_POST['userPassword'] != $_POST['userPasswordConfirm'] ) {
-            $_SESSION['addUserMsg'] = USER_NO_OK;
+        $var = new \config\GlobalVar;
+
+        if ($var->post('userPassword') != $var->post('userPasswordConfirm')) {
+            $var->setSession('addUserMsg', USER_NO_OK);
             header('Location: index.php?admin=adduser');
             exit();
         }
 
-        if (isset($_GET['id']) && isset($_SESSION['updateUser'])) {
+        if ($var->issetGet('id') && $var->issetSession('updateUser')) {
             
             $affectedLine = $this -> testUpdateUser();
 
         } else {
             $form = array(
-                'userName' => $_POST['userName'],
+                'userName' => $var->post('userName'),
                 'password' => password_hash(
-                    $_POST['userPassword'], 
+                    $var->post('userPassword'), 
                     PASSWORD_DEFAULT
                 ),
-                'type' => $_POST['userType'] 
+                'type' => $var->post('userType') 
             );
             $affectedLine = $this -> addUser($form);
         }
             
         if ($affectedLine == 1 ) {
-            $_SESSION['addUserMsg'] = ADD_USER_OK;
+            $var->setSession('addUserMsg', ADD_USER_OK);
             header('Location: index.php?admin=adduser');
             exit();
         } 
-        $_SESSION['addUserMsg'] = ADD_USER_NO_OK;
+        $var->setSession('addUserMsg', ADD_USER_NO_OK);
         header('Location: index.php?admin=adduser');
         exit();   
     }
@@ -78,25 +82,26 @@ class BackUserController extends BackController
     public function testUpdateUser()
     {
         $frontController = new \controller\FrontController;
-        
+        $var = new \config\GlobalVar;
+
         $form = array(
-            'id' => $_GET['id'],
-            'userName' => $_POST['userName'],
-            'password' => $_POST['userPassword'],
-            'userEmail' => $_SESSION['updateUser']->userEmail(),
-            'profilPicture' => $_SESSION['updateUser']->profilPicture(),
-            'authorName' => $_SESSION['updateUser']->authorName(),
-            'type' => $_POST['userType'] 
+            'id' => $var->get('id'),
+            'userName' => $var->post('userName'),
+            'password' => $var->post('userPassword'),
+            'userEmail' => $var->session('updateUser')->userEmail(),
+            'profilPicture' => $var->session('updateUser')->profilPicture(),
+            'authorName' => $var->session('updateUser')->authorName(),
+            'type' => $var->post('userType') 
         );
           
-        unset($_SESSION['updateUser']);
+        $var->unsetSession('updateUser');
         $affectedLine = $this -> updateUser($form);
          
-        if ($_SESSION['user']->userId() == $_GET['id']) { 
+        if ($var->session('user')->userId() == $var->get('id')) { 
             
             $frontController -> verifyUser(
-                $_POST['userName'], 
-                $_POST['userPassword']
+                $var->post('userName'), 
+                $var->post('userPassword')
             );
             header('Location: index.php?admin=backhome');
             exit();
@@ -183,22 +188,24 @@ class BackUserController extends BackController
 
     public function profilView($userId, $update=null)
     {
+        $var = new \config\GlobalVar;
         $userManager = new \model\UserManager;
+
         $data = $userManager -> getUser((int)$userId);
         $userProfil = new \model\User($data);
 
-        if (isset($_SESSION['updateUserMsg'])) {
-            $msg = $_SESSION['updateUserMsg'];
-            unset($_SESSION['updateUserMsg']);
+        if ($var->issetSession('updateUserMsg')) {
+            $msg = $var->session('updateUserMsg');
+            $var->unsetSession('updateUserMsg');
         } else {
             $msg = null;
         }
 
-        if (isset($_SESSION['resetImage'])
-            && $_SESSION['resetImage'] == 'reset'
+        if ($var->issetSession('resetImage')
+            && $var->session('resetImage') == 'reset'
         ) {
             $userProfil->setprofilPicture(null);
-            unset($_SESSION['resetImage']);
+            $var->unsetSession('resetImage');
         }
 
         $this->twigInit();
@@ -217,18 +224,19 @@ class BackUserController extends BackController
 
     public function dataInputProfil()
     {
+        $var = new \config\GlobalVar;
         $frontController = new \controller\FrontController;
 
         $userEmail = null;
         $authorName = null;
         $profilPicture = null;
         
-        if ($_POST['userPassword'] == $_POST['userPasswordConfirm']) {
-            if (isset($_POST['userEmail'])) {
-                $userEmail = $_POST['userEmail'];
+        if ($var->post('userPassword') == $var->post('userPasswordConfirm')) {
+            if ($var->issetPost('userEmail')) {
+                $userEmail = $var->post('userEmail');
             } 
-            if (isset($_POST['authorName'])) {
-                $authorName = $_POST['authorName'];
+            if ($var->issetPost('authorName')) {
+                $authorName = $var->post('authorName');
             } 
             if (isset($_FILES['profilPictureUpload'])
                 && $_FILES['profilPictureUpload']['name'] != null
@@ -237,31 +245,31 @@ class BackUserController extends BackController
                 uploadProfilPicture(
                     $_FILES['profilPictureUpload']
                 ); 
-            } elseif (isset($_POST['profilPictureUpload'])) {
-                $profilPicture = $_POST['profilPictureUpload'];
+            } elseif ($var->issetPost('profilPictureUpload')) {
+                $profilPicture = $var->post('profilPictureUpload');
             } 
             
             $form = array(
-                'id' => $_GET['id'],
-                'userName' => $_POST['userName'],
+                'id' => $var->get('id'),
+                'userName' => $var->post('userName'),
                 'password' =>  password_hash(
-                    $_POST['userPassword'],
+                    $var->post('userPassword'),
                     PASSWORD_DEFAULT
                 ),
                 'userEmail' => $userEmail,
                 'authorName' => $authorName,
                 'profilPicture' => basename($profilPicture),
-                'type' => $_SESSION['user']->type()
+                'type' => $var->session('user')->type()
             );
             
             $this -> updateUser($form);
             $frontController -> verifyUser(
-                $_POST['userName'], $_POST['userPassword']
+                $var->post('userName'), $var->post('userPassword')
             );
             return;
         }
-        $_SESSION['updateUserMsg'] = USER_NO_OK;
-        header('Location: index.php?admin=profil&id=' . $_GET['id']);
+        $var->setSession('updateUserMsg', USER_NO_OK);
+        header('Location: index.php?admin=profil&id=' . $var->get('id'));
         exit();
     }
 
@@ -293,7 +301,9 @@ class BackUserController extends BackController
 
     public function deleteOldProfilPicture() 
     {
-        if (!empty($_SESSION['user']->profilPicture()) 
+        $var = new \config\GlobalVar;
+
+        if (!empty($var->session('user')->profilPicture()) 
             && (file_exists(
                 USER_IMG_DIRECTORY . basename($_SESSION['user']->profilPicture())
             ))
