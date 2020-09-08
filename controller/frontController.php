@@ -29,18 +29,17 @@ class FrontController extends Controller
 
     public function testInputMessage()
     {
-        if (!empty($_POST['inputName']) 
-            && !empty($_POST['inputFirstName']) 
-            && !empty($_POST['inputEmail']) 
-            && !empty($_POST['inputMessage'])
+        $var = new \config\GlobalVar;
+
+        if ($var->noEmptyPost('inputName')
+            && $var->noEmptyPost('inputFirstName') 
+            && $var->noEmptyPost('inputEmail') 
+            && $var->noEmptyPost('inputMessage')
         ) {
-            $form = array('inputName' => $_POST['inputName'], 
-                    'inputFirstName' => $_POST['inputFirstName'], 
-                    'inputEmail' => $_POST['inputEmail'], 
-                    'inputMessage' => filter_input(
-                        INPUT_POST, 'inputMessage', 
-                        FILTER_SANITIZE_SPECIAL_CHARS
-                    )
+            $form = array('inputName' => $var->post('inputName'), 
+                    'inputFirstName' => $var->post('inputFirstName'), 
+                    'inputEmail' => $var->post('inputEmail'), 
+                    'inputMessage' => $var->post('inputMessage')       
             );
             return $form;
         }
@@ -77,9 +76,12 @@ class FrontController extends Controller
 
     public function postView($postId, $msg=null)
     {
+        $var = new \config\GlobalVar;
+
         $backManageComment = null;
-        if (isset($_GET['c'])) {
-            $backManageComment = $_GET['c'];
+
+        if ($var->issetGet('c')) {
+            $backManageComment = $var->get('c');
         } 
         $postManager = new \model\PostManager;
         $dataPost = $postManager -> getPost($postId);
@@ -127,45 +129,42 @@ class FrontController extends Controller
 
     public function validComment()
     {
+        $var = new \config\GlobalVar;
         $backCommentController = new \controller\BackCommentController;
 
-        if (isset($_GET['cid'])) {      
-            $backCommentController -> updateComment(
-                filter_input(
-                    INPUT_GET, 'cid',
-                    FILTER_SANITIZE_SPECIAL_CHARS
-                )
-            );
+        if ($var->issetGet('cid')) {      
+            $backCommentController -> updateComment($var->get('cid'));
             return;
         }
     }
 
     public function testInputComment($valid, $moderate=null)
     {
+        $var = new \config\GlobalVar;
         $frontController = new \controller\FrontController;
 
         $userId = null;
         $userType = null;
 
-        if (isset($_SESSION['user'])) {
-            $userId = $_SESSION['user']->userId();
+        if ($var->issetSession('user')) {
+            $userId = $var->session('user')->userId();
         } 
 
         if ($moderate != null) {
-            $userType = $_SESSION['user']->type() . ' : ';
+            $userType = $var->session('user')->type() . ' : ';
         }
 
-        if (!empty($_POST['nameVisitor']) 
-            && !empty($_POST['emailVisitor']) 
-            && !empty($_POST['content'])
+        if ($var->noEmptyPost('nameVisitor') 
+            && $var->noEmptyPost('emailVisitor') 
+            && $var->noEmptyPost('content')
         ) {                           
             $form = array(
-                'nameVisitor' => $userType . $_POST['nameVisitor'],
-                'emailVisitor' => $_POST['emailVisitor'],
-                'content' => $_POST['content'],
+                'nameVisitor' => $userType . $var->post('nameVisitor'),
+                'emailVisitor' => $var->post('emailVisitor'),
+                'content' => $var->post('content'),
                 'validComment' => $valid,
                 'user_id' => $userId,
-                'post_id' =>$_GET['id']
+                'post_id' =>$var->get('id')
             );           
             return $this -> addNewComment($form);              
         } 
@@ -187,12 +186,14 @@ class FrontController extends Controller
 
     public function testInputConnect()
     {
-        if (!empty($_POST['inputPseudoConnect']) 
-            && !empty($_POST['inputPasswordConnect'])
+        $var = new \config\GlobalVar;
+
+        if ($var->noEmptyPost('inputPseudoConnect') 
+            && $var->noEmptyPost('inputPasswordConnect')
         ) {
             $msgConnect = $this -> verifyUser(
-                $_POST['inputPseudoConnect'], 
-                $_POST['inputPasswordConnect']    
+                $var->post('inputPseudoConnect'), 
+                $var->post('inputPasswordConnect')    
             );
             return $msgConnect;
             
@@ -206,7 +207,8 @@ class FrontController extends Controller
 
     public function verifyUser($pseudo, $password)
     {
-        
+        $var = new \config\GlobalVar;
+
         $userManager = new \model\UserManager;
         $data = $userManager -> getUser($pseudo);
         
@@ -216,18 +218,20 @@ class FrontController extends Controller
             return  USER_NO_OK; 
         }
 
-        if (!isset($_GET['admin']) && password_verify(
+        if (!$var->issetGet('admin') && password_verify(
             $password, $user->password()
         )         
         ) {
-            $_SESSION['user'] = $user;
+            $var -> setSession('user', $user);
+            $var -> unsetSession('msg');
             header('Location: index.php?p=home');
             exit();
         }
 
-        if (($_GET['admin'] == 'adduser' && $password == $user->password())
+        if (($var->get('admin') == 'adduser' && $password == $user->password())
         ) {
-            $_SESSION['user'] = $user;
+            $var -> setSession('user', $user);
+            $var -> unsetSession('msg');
             header('Location: index.php?p=home');
             exit();
         } 

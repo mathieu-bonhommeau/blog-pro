@@ -38,8 +38,6 @@ class RouterFront
 
             $frontController = new \controller\FrontController;
 
-            //$getSubmitComment = filter_input(INPUT_POST, 'submitComment');
-
             if ($var->issetGet('c') 
                 && ($var->get('c') == 'ok' || $var->get('c') == 'moderate')
             ) {

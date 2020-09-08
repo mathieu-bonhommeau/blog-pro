@@ -35,6 +35,16 @@ class GlobalVar
         return false;
     }
 
+    public function noEmptyPost($index)
+    {
+        $index = htmlspecialchars($index);
+        $post =  filter_input(INPUT_POST, $index);
+        if (!empty($post)) {
+            return true;
+        }
+        return false;
+    }
+
     public function session($index)
     {
         if (isset($_SESSION[$index])) {
