@@ -19,10 +19,11 @@ class RouterFront
                 header('Location: index.php?p=home#signup'); 
                 return;
             } 
-            if (isset($_SESSION['msg'])) {
-                $msg = $_SESSION['msg'];
+            if ($var->issetSession('msg')) {
+                $msg = $var->session('msg');
                 $frontController -> homePage($msg);
-                unset($_SESSION['msg']);
+                $var->unsetSession('msg');
+               
                 return;
             } 
             $frontController -> homePage();

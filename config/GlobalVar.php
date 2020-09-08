@@ -27,7 +27,7 @@ class GlobalVar
 
     public function issetPost($index)
     {
-        $index = addslashes($index);
+        $index = htmlspecialchars($index);
         $post =  filter_input(INPUT_POST, $index);
         if (isset($post)) {
             return true;
@@ -37,6 +37,27 @@ class GlobalVar
 
     public function session($index)
     {
+        if (isset($_SESSION[$index])) {
+            return $_SESSION[$index];
+        }
+    }
+
+    public function issetSession($index)
+    {
+        $index = htmlspecialchars($index);
+        if (isset($_SESSION[$index])) {
+            return true;
+        }
+        return false;
+    }
+
+    public function unsetSession($index)
+    {
+        if (isset($_SESSION[$index])) {
+            unset($_SESSION[$index]);
+            return true;
+        }
+        return false;
         
     }
 }
