@@ -10,7 +10,8 @@ class RouterFront
 
             $frontController = new \controller\FrontController;
 
-            if (isset($_POST['submitMessage'])) {
+            $submitMessage = filter_input(INPUT_POST, 'submitMessage');
+            if (isset($submitMessage)) {
                 $form = $frontController -> testInputMessage();   
                 $msg = $frontController -> runSendMessage($form); 
                 $_SESSION['msg'] = $msg;
