@@ -6,12 +6,15 @@ class RouterFront
 { 
     public function runFrontPage($get)
     {
+        $getId = filter_input(INPUT_GET, 'id');
+
         if ($get == 'home') {
 
             $frontController = new \controller\FrontController;
 
-            $submitMessage = filter_input(INPUT_POST, 'submitMessage');
-            if (isset($submitMessage)) {
+            $postSubmitMessage = filter_input(INPUT_POST, 'submitMessage');
+
+            if (isset($postSubmitMessage)) {
                 $form = $frontController -> testInputMessage();   
                 $msg = $frontController -> runSendMessage($form); 
                 $_SESSION['msg'] = $msg;
@@ -33,24 +36,26 @@ class RouterFront
             $frontController -> listPostsView(); 
             return;
             
-        } elseif ($get == 'post' && isset($_GET['id'])) {
+        } elseif ($get == 'post' && isset($getId)) {
 
             $frontController = new \controller\FrontController;
+            $getC = filter_input(INPUT_GET, 'C');
+            $getSubmitComment = filter_input(INPUT_POST, 'submitComment');
 
-            if (isset($_GET['c']) 
-                && ($_GET['c'] == 'ok' || $_GET['c'] == 'moderate')
+            if (isset($getC) 
+                && ($getC == 'ok' || $getC == 'moderate')
             ) {
                 $frontController -> validComment();
-                $frontController -> postView($_GET['id']);
+                $frontController -> postView($getId);
                 return;
 
-            } elseif (isset($_POST['submitComment'])) {
+            } elseif (isset($getSubmitComment)) {
                 
                 $msg = $frontController -> testInputComment('FALSE', null);
                 $_SESSION['commentMsg'] = $msg;
                 header(
                     'Location: index.php?p=post&id=' 
-                    . $_GET['id'] . '#comments'
+                    . $getId . '#comments'
                 );
                 exit();
             
