@@ -217,11 +217,14 @@ class FrontController extends Controller
         } else {
             return  USER_NO_OK; 
         }
-
-        if (!$var->issetGet('admin') && password_verify(
-            $password, $user->password()
-        )         
+        
+        if (($var->issetGet('admin') != true 
+            || $var->get('admin') != 'adduser') 
+            && password_verify(
+                $password, $user->password()
+            )         
         ) {
+            
             $var -> setSession('user', $user);
             $var -> unsetSession('msg');
             header('Location: index.php?p=home');

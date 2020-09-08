@@ -164,8 +164,21 @@ class BackUserController extends BackController
 
     public function deleteUser($userId)
     {
+        $var = new \config\GlobalVar;
         $userManager = new \model\UserManager;
-        return $userManager -> deleteUser($userId);
+
+        if ($var->issetPost('validDeleteUser')) {
+
+            $affectedLine = $userManager->deleteUser($userId);
+
+            if ($affectedLine == 1) {
+                header('Location: index.php?admin=listusers');
+                exit();
+            }
+            throw new \Exception(USER_NO_DELETE);
+        }  
+        $this -> deleteUserView($userId);
+        return;
     }
 
     public function profilView($userId, $update=null)
@@ -200,6 +213,56 @@ class BackUserController extends BackController
                 
             )
         );
+    }
+
+    public function dataInputProfil()
+    {
+        $frontController = new \controller\FrontController;
+
+        $userEmail = null;
+        $authorName = null;
+        $profilPicture = null;
+        
+        if ($_POST['userPassword'] == $_POST['userPasswordConfirm']) {
+            if (isset($_POST['userEmail'])) {
+                $userEmail = $_POST['userEmail'];
+            } 
+            if (isset($_POST['authorName'])) {
+                $authorName = $_POST['authorName'];
+            } 
+            if (isset($_FILES['profilPictureUpload'])
+                && $_FILES['profilPictureUpload']['name'] != null
+            ) {
+                $profilPicture = $this ->
+                uploadProfilPicture(
+                    $_FILES['profilPictureUpload']
+                ); 
+            } elseif (isset($_POST['profilPictureUpload'])) {
+                $profilPicture = $_POST['profilPictureUpload'];
+            } 
+            
+            $form = array(
+                'id' => $_GET['id'],
+                'userName' => $_POST['userName'],
+                'password' =>  password_hash(
+                    $_POST['userPassword'],
+                    PASSWORD_DEFAULT
+                ),
+                'userEmail' => $userEmail,
+                'authorName' => $authorName,
+                'profilPicture' => basename($profilPicture),
+                'type' => $_SESSION['user']->type()
+            );
+            
+            $this -> updateUser($form);
+            $frontController -> verifyUser(
+                $_POST['userName'], $_POST['userPassword']
+            );
+            return;
+        }
+        $_SESSION['updateUserMsg'] = USER_NO_OK;
+        header('Location: index.php?admin=profil&id=' . $_GET['id']);
+        exit();
     }
 
     public function uploadProfilPicture($picture)
