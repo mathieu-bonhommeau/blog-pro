@@ -9,11 +9,12 @@ class BackAddPostController extends BackPostController
     public function addPostAction()
     {
         $backImageController = new \controller\BackPImgController;
+        $var = new \config\GlobalVar;
 
-        if (isset($_POST['addPost'])) {
+        if ($var->issetPost('addPost')) {
                     
-            if (isset($_GET['id'])) { 
-                $form = $this -> dataInputPost($_GET['id']);
+            if ($var->issetGet('id')) { 
+                $form = $this -> dataInputPost($var->get('id'));
                 
             } else {
                 $form = $this -> dataInputPost();   
@@ -22,18 +23,18 @@ class BackAddPostController extends BackPostController
             $this -> addPostView($form);
             return;
 
-        } elseif (isset($_POST['preview'])) {
-            if (isset($_GET['id'])) {
-                $form = $this -> dataInputPost($_GET['id']);
+        } elseif ($var->issetPost('preview')) {
+            if ($var->issetGet('id')) {
+                $form = $this -> dataInputPost($var->get('id'));
             } else {
                 $form = $this -> dataInputPost();
             }
             $this -> previewPost($form);
             return;
 
-        } elseif (isset($_POST['notPublished'])) {  
-            if (isset($_GET['id'])) {
-                $form = $this -> dataInputPost($_GET['id']);
+        } elseif ($var->issetPost('notPublished')) {  
+            if ($var->issetGet('id')) {
+                $form = $this -> dataInputPost($var->get('id'));
             } else {
                 $form = $this -> dataInputPost();
             }
@@ -41,30 +42,30 @@ class BackAddPostController extends BackPostController
             $this -> addPostView($form);
             return;
 
-        } elseif (isset($_POST['imgChange'])) {
+        } elseif ($var->issetPost('imgChange')) {
             $backImageController -> imgChange();
             return;
 
-        } elseif (isset($_GET['id'])) {
-            if (isset($_SESSION['previewPost'])) {
-                $updatePost = $_SESSION['previewPost'];
+        } elseif ($var->issetGet('id')) {
+            if ($var->issetSession('previewPost')) {
+                $updatePost = $var->session('previewPost');
                 
             } else {
-                $updatePost = $this  -> updatePost($_GET['id']);
-                $_SESSION['previewPost'] = $updatePost;
+                $updatePost = $this  -> updatePost($var->get('id'));
+                $var->setSession('previewPost', $updatePost);
             }
             $this  -> addPostView($form=null, null, $updatePost);
             return;
             
-        } elseif (isset($_SESSION['previewPost'])) {
-            $previewPost = $_SESSION['previewPost'];
+        } elseif ($var->issetSession('previewPost')) {
+            $previewPost = $var->session('previewPost');
             $this  -> addPostView($form=null, $msg=null, $previewPost);
             return;
             
         } else {
-            if (isset($_SESSION['addPostMsg'])) {
-                $this  -> addPostView(null, $_SESSION['addPostMsg']);
-                unset($_SESSION['addPostMsg']);
+            if ($var->issetSession('addPostMsg')) {
+                $this  -> addPostView(null, $var->session('addPostMsg'));
+                $var->unsetSession('addPostMsg');
                 return;
             } 
             $this -> addPostView();

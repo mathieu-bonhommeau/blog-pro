@@ -77,13 +77,13 @@ class RouterBack
                 }
 
             } elseif ($get == 'listusers'
-                && $_SESSION['user']->type() == 'administrator'
+                && $var->session('user')->type() == 'administrator'
             ) {
                 $backUserController -> listUsers();
                 return;
 
             } elseif ($get == 'deleteuser'
-                && $_SESSION['user']->type() == 'administrator'
+                && $var->session('user')->type() == 'administrator'
             ) {  
                 if ($var->issetGet('id')) {
                     $backUserController -> deleteUser($var->get('id'));
