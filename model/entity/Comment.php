@@ -1,8 +1,21 @@
 <?php
-
+/**
+ * This files contains Comment class
+ */
 namespace model;
 
-class Comment 
+/**
+ * Class for post comments.
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Entity
+ * @package   \model\entity
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
+class Comment
 {
     private $_commentId;
     private $_nameVisitor;
@@ -83,6 +96,11 @@ class Comment
         return $this->_commentDate;
     }
 
+    /**
+     * Getter emailVisitor
+     * 
+     * @return string email format
+     */
     public function emailVisitor()
     {
         return $this->_emailVisitor;
@@ -98,11 +116,21 @@ class Comment
         return $this->_validComment;
     }
 
+    /**
+     * Getter user_id
+     * 
+     * @return int
+     */
     public function user_id()
     {
         return $this->_user_id;
     }
 
+    /**
+     * Getter post_id
+     * 
+     * @return int
+     */
     public function post_id()
     {
         return $this->_post_id;
@@ -111,7 +139,7 @@ class Comment
     /**
      * Setter setId
      *
-     * @param int $id Id of comment
+     * @param int $commentId Id of comment
      * 
      * @return void
      */
@@ -139,7 +167,7 @@ class Comment
     /**
      * Setter setComment
      *
-     * @param string $comment Comment
+     * @param string $content Content of comment 
      * 
      * @return void
      */
@@ -166,6 +194,13 @@ class Comment
         $this->_commentDate = $commentDate;
     }
 
+    /**
+     * Setter emailVisitor
+     * 
+     * @param $emailVisitor Email of visitor
+     * 
+     * @return void
+     */
     public function setEmailVisitor($emailVisitor)
     {
         $emailControl = preg_match(
@@ -197,6 +232,13 @@ class Comment
         }
     }
 
+    /**
+     * Setter user_id
+     * 
+     * @param int $user_id User id
+     * 
+     * @return void
+     */
     public function setUser_id($user_id)
     {
         if (is_null($user_id) || $user_id == 0) {
@@ -207,6 +249,13 @@ class Comment
         $this->_user_id = $user_id;
     }
 
+    /**
+     * Setter post_id
+     * 
+     * @param $post_id Post id
+     * 
+     * @return void
+     */
     public function setPost_id($post_id)
     {
         $post_id = (int)$post_id;
