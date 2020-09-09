@@ -9,15 +9,17 @@ session_start();
 
 try 
 {
-    $router = new config\Router;
+    $routerFront = new config\RouterFront;
+    $routerBack = new config\RouterBack;
+    $var = new config\GlobalVar;
         
-    if (isset($_GET['p'])) {
+    if ($var->issetGet('p')) {
         
-        $msg = $router -> runFrontPage($_GET['p']);
+        $msg = $routerFront -> runFrontPage($var->get('p'));
     
-    } elseif (isset($_GET['admin'])) {
+    } elseif ($var->issetGet('admin')) {
         
-        $router -> runBackPage($_GET['admin']);
+        $routerBack -> runBackPage($var->get('admin'));
 
     } else {
     

@@ -34,21 +34,21 @@ class BackController extends Controller
     public function backHomePostBadge()
     {
         $postManager = new \model\PostManager;
-        
+        $var = new \config\GlobalVar;
 
         $infos['nbrPosts'] = null;
         $infos['lastDatePost'] = null;
 
-        if ($_SESSION['user']->type() == 'administrator') {
+        if ($var->session('user')->type() == 'administrator') {
             $infos['nbrPosts'] = $postManager -> countPosts();
             $infos['lastDatePost'] = $postManager -> lastDatePost();
 
-        } elseif ($_SESSION['user']->type() == 'author') {
+        } elseif ($var->session('user')->type() == 'author') {
             $infos['nbrPosts'] = $postManager -> countUserPosts(
-                $_SESSION['user']->userId()
+                $var->session('user')->userId()
             );
             $infos['lastDatePost'] = $postManager -> lastDateUserPost(
-                $_SESSION['user']->userId()
+                $var->session('user')->userId()
             );
         }
         return $infos;

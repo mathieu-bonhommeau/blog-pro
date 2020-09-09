@@ -73,7 +73,8 @@ class PostManager extends Manager
              published
              FROM post
              INNER JOIN user ON post.user_id = user.id
-             WHERE post.user_id = ?'
+             WHERE post.user_id = ?
+             ORDER BY lastDateModif DESC'
         );
         $req -> execute(array($user_Id));
         while ($data = $req->fetch(\PDO::FETCH_ASSOC)) {
