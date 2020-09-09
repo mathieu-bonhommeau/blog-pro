@@ -8,12 +8,13 @@ class BackPostController extends BackController
 {
     public function backListPosts()
     {
+        $var = new \config\GlobalVar;
         $postManager = new \model\PostManager;
         
-        if ($_SESSION['user']->type() == 'administrator') {
+        if ($var->session('user')->type() == 'administrator') {
             $posts = $postManager -> getPosts();
-        } elseif ($_SESSION['user']->type() == 'author') {
-            $posts = $postManager -> getUserPosts($_SESSION['user']->userId());
+        } elseif ($var->session('user')->type() == 'author') {
+            $posts = $postManager -> getUserPosts($var->session('user')->userId());
         }
 
         $this->twigInit();
@@ -25,6 +26,31 @@ class BackPostController extends BackController
                 'posts' => $posts 
             )
         );
+    }
+
+    public function backListPostsAction()
+    {
+        $var = new \config\GlobalVar;
+
+        if ($var->issetGet('published')) {
+            $this -> publishedPost($var->get('published'));
+            return; 
+        }   
+        if ($var->issetGet('delete')) { 
+            if ($var->issetPost('validDelete')) {
+                $this -> deletePost($var->get('delete'));
+                return;
+
+            } elseif ($var->issetPost('cancelDelete')) {    
+                header('Location: index.php?admin=post');
+                exit();  
+
+            } else {
+                $this -> deleteView($var->get('delete'));
+                return;  
+            }    
+        }
+        $this -> backListPosts();     
     }
 
     public function addPostView(
@@ -58,12 +84,15 @@ class BackPostController extends BackController
         );
     }
 
+    
+
     public function resultPost($affectedLines, $id) 
     {
         $postManager = new \model\PostManager;
+        $var = new \config\GlobalVar;
 
         if ($affectedLines != 1) {
-            $_SESSION['addPostMsg'] = POST_NO_OK;
+            $var->setSession('addPostMsg', POST_NO_OK);
             header('Location: index.php?admin=addpost');
             exit(); 
         }
@@ -72,18 +101,18 @@ class BackPostController extends BackController
         $newPost = new \model\Post($data);
             
         if ($newPost->published() != 'TRUE') {
-            $_SESSION['addPostMsg'] = MSG_SAVE;
+            $var->setSession('addPostMsg', MSG_SAVE);
             $this -> deleteSession('previewPost');
             header('Location: index.php?admin=addpost');
             exit();
         }
 
-        if ((isset($_SESSION['previewPost']) 
-            && isset($_SESSION['oldImage'])) && (basename(
-                $_SESSION['previewPost']->picture()
-            )  != $_SESSION['oldImage'])
+        if (($var->issetSession('previewPost') 
+            && $var->issetSession('oldImage')) && (basename(
+                $var->session('previewPost')->picture()
+            )  != $var->session('oldImage'))
         ) {
-            unlink(POST_IMG_DIRECTORY . $_SESSION['oldImage']);  
+            unlink(POST_IMG_DIRECTORY . $var->session('oldImage'));  
         }
         $this -> deleteSession('previewPost');
         header('Location: index.php?p=post&id=' . $newPost->postId());
@@ -92,9 +121,11 @@ class BackPostController extends BackController
 
     public function previewPost(array $form)
     {
+        $var = new \config\GlobalVar;
+        
         $newPost = new \model\Post($form);
         $newPost -> setLastDateModif(time());
-        $newPost -> setAuthorName($_SESSION['user']->authorName());
+        $newPost -> setAuthorName($var->session('user')->authorName());
 
         $this->twigInit();
         $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -110,26 +141,30 @@ class BackPostController extends BackController
 
     public function inputPostTest() 
     {
-        if ((empty($_POST['titlePost']) 
-            && empty($_POST['chapoPost']) 
-            && empty(filter_input(INPUT_POST, 'contentPost', FILTER_SANITIZE_SPECIAL_CHARS))) 
-            && (isset($_SESSION['previewPost']))
+        $var = new \config\GlobalVar;
+
+        if (($var->emptyPost('titlePost') 
+            && $var->emptyPost('chapoPost') 
+            && $var->emptyPost('contentPost')) 
+            && ($var->issetSession('previewPost'))
         ) {
-            $_POST['titlePost'] = $_SESSION['previewPost']->title();
-            $_POST['chapoPost'] = $_SESSION['previewPost']->chapo();
-            $_POST['contentPost'] = $_SESSION['previewPost']->content();  
+            $var->setPost('titlePost', $var->session('previewPost')->title());
+            $var->setPost('chapoPost', $var->session('previewPost')->chapo());
+            $var->setPost('contentPost', $var->session('previewPost')->content());  
         }
         return;
     }
 
     public function dataInputPost($id=null)
     {
+        $var = new \config\GlobalVar;
         $backImageController = new \controller\BackPImgController;
+
         $this -> inputPostTest();
 
-        if (!empty($_POST['titlePost'])
-            && !empty($_POST['chapoPost'])
-            && !empty($_POST['contentPost'])
+        if ($var->noEmptyPost('titlePost')
+            && $var->noEmptyPost('chapoPost')
+            && $var->noEmptyPost('contentPost')
         ) {
             if (empty($_FILES['imgPost']['name'])) {
                 $path = $backImageController->managePostImage();
@@ -139,14 +174,15 @@ class BackPostController extends BackController
             }
             $form = array(
                 'id' => $id,
-                'title' => $_POST['titlePost'],'chapo' => $_POST['chapoPost'],
-                'content' => $_POST['contentPost'],'picture' => $path,
+                'title' => $var->post('titlePost'),
+                'chapo' => $var->post('chapoPost'),
+                'content' => $var->post('contentPost'),'picture' => $path,
                 'published' => 'FALSE'   
             );
             return $form;
 
         }
-        $_SESSION['addPostMsg'] = EMPTY_FIELDS;
+        $var->setSession('addPostMsg', EMPTY_FIELDS);
         header('Location: index.php?admin=addpost');
     }
 
@@ -254,19 +290,27 @@ class BackPostController extends BackController
 
     public function deleteSession($name) 
     {
-        if (isset($_SESSION[$name]) && (file_exists($_SESSION[$name] -> picture()))
+        $var = new \config\GlobalVar;
+
+        if ($var->issetSession($name) 
+            && (file_exists(
+                $var->session($name) -> picture()
+            ))
         ) {
             $postManager = new \model\PostManager;
-            $result = $postManager -> getPostImg(basename($_SESSION[$name] -> picture()));
+            $result = $postManager -> getPostImg(
+                basename($var->session($name) -> picture())
+            );
             if ($result == 0) {
-                unlink($_SESSION[$name] -> picture());
+                unlink($var->session($name) -> picture());
             }
-            unset($_SESSION[$name]);
+            $var->unsetSession($name);
             return; 
         }
-        if (isset($_SESSION[$name]) && (!file_exists($_SESSION[$name] -> picture()))
+        if ($var->issetSession($name) 
+            && (!file_exists($var->session($name) -> picture()))
         ) {
-            unset($_SESSION[$name]);
+            $var->unsetSession($name);
             return;
         }
         return;      

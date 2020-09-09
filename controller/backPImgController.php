@@ -8,6 +8,8 @@ class BackPImgController extends BackPostController
 {
     public function uploadFile($imgPost=null)
     {  
+        $var = new \config\GlobalVar;
+
         $this -> verifTmpFolder();
 
         if (!($imgPost['error'] == 0  && $imgPost['size'] <= 2000000)) {
@@ -18,7 +20,7 @@ class BackPImgController extends BackPostController
             throw new \Exception(UPLOAD_NO_OK);
         }
 
-        if (isset($_POST['addPost']) || isset($_POST['notPublished'])
+        if ($var->issetPost('addPost') || $var->issetPost('notPublished')
         ) {
             $this -> moveFile($imgPost, POST_IMG_DIRECTORY);
             $this -> renameFile($imgPost, POST_IMG_DIRECTORY);
@@ -26,7 +28,7 @@ class BackPImgController extends BackPostController
             . pathinfo($imgPost['name'])['extension'];
         } 
         
-        if (isset($_POST['preview'])
+        if ($var->issetPost('preview')
         ) {
             $this -> moveFile($imgPost, 'tmp/');
             return 'tmp/' . basename($imgPost['name']);
@@ -52,34 +54,40 @@ class BackPImgController extends BackPostController
 
     public function managePostImage() 
     {
-        if (isset($_SESSION['previewPost']) 
-            && $_SESSION['previewPost']->picture() != null
+        $var = new \config\GlobalVar;
+
+        if ($var->issetSession('previewPost') 
+            && $var->session('previewPost')->picture() != null
         ) {
-            $path = basename($_SESSION['previewPost']->picture());
+            $path = basename($var->session('previewPost')->picture());
                     
-            if (isset($_POST['notPublished']) || isset($_POST['addPost'])) {
+            if ($var->issetPost('notPublished') || $var->issetPost('addPost')) {
                 $newName = (string)time() . '.' .pathinfo($path)['extension'];
 
                 $this-> verifTmpFolder();
 
                 rename('tmp/'. $path, POST_IMG_DIRECTORY . $newName);
-                $_SESSION['previewPost'] -> setPicture(
+                $var->session('previewPost') -> setPicture(
                     POST_IMG_DIRECTORY . $newName
                 );
             }
-            return $_SESSION['previewPost']->picture();            
+            return $var->session('previewPost')->picture();            
         } 
         return null;           
     }
 
     public function imgChange()
     {
-        if (isset($_SESSION['previewPost'])) {
-            if (file_exists($_SESSION['previewPost'] -> picture())) {
-                unlink($_SESSION['previewPost'] -> picture());
+        $var = new \config\GlobalVar;
+
+        if ($var->issetSession('previewPost')) {
+            if (file_exists($var->session('previewPost') -> picture())) {
+                unlink($var->session('previewPost')-> picture());
             }
-            $_SESSION['previewPost']->setPicture(null);
-            $this -> addPostView($form=null, $msg=null, $_SESSION['previewPost']);
+            $var->session('previewPost')->setPicture(null);
+            $this -> addPostView(
+                $form=null, $msg=null, $var->session('previewPost')
+            );
         }  
     }
 }
