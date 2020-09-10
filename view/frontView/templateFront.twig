@@ -10,6 +10,13 @@
         <link rel="icon" type="image/x-icon" href="public/assets/img/logo.png" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <!--TinyMce
+        <script src="https://cdn.tiny.cloud/1/91pdog4ihnv71gzmict2k0487svx1l066lqcfwhiv7y44x2s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+              selector: '#contentComment'
+            });
+          </script>-->
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
@@ -30,7 +37,7 @@
                         <img src="public/assets/img/logo.png" id="logoMenu" alt="logo" />
                     </a>
                     {% if user is null %}
-                    <a class="navbar-brand js-scroll-trigger" href="mat.bonhommeau85@gmail.com">
+                    <a class="navbar-brand js-scroll-trigger" id="myNameMenu" href="mailto:mat.bonhommeau85@gmail.com">
                         Mathieu Bonhommeau
                     </a>
                     {% endif %}
@@ -90,7 +97,7 @@
                                     <i class="fas fa-envelope text-primary mb-2"></i>
                                     <h4 class="text-uppercase m-0">Email</h4>
                                     <hr class="my-4" />
-                                    <div class="small text-black-50"><a href="#!">mat.bonhommeau85@gmail.com</a></div>
+                                    <div class="small text-black-50"><a href="mailto:mat.bonhommeau85@gmail.com">mat.bonhommeau85@gmail.com</a></div>
                                 </div>
                             </div>
                         </div>
@@ -112,27 +119,27 @@
             <footer class="footer bg-black small text-center text-white-50">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-md-4 col-xs-12">
                             {% if user %}
-                                <div class="container text-left mb-3"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
-                                <div class="container text-left mb-3"><a href="index.php?p=connect">Changer d'utilisateur</a></div>
-                                <div class="container text-left"><a href="index.php?admin=backhome" id="admin">Accéder au BackOffice >></a></div>
+                                <div class="container text-left mb-3 action"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
+                                <div class="container text-left mb-3 action"><a href="index.php?p=connect">Changer d'utilisateur</a></div>
+                                <div class="container text-left mb-3 action"><a href="index.php?admin=backhome" id="admin">Accéder au BackOffice >></a></div>
                             {% else %}
-                                <div class="container text-left mb-3"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
+                                <div class="container text-left mb-3 action"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
                             {% endif %}
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-md-4 col-xs-12">
                             <div class="social d-flex justify-content-center">
                                 <a class="mx-2" href="https://www.linkedin.com/in/mathieu-bonhommeau-155640128/" target="_blank"><i class="fab fa-circle fa-stack-2x fa-linkedin-in"></i></a>
                                 <a class="mx-2" href="https://github.com/matanna" target="_blank"><i class="fab fa-circle fa-stack-2x fa-github"></i></a>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="container text-right mb-3"><a href="index.php">Accueil >></a></div>
-                            <div class="container text-right mb-3"><a href="index.php?p=listposts">Tous les articles >></a></div>
+                        <div class="col-md-4">
+                            <div class="container text-right mb-3 footer-menu"><a href="index.php">Accueil >></a></div>
+                            <div class="container text-right mb-3 footer-menu"><a href="index.php?p=listposts">Tous les articles >></a></div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row pt-3">
                         <div class="container text-center">Copyright © Tous droits réservé</div>
                     </div>
                 </div>

@@ -28,11 +28,11 @@
 }
 
 .post:nth-child(2n+1) > .reverse {
-  text-align: left;
+  text-align: right;
 }
 
 .post:nth-child(2n+0) > .reverse {
-  text-align: right;
+  text-align: left;
 }
 
 #connect {
@@ -103,20 +103,72 @@
   width: 7rem;
   height: 5rem;
 }
+@media (max-width: 1200px) {
+  #logoMenu {
+    width: 4rem;
+    height: 3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  #mainNav .navbar-brand {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
 
 #logoHome {
   width: 14rem;
   height: 12rem;
 }
+@media (max-width: 1200px) {
+  #logoHome {
+    width: 11rem;
+    height: 9rem;
+  }
+}
+@media (max-width: 768px) {
+  #logoHome {
+    width: 8rem;
+    height: 7rem;
+  }
+}
+
 
 #myName {
   font-size: 2rem;
   letter-spacing: 0.1rem;
 }
+@media (max-width: 992px) {
+  #myName{
+    font-size: 1.3rem;
+  }
+  #myNameMenu {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 540px) {
+  #myNameMenu {
+    font-size: 1rem;
+  }
+}
 
 #myJob {
   font-size: 3.5rem;
   letter-spacing: 0.1rem;
+  
+}
+@media (max-width: 992px) {
+  #myJob {
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+  }
+}
+@media (max-width: 540px) {
+  #myJob {
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;
+  }
 }
 
 .btn-primary {
@@ -133,12 +185,110 @@
 }
 
 #myPhoto {
-  width: 230px;
-  height: 250px;
-  box-shadow: -2px -2px 2px #1b3236;
+  width: 250px;
+  height: 261px;
+  margin-right: 1rem;
+  margin-bottom: 2rem;
 }
 
 .fa-stack-1x,
 .fa-stack-2x {
   position: inherit;
 }
+
+.about-section h2 {
+  background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
+@media (max-width: 992px) {
+  .masthead {
+    padding-top: 7rem;
+    padding-bottom: 5rem;
+  }
+  .navbar-brand {
+    margin-right: 0;
+  }
+  .navbar .container, 
+  .navbar .container-fluid, 
+  .navbar .container-sm, 
+  .navbar .container-md, 
+  .navbar .container-lg, 
+  .navbar .container-xl {
+    justify-content: space-around;
+  }
+  .ml-5, .mx-5 {
+    margin-left: 0 !important;
+  }
+  .about-section {
+    padding-top: 0;
+  }
+}
+
+.projects-section .project-text {
+  padding: 3rem;
+}
+@media (max-width: 998px) {
+  .projects-section .project-text {
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 999px) {
+  .content-post-sm {
+    display: none;
+  }
+}
+@media (max-width: 998px) {
+  #firstPost h4 {
+    text-align: left;
+  }
+  #firstPost p {
+    text-align: justify !important;
+    margin-bottom: 0;
+  }
+  .content-post-lg {
+    display: none;
+  }
+  #homePosts h4 {
+    text-align: left;
+  }
+  #homePosts p {
+    text-align: justify !important;
+  }
+  .author {
+    display: none;
+  }
+  .projects-section {
+    padding-bottom: 2rem;
+  }
+  .signup-section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .post {
+    margin-bottom: 0 !important;
+  }
+}
+
+#inputName, #inputFirstName, #inputEmail, #inputMessage, #submitMessage {
+  margin-bottom: 1rem !important;
+}
+
+@media (max-width: 768px) {
+  .footer-menu {
+    display: none;
+  }
+  .action {
+    text-align: center !important;
+  }
+}
+
+
+
+
+
+
+  
