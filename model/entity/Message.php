@@ -1,7 +1,20 @@
 <?php
-
+/**
+ * This files contains Message class
+ */
 namespace model;
 
+/**
+ * Class for mail Messages.
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Entity
+ * @package   \model\entity
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class Message 
 {
     private $_name;

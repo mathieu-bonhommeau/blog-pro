@@ -49,16 +49,17 @@ class BackCommentController extends BackController
 
     public function deleteComment()
     {
+        $var = new \config\GlobalVar;
         $commentManager = new \model\CommentManager;
         $addMsgEmail = null;
 
-        if (isset($_SESSION['comment'])) {
+        if ($var->issetSession('comment')) {
 
-            if ((isset($_POST['addMsgEmail']))) {
-                $addMsgEmail = $_POST['addMsgEmail'];
+            if ($var->issetPost('addMsgEmail')) {
+                $addMsgEmail = $var->post('addMsgEmail');
             } 
             $affectedLine = $commentManager -> deleteComment(
-                $_SESSION['comment']->commentId()
+                $var->session('comment')->commentId()
             );
             $this -> deleteCommentMail($affectedLine, $addMsgEmail);
         }   
@@ -66,30 +67,30 @@ class BackCommentController extends BackController
 
     public function deleteCommentMail($affectedLine, $addMsgEmail)
     {
+        $var = new \config\GlobalVar;
+
         if ($affectedLine == 1) {
                 
-            $message = $_SESSION['comment']->nameVisitor() . ', '
+            $message = $var->session('comment')->nameVisitor() . ', '
              . NO_VALID_COMMENT_EMAIL
-             . ' : <p>' . $_SESSION['comment']->content() . '</p>'
+             . ' : <p>' . $var->session('comment')->content() . '</p>'
              . '<p>' . $addMsgEmail . '</p>'
-             . $_SESSION['user']->userName() . ' : '
-             . $_SESSION['user']->type() . '</p>';
+             . $var->session('user')->userName() . ' : '
+             . $var->session('user')->type() . '</p>';
              
             $data = array(
-                'inputName' => $_SESSION['user']->userName(),
-                'inputEmail' => $_SESSION['comment']->emailVisitor(),
+                'inputName' => $var->session('user')->userName(),
+                'inputEmail' => $var->session('comment')->emailVisitor(),
                 'inputMessage' => $message
             );
         
             $controller = new \controller\Controller;
             $controller -> sendMessage(
-                $data, $_SESSION['comment']-> emailVisitor()
+                $data, $var->session('comment')-> emailVisitor()
             );
             return;
-
         }
-        throw new \Exception(COMMENT_NO_EXIST);
-        
+        throw new \Exception(COMMENT_NO_EXIST);   
     }
 
     public function listComments($try=null)
@@ -106,6 +107,57 @@ class BackCommentController extends BackController
                 'comments' => $comments
             )
         );
+    }
+
+    public function validDeleteComment()
+    {
+        $var = new \config\GlobalVar;
+
+        if ($var->issetPost('cancelDeleteComment')) {
+            if ($var->issetGet('del')) {  
+                header('Location: index.php?admin=listcomments');
+                exit();
+            }
+            header('Location: index.php?admin=validcomment');
+            exit();
+        }
+        
+        if ($var->issetPost('validDeleteComment')) {
+            $this -> deleteComment($var->get('delete'));
+
+            if ($var->issetGet('del')) {  
+                header('Location: index.php?admin=listcomments');
+                exit();
+            } 
+            header('Location: index.php?admin=validcomment');
+            exit();
+        }
+
+        $this -> deleteCommentView($var->get('delete'));
+        return;
+    }
+
+    public function listCommentsAction()
+    {
+        $var = new \config\GlobalVar;
+
+        if ($var->issetPost('byPost')) {
+            $this -> listComments('post_id');
+            return;
+        } 
+
+        if ($var->issetPost('byDate')) {
+            $this -> listComments('commentDate');
+            return;
+        } 
+        
+        if ($var->issetPost('byName')) {
+            $this -> listComments('nameVisitor');
+            return;
+        } 
+
+        $this -> listComments();
+        return;
     }
 }
 
