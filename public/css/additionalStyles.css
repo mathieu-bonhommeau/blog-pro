@@ -1,3 +1,10 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0;
+  margin-left: 0; 
+}
+
 #submitMessage {
   width: 100%;
 }
@@ -203,6 +210,20 @@
           background-clip: text;
 }
 
+.black-font h4 {
+  background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
+.white-font h4, .white-font h2 {
+  background: linear-gradient(rgba(0, 0, 0, 0.9),rgba(0, 0, 0, 0.5));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
 @media (max-width: 992px) {
   .masthead {
     padding-top: 7rem;
@@ -254,6 +275,7 @@
   }
   #homePosts h4 {
     text-align: left;
+   
   }
   #homePosts p {
     text-align: justify !important;
@@ -286,6 +308,31 @@
   }
 }
 
+@media (max-width: 992px) {
+  #textListPost p {
+    text-align: justify;
+  }
+  #textListPost h4 {
+    text-align: left;
+  }
+  #postImage {
+    text-align: center;
+  }
+}
+
+@media (max-width: 540px) {
+  #authorList {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 992px) {
+  #text-post p{
+    text-align: justify !important;
+    padding: 0;
+    margin-bottom: 3rem;
+  }
+}
 
 
 

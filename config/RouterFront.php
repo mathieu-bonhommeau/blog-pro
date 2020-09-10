@@ -99,11 +99,13 @@ class RouterFront
                 return;
             } 
             $frontController -> connectView();
+            return;
                
         } elseif ($get == 'disconnect') {
 
             $var -> unsetSession('user');
             header('Location: index.php');
+            exit();
         }
 
         throw new \Exception(PAGE_NOT_EXIST);

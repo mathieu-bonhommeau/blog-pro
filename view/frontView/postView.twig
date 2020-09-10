@@ -27,20 +27,26 @@
     </div>
     <hr class="d-none d-lg-block mb-4 ml-0" />
     {% endif %}
-       <div class="row">
-            <div class="col-lg-6 ">
-                <div class="row"><h2 class="mb-4">{{ post.title }}</h2></div>
-                <div class="row"><p class="text-black-50 ">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
-                <div class="row"><p class="text-black-50 ">{{ post.authorName }}</p></div>
-                <div class="row"><p class="text-black-50 "><a href="#comments" class="badge badge-dark js-scroll-trigger">{{ nbrComments }} commentaires</a></p></div>
+        <div class="row">
+            <div class="col-lg-6 white-font">
+                <div class="row">
+                    <div class="col-lg-12"><h2 class="mb-4">{{ post.title }}</h2></div>
+                    <div class="col-lg-12"><p class="text-black-50 ">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
+                    <div class="col-lg-12"><p>{{ post.authorName }}</p></div>
+                    <div class="col-lg-12"><p class="text-black-50 mb-4"><a href="#comments" class="badge badge-dark js-scroll-trigger">{{ nbrComments }} commentaires</a></p></div>
+                </div>
             </div> 
-            <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>  
+            <div class="col-lg-6 mb-5">
+                <img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" />
+            </div>  
         </div>
         <div id="addComment"></div>
-        <p class="font-weight-bold">{{ post.chapo }}</p>
-        <p class="text-justify featured-text">{{ post.content|nl2br }}</p>
-        <p>{{ post.authorName }}</p>
-        <p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES</a></p>
+        <div class="row" id="text-post">  
+            <div class="col-lg-12"><p class="font-weight-bold">{{ post.chapo }}</p></div>
+            <div class="col-lg-12"><p class="text-justify featured-text">{{ post.content|nl2br }}</p></div>
+            <div class="col-lg-12"><p>{{ post.authorName }}</p></div>
+            <div class="col-lg-12"><p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES >>>></a></p></div>
+        </div>
         
         {% if backManageComment == 'moderate' %}
             <h4 id="comments" class="mb-4 text-success">Message de modération : </h4>
