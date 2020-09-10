@@ -262,6 +262,13 @@
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  .content-post-xs {
+    display: none;
+  }
+}
+
 @media (max-width: 998px) {
   #firstPost h4 {
     text-align: left;
@@ -333,6 +340,33 @@
     margin-bottom: 3rem;
   }
 }
+
+@media (max-width: 992px) {
+  #profilPictureMenu {
+    display: none;
+  }
+  #admin {
+    padding: 7rem 0;
+  }
+  #admin .featured-text {
+    padding: 0;
+  }
+  #backHomeProfil {
+    text-align: left;
+  }
+  #addPostButton {
+    text-align: left !important;
+    margin-top: 2rem;
+  }
+  #backListPosts div {
+    margin-bottom: 1rem !important;
+  }
+  .btn-sm {
+    width: 100%;
+  }
+}
+
+
 
 
 

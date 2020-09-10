@@ -6,28 +6,28 @@
 <section class="projects-section bg-light" id="backListPosts">
     <div class="container">
         <div class="row">
-            <h2 class="col-lg-6 font-weight-bold align-self-center">Gestion des articles</h2>
-            <div class="col-lg-6 text-right"><a class="btn btn-secondary active" href="index.php?admin=addpost">Ajouter un article</a></div>
+            <h2 class="col-md-6 font-weight-bold align-self-center">Gestion des articles</h2>
+            <div class="col-md-6 text-right mb-3" id="addPostButton"><a class="btn btn-secondary active" href="index.php?admin=addpost">Ajouter un article</a></div>
         </div>
-        <hr class="d-none d-lg-block mb-3" />
-        <div class="row mb-3">
-            <div class="col-lg-1  font-weight-bold align-self-center">Id</div>
-            <div class="col-lg-4  font-weight-bold align-self-center">Titre</div>
-            <div class="col-lg-2  font-weight-bold align-self-center">Auteur</div>
-            <div class="col-lg-2  font-weight-bold align-self-center">Date d'ajout</div>
-            <div class="col-lg-1  font-weight-bold align-self-center text-center">Publié</div>
-            <div class="col-lg-2 text-center font-weight-bold align-self-center">Action</div>
+        <hr class="d-none d-md-block mb-3" />
+        <div class="row mb-3 content-post-xs">
+            <div class="col-md-1 font-weight-bold align-self-center">Id</div>
+            <div class="col-lg-4 col-md-3 font-weight-bold align-self-center">Titre</div>
+            <div class="col-md-2 font-weight-bold align-self-center">Auteur</div>
+            <div class="col-md-2 font-weight-bold align-self-center">Date d'ajout</div>
+            <div class="col-md-1 font-weight-bold align-self-center text-center">Publié</div>
+            <div class="col-lg-2 col-md-3 text-center font-weight-bold align-self-center">Action</div>
         </div>
-        <hr class="d-none d-lg-block mb-2 ml-0" />
+        <hr class="d-none d-md-block mb-2 ml-0" />
         {% for post in posts %}
             <div class="row mt-3 mb-3">
-                <div class="col-lg-1 align-self-center">
+                <div class="col-md-1 col-sm-2 align-self-center">
                     <a href={{ 'index.php?p=post&id=' ~ post.id }} class="badge badge-dark">{{post.id}}</a>
                 </div>
-                <div class="col-lg-4 text-truncate align-self-center">{{ post.title }}</div>
-                <div class="col-lg-2 align-self-center">{{ post.authorName }}</div>
-                <div class="col-lg-2 align-self-center">{{ post.lastDateModif|date("d/m/Y") }}</div>
-                <div class="col-lg-1 align-self-center text-center">
+                <div class="col-lg-4 col-md-3 col-sm-10 text-truncate align-self-center">{{ post.title }}</div>
+                <div class="col-md-2 col-sm-12 align-self-center">{{ post.authorName }}</div>
+                <div class="col-md-2 col-sm-12 align-self-center">{{ post.lastDateModif|date("d/m/Y") }}</div>
+                <div class="col-md-1 col-sm-12 align-self-center text-center">
                    {% if post.published == 'TRUE' %} 
                    <!--Check-->
                         <span class="text-blue font-weight-bold">
@@ -46,13 +46,13 @@
                    {% endif %}
                 </div>
                 <!--Edit and Delete-->
-                <div class="col-lg-2 text-center justify-content-between align-self-center">
+                <div class="col-lg-2 col-md-3 col-sm-12 text-center justify-content-between align-self-center">
                     <div class="row">
                         <!--Edit-->
                     {% if user.type == 'administrator' %}
-                        <div class="col-lg-6 ">
+                        <div class="col-md-6 ">
                     {% elseif user.type == 'author' %}
-                        <div class="col-lg-12">
+                        <div class="col-md-12">
                     {% endif %}
                             <a href={{'index.php?admin=addpost&id=' ~ post.id }} class="btn btn-sm text-success font-weight-bold">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -63,7 +63,7 @@
                         </div>
                     {% if user.type == 'administrator' %}
                         <!--Delete-->
-                        <div class="col-lg-6 ">
+                        <div class="col-md-6 ">
                             <a href={{'index.php?admin=post&delete=' ~ post.id }} class="btn btn-sm text-danger font-weight-bold">
                                 <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -75,7 +75,7 @@
                     </div> 
                 </div>
             </div>
-            <hr class="d-none d-lg-block mb-1 mt-1" />
+            <hr class="d-none d-sm-block mb-1 mt-1" />
         {% endfor %}
     </div>
 </section>
