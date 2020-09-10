@@ -1,7 +1,22 @@
 <?php
 
+/**
+ * This file contains User class
+ */
+
 namespace model;
 
+/**
+ * Class for Users registred
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Entity
+ * @package   \model\entity
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class User 
 { 
     private $_userId;
@@ -15,11 +30,25 @@ class User
 
     private static $_role = array('administrator', 'author', 'moderator');
 
+    /**
+     * __construct Init object 
+     *
+     * @param array $data Array with database data
+     * 
+     * @return void
+     */
     public function __construct($data)
     {
         $this->hydrate($data);
     }
 
+    /**
+     * Hydrate 
+     *
+     * @param array $data Array with database data
+     * 
+     * @return void
+     */
     public function hydrate($data)
     {
         foreach ($data as $key => $value) {
@@ -31,64 +60,133 @@ class User
         }
     }
 
+    /**
+     * Getter $_userId
+     * 
+     * @return int
+     */
     public function userId()
     {
         return $this->_userId;
     }
 
+    /**
+     * Getter $_userName
+     * 
+     * @return string
+     */
     public function userName()
     {
         return $this->_userName;
     }
 
+    /**
+     * Getter $_password
+     * 
+     * @return string hash
+     */
     public function password()
     {
         return $this->_password;
     }
 
+    /**
+     * Getter $_userName
+     * 
+     * @return string email format
+     */
     public function userEmail()
     {
         return $this->_userEmail;
     }
 
+    /**
+     * Getter $_profilPicture
+     * 
+     * @return string 
+     */
     public function profilPicture()
     {
         return $this->_profilPicture;
     }
 
+    /**
+     * Getter $_authorName
+     * 
+     * @return string
+     */
     public function authorName()
     {
         return $this->_authorName;
     }
 
+    /**
+     * Getter $_registerDate
+     * 
+     * @return timestamp
+     */
     public function registerDate()
     {
         return $this->_registerDate;
     }
 
+    /**
+     * Getter $_type
+     * 
+     * @return string
+     */
     public function type()
     {
         return $this->_type;
     }
 
+    /**
+     * Setter $_userId
+     * 
+     * @param $userId Id of user
+     * 
+     * @return void
+     */
     public function setId($userId)
     {
         $userId = (int)$userId;
         $this->_userId = $userId;
     }
 
+    /**
+     * Setter $_userName
+     * 
+     * @param $userName Name of registred user
+     * 
+     * @return void 
+     */
     public function setUserName($userName)
     {
         $userName = (string)$userName;
         $this->_userName = $userName;
     }
 
+    /**
+     * Setter $_password
+     * 
+     * @param $password Hash password with passord_hash()
+     * 
+     * @return void
+     */
     public function setPassword($password)
     {
         $password = (string)$password; 
         $this->_password = $password;
     }
 
+    /**
+     * Setter _userEmail
+     * Control with regex
+     * 
+     * @param $userEmail Email of registered user
+     * 
+     * @return void
+     */
     public function setUserEmail($userEmail)
     {
         if ($userEmail == null) {
@@ -109,6 +207,13 @@ class User
         
     }
 
+    /**
+     * Setter $_profilPicture
+     * 
+     * @param $profilPicture Profil picture of registered user
+     * 
+     * @return void
+     */
     public function setprofilPicture($profilPicture) 
     {
         if ($profilPicture == null ) {
@@ -119,18 +224,39 @@ class User
         }
     }
 
+    /**
+     * Setter $_authorName
+     * 
+     * @param $authorName Full name of user for signed posts
+     * 
+     * @return void
+     */
     public function setAuthorName($authorName)
     {
         $authorName = (string)$authorName;
         $this->_authorName = $authorName;
     }
 
+    /**
+     * Setter $_registerDate
+     * 
+     * @param $registerDate Timestamp of user register date
+     * 
+     * @return void
+     */
     public function setRegisterDate($registerDate)
     {
         $registerDate = (int)$registerDate;
         $this->_registerDate = $registerDate;
     }
 
+    /**
+     * Setter $_type
+     * 
+     * @param $type Role of user - Define in static variable $_role
+     * 
+     * @return void
+     */
     public function setType($type)
     {
         if (in_array($type, self::$_role)) {
