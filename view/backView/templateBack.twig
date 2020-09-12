@@ -43,7 +43,7 @@
                         <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.userId }} id="adminProfil">
                         {{user.userName}} : 
                        {% if user.type == 'administrator' %}
-                           Administrateur
+                           Admin
                        {% elseif user.type == 'author' %}
                            Auteur
                        {% elseif user.type == 'moderator' %} 

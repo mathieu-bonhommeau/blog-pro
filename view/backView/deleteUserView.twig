@@ -9,8 +9,8 @@
         <div class="text-danger mb-4 text-center"><h2>Vous ne pouvez pas supprimer cet utilisateur.</h2></div>
         <p class="text-center">Veuillez tout d'abord supprimer les articles qui lui sont liés.</p>
         <div class="row">
-            <div class="col-lg-6 text-right"><a href="index.php?admin=listusers" class="btn btn-outline-primary">ANNULER</a></div>
-            <div class="col-lg-6 text-left"><a href="index.php?admin=post" class="btn btn-outline-danger">ARTICLES</a></div>
+            <div class="col-6 text-right"><a href="index.php?admin=listusers" class="btn btn-outline-primary">ANNULER</a></div>
+            <div class="col-6 text-left"><a href="index.php?admin=post" class="btn btn-outline-danger">ARTICLES</a></div>
         </div>
         <form class="form-group" method="post" action="">
             
@@ -22,7 +22,7 @@
                 <div class="col-lg-6 text-left"><button type="submit" class="btn btn-outline-danger" name="validDeleteUser">SUPPRIMER</button></div>
             </div>
         {% endif %}
-            <hr class="d-none d-lg-block mb-4 ml-0" />
+            <hr class="mb-4 ml-0" />
             <div class="row">
                 <div class="col-lg-6 ">
                     <div class="row"><h2 class="mb-4">Pseudo : {{ deleteUser.userName }}</h2></div>
@@ -38,9 +38,10 @@
                         {% endif %}
                 </div>   
             </div>
-            <hr class="d-none d-lg-block mb-4 ml-0" />
-            <h4 class="text-danger mb-5">Articles liés à cet utilisateur :</h4>
-            <div class="row">
+            <hr class="mb-4 ml-0" />
+            <h4 class="text-danger mb-5 content-post-lg">Articles liés à cet utilisateur :</h4>
+            <h4 class="text-danger mb-5 content-post-sm">Articles liés :</h4>
+            <div class="row content-post-lg">
                 <div class="col-lg-1  font-weight-bold align-self-center">Id</div>
                 <div class="col-lg-6  font-weight-bold align-self-center">Titre</div>
                 <div class="col-lg-3  font-weight-bold align-self-center">Date d'ajout</div>
@@ -50,13 +51,13 @@
 
             {% for post in posts %}
                 <div class="row">
-                    <div class="col-lg-1  align-self-center"><span class="badge badge-dark">{{ post.postId }}</span></div>
-                    <div class="col-lg-6  align-delf-center">{{ post.title }}</div>
-                    <div class="col-lg-3 align-self-center">{{ post.lastDateModif|date("d/m/Y") }}</div>
-                    <div class="col-lg-2  font-weight-bold align-self-center text-center">
+                    <div class="col-lg-1 align-self-center"><span class="content-post-sm font-weight-bold">Id de l'article : </span><span class="badge badge-dark">{{ post.id }}</span></div>
+                    <div class="col-lg-6 align-delf-center"><span class="content-post-sm font-weight-bold">Titre : </span>{{ post.title }}</div>
+                    <div class="col-lg-3 align-self-center"><span class="content-post-sm font-weight-bold">Enregistré le : </span>{{ post.lastDateModif|date("d/m/Y") }}</div>
+                    <div class="col-lg-2 font-weight-bold align-self-center text-center btn-disabled content-post-lg">
                         {% if post.published == 'TRUE' %}
-                            <span class="text-blue">
-                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <span class=" btn btn-sm btn-disabled text-center">
+                                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check2 btn-disabled text-blue" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
                                 </svg>
                             </span>
@@ -69,7 +70,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <hr class="d-none d-lg-block ml-0" />
+                <hr class="ml-0" />
             {% endfor %}
 
         </form>

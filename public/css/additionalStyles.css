@@ -251,25 +251,25 @@
 .projects-section .project-text {
   padding: 3rem;
 }
-@media (max-width: 998px) {
+@media (max-width: 992px) {
   .projects-section .project-text {
     padding: 2rem;
   }
 }
 
-@media (min-width: 999px) {
+@media (min-width: 992px) {
   .content-post-sm {
     display: none;
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .content-post-xs {
     display: none;
   }
 }
 
-@media (max-width: 998px) {
+@media (max-width: 992px) {
   #firstPost h4 {
     text-align: left;
   }
@@ -354,7 +354,7 @@
   #backHomeProfil {
     text-align: left;
   }
-  #addPostButton {
+  #button-sm {
     text-align: left !important;
     margin-top: 2rem;
   }
@@ -362,11 +362,45 @@
     margin-bottom: 1rem !important;
   }
   .btn-sm {
+    width: 50%;
+  }
+  #published-button-sm .btn {
+    width: 50%;
+  }
+  .text-center-sm {
+    text-align: center;
+  }
+  .text-left-sm {
+    text-align: left !important;
+  }
+  #btn-try {
     width: 100%;
   }
 }
 
+@media (max-width: 540px) {
+  .btn-sm {
+    width: 80%;
+  }
+  #published-button-sm .btn {
+    width: 80%;
+  }
+}
 
+@media (max-width: 768px) {
+  #published-button-sm {
+    margin-top: 2rem;
+    justify-content: flex-start !important;
+  }
+}
+
+.btn-disabled {
+  box-shadow: none !important;
+}
+.btn-disabled:hover {
+  cursor: default !important;
+
+}
 
 
 
