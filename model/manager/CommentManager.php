@@ -1,21 +1,19 @@
 <?php
 
 /**
- * Class for manage comment in database
+ * This file contains CommentManager class
  */
-
 namespace model;
 
+/**
+ * Class for manage Comments in database
+ */
 class CommentManager extends Manager
 {    
     /**
      * Add a new comment
      * 
-     * @param string $nameVisitor  Name of visitor
-     * @param string $content      Comment
-     * @param bool   $validComment Validation of comment
-     * @param int    $user_id      Id of moderator
-     * @param int    $post_id      Id of post
+     * @param string $comment Comment Object
      * 
      * @return int Number affected lines
      */
@@ -42,6 +40,14 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Get comments valid or no valid and sort the result by $try
+     * 
+     * @param bool   $validComment If param no exist -> null 
+     * @param string $try          If param no exist -> null
+     * 
+     * @return PDO result 
+     */
     public function getAllComments($validComment=null, $try=null)
     {
         if ($validComment == null) {
@@ -64,6 +70,13 @@ class CommentManager extends Manager
         return $req;
     }
 
+    /**
+     * Get comments linked to a post and order by comment Date
+     * 
+     * @param int $post_id Id of post
+     * 
+     * @return PDO result
+     */
     public function getComments($post_id)
     {
         $req = $this->database()->prepare(
@@ -78,7 +91,14 @@ class CommentManager extends Manager
         return $req;
     }
 
-    public function getComment($CommnentId)
+    /**
+     * Get a comment
+     * 
+     * @param int $commentId Id of comment
+     * 
+     * @return array
+     */
+    public function getComment($commentId)
     {
         $req = $this->database()->prepare(
             'SELECT id, nameVisitor, content, 
@@ -87,16 +107,23 @@ class CommentManager extends Manager
             FROM comment
             WHERE id = ?'
         );
-        $req -> execute(array($CommnentId));
+        $req -> execute(array($commentId));
         return $req->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function deleteComment($CommnentId)
+    /**
+     * Delete a comment
+     * 
+     * @param int $commentId Id of comment
+     * 
+     * @return int Number of affected lines
+     */
+    public function deleteComment($commentId)
     {
         $req = $this->database()->prepare(
             'DELETE FROM comment WHERE id = ?'
         );
-        $req -> execute(array($CommnentId));
+        $req -> execute(array($commentId));
         return $req->rowCount();
     }
 
@@ -109,6 +136,13 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Update a comment
+     * 
+     * @param int $commentId Id of comment
+     * 
+     * @return int Number of affected lines
+     */
     public function updateComment($commentId)
     {
         $req = $this->database()->prepare(
@@ -120,6 +154,14 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Count the number of comments by post and valid or no valid
+     * 
+     * @param int  $post_id      Post id of comment
+     * @param bool $validComment Comment is valid or no
+     * 
+     * @return array
+     */
     public function nbrComments($post_id, $validComment)
     {
         $req = $this->database()->prepare(
@@ -130,6 +172,13 @@ class CommentManager extends Manager
         return $req->fetch(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Count the number of all comments valid or no valid
+     * 
+     * @param bool $validComment Comment is valid or no
+     * 
+     * @return int
+     */
     public function nbrAllComments($validComment)
     {
         $req = $this->database()->prepare(
@@ -141,6 +190,11 @@ class CommentManager extends Manager
         return $nbr['COUNT(*)'];
     }
 
+    /**
+     * Get the date of the last comment
+     * 
+     * @return string Date format Datetime
+     */
     public function lastDateComment()
     {
         $req = $this->database()->query(
