@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
     <head>
         <meta charset="utf-8" />
@@ -40,7 +40,7 @@
                     {% else %}
                         <img src={{ constant('USER_IMG_DIRECTORY') ~ user.profilPicture }} alt="Photo de profil" id="profilPictureMenu" class="ml-5"/>
                     {% endif %}
-                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.userId }} id="adminProfil">
+                        <a class="nav-link js-scroll-trigger" href="{{'index.php?admin=profil&id=' ~ user.userId }}" id="adminProfil">
                         {{user.userName}} : 
                        {% if user.type == 'administrator' %}
                            Admin
