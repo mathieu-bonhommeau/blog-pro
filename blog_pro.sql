@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  sam. 12 sep. 2020 à 08:00
+-- Généré le :  sam. 12 sep. 2020 à 17:08
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `fk_post_id` (`post_id`),
   KEY `fk_comment_user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `comment`
@@ -91,9 +91,9 @@ INSERT INTO `comment` (`id`, `nameVisitor`, `content`, `commentDate`, `emailVisi
 (204, 'Annabelle Clemenceau', 'fdsgsfdgbsdfxc', '2020-09-08 18:53:24', 'matanna@orange.fr', 'TRUE', 18, 146),
 (205, 'Annabelle Clemenceau', 'fdsgsfdgbsdfxc', '2020-09-08 18:55:50', 'matanna@orange.fr', 'TRUE', 18, 146),
 (206, 'Lilou445', 'un commentaire', '2020-09-08 18:56:21', 'matanna@orange.fr', 'TRUE', 18, 147),
-(208, 'Anna', 'rliyubcgnergd', '2020-09-08 19:38:57', 'matanna@orange.fr', 'TRUE', 18, 124),
 (209, 'administrator : Mat85', 'un com de valid', '2020-09-08 19:39:31', 'mathieu.bonhommeau@orange.fr', 'TRUE', 18, 147),
-(210, 'Mathieu Bonhommeau', 'fdhserdfhedf', '2020-09-09 23:42:32', 'mathieu.bonhommeau@orange.fr', 'FALSE', 18, 19);
+(210, 'Mathieu Bonhommeau', 'fdhserdfhedf', '2020-09-09 23:42:32', 'mathieu.bonhommeau@orange.fr', 'FALSE', 18, 19),
+(212, 'administrator : Mat85', 'Je le valide mais bon je suis pas content ', '2020-09-12 19:03:32', 'mathieu.bonhommeau@orange.fr', 'TRUE', 18, 130);
 
 -- --------------------------------------------------------
 
