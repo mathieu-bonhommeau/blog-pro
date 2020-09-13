@@ -5,7 +5,7 @@
 <section class="projects-section bg-light" id="projects">
     <div class="container">
         <div class="text-danger mb-4 text-center"><h2>Voulez vous vraiment supprimer ce commentaire ?</h2></div>
-        <form class="form-group" method="post" action="">
+        <form class="form-group" method="post" action="#">
             <div class="row">
                 <div class="col-6 text-right"><button type="submit" class="btn btn-outline-primary" name="cancelDeleteComment">ANNULER</button></div>
                 <div class="col-6 text-left"><button type="submit" class="btn btn-outline-danger" name="validDeleteComment">SUPPRIMER</button></div>
@@ -20,7 +20,7 @@
                     <div class="row"><p class="text-black-50 ">{{ comment.content }}</p></div>
                     <hr class="d-none d-lg-block mb-4 ml-0" />
                     <div class="row">
-                        <p class="text-danger">Expliquer la raison de la suppression à {{ comment.nameVisitor }} : </div>
+                        <p class="text-danger">Expliquer la raison de la suppression à {{ comment.nameVisitor }} :
                     </div>
                     <textarea class="form-control" name="addMsgEmail" rows="5" placeholder="Un email sera envoyé lors de la suppression à l'auteur du commentaire"></textarea>
                 </div>   

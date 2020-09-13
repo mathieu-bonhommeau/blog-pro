@@ -56,7 +56,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"></li><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
                             {% if user.type == 'administrator' or user.type == 'author' %}
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
                             {% endif %}
@@ -123,7 +123,7 @@
                         {% if user %}
                             <div class="container text-left mb-3 action"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
                             <div class="container text-left mb-3 action"><a href="index.php?p=connect">Changer d'utilisateur</a></div>
-                            <div class="container text-left mb-3 action"><a href="index.php" id="admin">Retour au site >></a></div>
+                            <div class="container text-left mb-3 action"><a href="index.php" id="goto-site">Retour au site >></a></div>
                         {% else %}
                             <div class="container text-left mb-3 action"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
                         {% endif %}

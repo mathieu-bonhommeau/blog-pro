@@ -9,15 +9,15 @@
   width: 100%;
 }
 
-#nameVisitor {
+.nameVisitor {
   font-size: 0.85em;
 }
 
-#comment {
+.comment {
   font-size: 0.85em;
 }
 
-#commentDate {
+.commentDate {
   font-size: 0.6em;
 }
 
@@ -280,11 +280,11 @@
   .content-post-lg {
     display: none;
   }
-  #homePosts h4 {
+  .homePosts h4 {
     text-align: left;
    
   }
-  #homePosts p {
+  .homePosts p {
     text-align: justify !important;
   }
   .author {
@@ -316,19 +316,19 @@
 }
 
 @media (max-width: 992px) {
-  #textListPost p {
+  .textListPost p {
     text-align: justify;
   }
-  #textListPost h4 {
+  .textListPost h4 {
     text-align: left;
   }
-  #postImage {
+  .postImage {
     text-align: center;
   }
 }
 
 @media (max-width: 540px) {
-  #authorList {
+  .authorList {
     text-align: left !important;
   }
 }
@@ -373,8 +373,12 @@
   .text-left-sm {
     text-align: left !important;
   }
-  #btn-try {
-    width: 100%;
+  .btn-try {
+    width: 20%;
+    margin-bottom: 0;
+  }
+  .try-button{
+    flex-direction: column;
   }
 }
 

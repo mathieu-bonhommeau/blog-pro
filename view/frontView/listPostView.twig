@@ -13,17 +13,17 @@
                 {% set numPost = numPost + 1 %}
                 <div class="row align-items-center no-gutters mb-4 mb-lg-5 post white-font">
                     {% if numPost is divisible by(2) %}
-                    <div class="col-lg-6  offset-lg-1" id="postImage"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                    <div class="col-lg-6  offset-lg-1 postImage"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
                     <div class="col-lg-5">
                     {% else %}
-                    <div class="col-lg-6" id="postImage"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                    <div class="col-lg-6 postImage"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
                     <div class="col-lg-5 offset-lg-1">
                     {% endif %}
-                        <div class="featured-text text-center text-lg-left" id="textListPost">
+                        <div class="featured-text text-center text-lg-left textListPost">
                             <h4>{{ post.title }}</h4>
                             <div class="row justify-content-center no-gutters">
                                 <div class="col-sm-6"><p class="text-left text-black-50">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
-                                <div class="col-sm-6"><p class="text-right" id="authorList">{{ post.authorName }}</p></div>
+                                <div class="col-sm-6"><p class="text-right authorList">{{ post.authorName }}</p></div>
                             </div>
                             <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true) }}</p>
                             <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
