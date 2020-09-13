@@ -1,18 +1,21 @@
 <?php
 
 /**
- * Class Manager parent
+ * This file contains Manager class
  */
-
 namespace model;
 
+/**
+ * Class Manager parent for database connexion
+ */
 class Manager 
 { 
     private $_database;
 
     /**
-     * Database connexion 
-     * return PDO object
+     * Database connexion
+     *  
+     * @return PDO object
      */
     public function __construct()
     {
@@ -26,6 +29,8 @@ class Manager
 
     /**
      * Getters
+     * 
+     * @return PDO object
      */
     public function database()
     {
@@ -34,6 +39,10 @@ class Manager
 
     /**
      * Setters
+     * 
+     * @param PDO $database PDO object
+     * 
+     * @return void
      */
     private function setDatabase($database)
     {

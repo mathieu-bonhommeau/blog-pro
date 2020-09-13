@@ -1,19 +1,20 @@
 <?php
 
 /**
- * Class for manage post in database
+ * This file contains PostManager class
  */
-
 namespace model;
 
+/**
+ * Class for manage Posts in database
+ */
 class PostManager extends Manager
 {
     /**
-     * Recovers all the posts
+     * Get all posts
      * 
-     * @param int $number Number of posts
-     * 
-     * @return array Result of request need a fetch process
+     * @return PDO result sort by date
+     * Result of request need a fetch process 
      */
     public function getPosts()
     {
@@ -28,6 +29,14 @@ class PostManager extends Manager
         return $req;
     }
 
+    /**
+     * Get posts for homepage
+     * 
+     * @param int $limit Number of posts display on homepage
+     * 
+     * @return PDO object sort by date
+     * Result of request need a fetch process 
+     */
     public function getHomePosts($limit)
     {
         $req = $this->database()->query(
@@ -43,9 +52,9 @@ class PostManager extends Manager
     }
 
     /**
-     * Recovers one post with the id post
+     * Get one post with the id post
      * 
-     * @param int $id Id post in database
+     * @param int $postId Id post in database
      * 
      * @return array Result of request
      */
@@ -65,6 +74,14 @@ class PostManager extends Manager
         return $data;   
     }
 
+    /**
+     * Get all the postsof an author
+     * 
+     * @param int $user_Id Id of user
+     * 
+     * @return array of posts if posts exists 
+     * @return null if posts not exists
+     */
     public function getUserPosts($user_Id)
     {
         $req = $this->database()->prepare(
@@ -92,12 +109,9 @@ class PostManager extends Manager
     /**
      * Add new post 
      *
-     * @param string $title   Title of post
-     * @param string $chapo   Chapo of post
-     * @param string $content Content of post
-     * @param int    $user_id Author id of post
+     * @param Post $newPost Object Post
      * 
-     * @return int Number of affected lines
+     * @return array Number of affected lines and las insert Id
      */
     public function addPost(Post $newPost)
     {
@@ -122,10 +136,7 @@ class PostManager extends Manager
     /**
      * Update a post
      *
-     * @param int    $id      Id of post
-     * @param string $title   Title of post
-     * @param string $chapo   Chapo of post
-     * @param string $content Content of post
+     * @param Post $post Object Post
      * 
      * @return int Number of affected lines
      */
@@ -153,7 +164,7 @@ class PostManager extends Manager
     /**
      * Delete a post
      *
-     * @param mixed $id Id of post
+     * @param int $postId Id of post
      * 
      * @return int Number of affected lines
      */
@@ -166,6 +177,11 @@ class PostManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Count number of posts
+     * 
+     * @return int Number of posts
+     */
     public function countPosts()
     {
         $req = $this->database()->query('SELECT COUNT(*) FROM post');
@@ -173,6 +189,13 @@ class PostManager extends Manager
         return $countPosts['COUNT(*)'];
     }
 
+    /**
+     * Count number of posts of an user
+     * 
+     * @param int $user_id Id of user
+     * 
+     * @return int Number of post of an user 
+     */
     public function countUserPosts($user_id)
     {
         $req = $this->database()->prepare(
@@ -185,6 +208,11 @@ class PostManager extends Manager
         return $countPosts['COUNT(*)'];
     }
 
+    /**
+     * Get the date of the last published post
+     * 
+     * @return string DateTime format
+     */
     public function lastDatePost()
     {
         $req = $this->database()->query(
@@ -195,6 +223,13 @@ class PostManager extends Manager
         return $lastDateModif['MAX(lastDateModif)'];
     }
 
+    /**
+     * Get the date of the last published post af an user
+     * 
+     * @param int $user_id Id of user
+     * 
+     * @return string DateTime format
+     */
     public function lastDateUserPost($user_id)
     {
         $req = $this->database()->prepare(
@@ -207,6 +242,13 @@ class PostManager extends Manager
         return $lastDateModif['MAX(lastDateModif)'];
     }
 
+    /**
+     * Get the number of line contains picture post name
+     * 
+     * @param string $picture Name of picture
+     * 
+     * @return int Number of lines
+     */
     public function getPostImg($picture)
     {
         $req = $this->database()->prepare('SELECT COUNT(*) FROM post WHERE picture = ?');
