@@ -46,7 +46,7 @@ class CommentManager extends Manager
      * @param bool   $validComment If param no exist -> null 
      * @param string $try          If param no exist -> null
      * 
-     * @return PDO result 
+     * @return PDO result Result of request need a fetch process
      */
     public function getAllComments($validComment=null, $try=null)
     {
@@ -75,7 +75,7 @@ class CommentManager extends Manager
      * 
      * @param int $post_id Id of post
      * 
-     * @return PDO result
+     * @return PDO result Result of request need a fetch process
      */
     public function getComments($post_id)
     {

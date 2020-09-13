@@ -240,4 +240,17 @@ class FrontController extends Controller
         } 
              
     }
+
+    public function errorView($exception)
+    {
+        $this->twigInit();
+        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
+        $this->twig->addExtension(new Twig_Extensions_Extension_Text()); 
+
+        echo $this->twig->render(
+            'errorView.twig', array(
+                'exception' => $exception 
+            )
+        );
+    }
 }

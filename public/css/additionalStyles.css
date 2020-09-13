@@ -403,10 +403,17 @@
 }
 .btn-disabled:hover {
   cursor: default !important;
-
 }
 
+.oups {
+  font-size: 5rem;
+  text-align: center;
+}
 
+.error-msg {
+  font-size: 3rem;
+  text-align: center;
+}
 
 
 

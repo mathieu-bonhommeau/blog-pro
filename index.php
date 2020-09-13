@@ -30,6 +30,7 @@ try
 
 catch (Exception $e)
 {
-    echo $e -> getMessage();
+    $frontController = new controller\FrontController;
+    $frontController -> errorView($e -> getMessage());
 }
 
