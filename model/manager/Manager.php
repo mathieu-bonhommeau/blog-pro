@@ -6,7 +6,7 @@
 namespace model;
 
 /**
- * Class Manager parent for database connexion
+ * Class Manager for database connexion
  */
 class Manager 
 { 

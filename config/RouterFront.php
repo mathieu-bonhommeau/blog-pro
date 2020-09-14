@@ -1,9 +1,22 @@
 <?php
 
+/**
+ * This file contains RouterFront class
+ */
 namespace config;
 
+/**
+ * Class for routing on front pages
+ */
 class RouterFront 
-{ 
+{
+    /**
+     * Routing on front pages
+     * 
+     * @param string $get Index $_GET
+     * 
+     * @return mixed
+     */
     public function runFrontPage($get)
     {
         $var = new \config\GlobalVar;

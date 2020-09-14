@@ -1,15 +1,33 @@
 <?php
 
+/**
+ * This class contains GlobalVar class
+ */
 namespace config;
 
+/**
+ * Class for manage superglobales
+ */
 class GlobalVar
 {
 
+    /**
+     * Getter $_GET
+     * 
+     * @return mixed
+     */
     public function get($index) 
     {
         return filter_input(INPUT_GET, $index);
     }
 
+    /**
+     * If $_GET isset
+     * 
+     * @param string $index Name of index
+     * 
+     * @return bool  
+     */
     public function issetGet($index)
     {
         $index = htmlspecialchars($index);
@@ -20,16 +38,36 @@ class GlobalVar
         return false;
     }
 
+    /**
+     * Getter $_POST
+     * 
+     * @return mixed
+     */
     public function post($index) 
     {
         return filter_input(INPUT_POST, $index);
     }
 
+    /**
+     * Setter $_POST
+     * 
+     * @param string $index Name of index
+     * @param string $value Value of index
+     * 
+     * @return mixed
+     */
     public function setPost($index, $value) 
     {
         return $_POST[$index] = $value;
     }
 
+    /**
+     * If $_POST isset
+     * 
+     * @param string $index Name of index
+     * 
+     * @return bool  
+     */
     public function issetPost($index)
     {
         $index = htmlspecialchars($index);
@@ -40,6 +78,13 @@ class GlobalVar
         return false;
     }
 
+    /**
+     * If $_POST no empty
+     * 
+     * @param string $index Name of index
+     * 
+     * @return bool  
+     */
     public function noEmptyPost($index)
     {
         $index = htmlspecialchars($index);
@@ -50,6 +95,13 @@ class GlobalVar
         return false;
     }
 
+    /**
+     * If $_POST empty
+     * 
+     * @param string $index Name of index
+     * 
+     * @return bool  
+     */
     public function emptyPost($index)
     {
         $index = htmlspecialchars($index);
@@ -60,6 +112,11 @@ class GlobalVar
         return false;
     }
 
+    /**
+     * Getter $_SESSION
+     * 
+     * @return mixed
+     */
     public function session($index)
     {
         if (isset($_SESSION[$index])) {
@@ -67,11 +124,26 @@ class GlobalVar
         }
     }
 
+    /**
+     * Setter $_SESSION
+     * 
+     * @param string $index Name of index
+     * @param string $value Value of index
+     * 
+     * @return mixed
+     */
     public function setSession($index, $value) 
     {
         return $_SESSION[$index] = $value;
     }
 
+    /**
+     * If $_SESSION isset
+     * 
+     * @param string $index Name of index
+     * 
+     * @return bool  
+     */
     public function issetSession($index)
     {
         $index = htmlspecialchars($index);
@@ -81,6 +153,13 @@ class GlobalVar
         return false;
     }
 
+    /**
+     * Unset $_SESSION
+     * 
+     * @param string $index Name of index
+     * 
+     * @return bool
+     */
     public function unsetSession($index)
     {
         if (isset($_SESSION[$index])) {

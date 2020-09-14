@@ -1,9 +1,22 @@
 <?php
 
+/**
+ * This file contains RouterBack class
+ */
 namespace config;
 
+/**
+ * Class for routing on back pages
+ */
 class RouterBack
-{ 
+{
+    /**
+     * Routing on back pages
+     * 
+     * @param string $get Index $_GET
+     * 
+     * @return mixed
+     */
     public function runBackPage($get)
     {
         $var = new \config\GlobalVar;

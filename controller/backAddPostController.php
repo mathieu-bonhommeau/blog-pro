@@ -1,11 +1,22 @@
 <?php
 
+/**
+ * This file contains BackAddPostController class
+ */
 namespace controller;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
+/**
+ * Class for manage action on add post page
+ */
 class BackAddPostController extends BackPostController
 {
+    /**
+     * Action buttons on add post page
+     * 
+     * @return void
+     */
     public function addPostAction()
     {
         $backImageController = new \controller\BackPImgController;
