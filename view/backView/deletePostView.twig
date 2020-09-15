@@ -5,14 +5,14 @@
 <section class="projects-section bg-light" id="projects">
     <div class="container">
         <div class="text-danger mb-4 text-center"><h2>Voulez vous vraiment supprimer cet article et tous ses commentaires ?</h2></div>
-        <form class="form-group" method="post" action="">
+        <form class="form-group" method="post" action="#">
             <div class="row">
-                <div class="col-lg-6 text-right"><button type="submit" class="btn btn-outline-primary" name="cancelDelete">ANNULER</button></div>
-                <div class="col-lg-6 text-left"><button type="submit" class="btn btn-outline-danger" name="validDelete">SUPPRIMER</button></div>
+                <div class="col-6 text-right"><button type="submit" class="btn btn-outline-primary" name="cancelDelete">ANNULER</button></div>
+                <div class="col-6 text-left"><button type="submit" class="btn btn-outline-danger" name="validDelete">SUPPRIMER</button></div>
             </div>
         </form>
         
-        <hr class="d-none d-lg-block mb-4 ml-0" />
+        <hr class="mb-4 ml-0" />
         <div class="row">
             <div class="col-lg-6 ">
                 <div class="row"><h2 class="mb-4">{{ post.title }}</h2></div>
@@ -22,23 +22,23 @@
             </div> 
             <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>  
         </div>
-        <p class="font-weight-bold">{{ post.chapo }}</p>
-        <p class="text-justify featured-text">{{ post.content }}</p>
+        <p class="font-weight-bold">{{ post.chapo|raw }}</p>
+        <p class="text-justify featured-text">{{ post.content|raw }}</p>
         <p>{{ post.authorName }}</p>
         
         <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
 
         {% for comment in comments %}
-            <section class="comments">
+            <div class="comments">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="card-title">
-                            <span id="nameVisitor" class="font-weight-bold">{{ comment.nameVisitor }}</span> <span id="commentDate" class="font-weight-light">- posté le : {{ comment.commentDate|date("d/m/Y") }}</span>
+                            <span class="font-weight-bold nameVisitor">{{ comment.nameVisitor }}</span> <span class="font-weight-light commentDate">- posté le : {{ comment.commentDate|date("d/m/Y") }}</span>
                         </div>
-                        <p class="card-text font-weight-light" id="comment">{{ comment.content }}</p>
+                        <p class="card-text font-weight-light comment">{{ comment.content }}</p>
                     </div>
                 </div>
-            </section>
+            </div>
         {% endfor %}
 
     </div>

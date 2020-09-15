@@ -1,9 +1,30 @@
 <?php
 
+/**
+ * This file contains RouterFront class
+ */
 namespace config;
 
+/**
+ * Class for routing on front pages
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Config
+ * @package   \config
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class RouterFront 
-{ 
+{
+    /**
+     * Routing on front pages
+     * 
+     * @param string $get Index $_GET
+     * 
+     * @return mixed
+     */
     public function runFrontPage($get)
     {
         $var = new \config\GlobalVar;
@@ -99,11 +120,13 @@ class RouterFront
                 return;
             } 
             $frontController -> connectView();
+            return;
                
         } elseif ($get == 'disconnect') {
 
             $var -> unsetSession('user');
             header('Location: index.php');
+            exit();
         }
 
         throw new \Exception(PAGE_NOT_EXIST);

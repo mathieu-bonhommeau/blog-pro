@@ -1,11 +1,30 @@
 <?php
 
+/**
+ * This file contains BackAddPostController class
+ */
 namespace controller;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
+/**
+ * Class for manage action on add post page
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Controller
+ * @package   \controller
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class BackAddPostController extends BackPostController
 {
+    /**
+     * Action buttons on add post page
+     * 
+     * @return void
+     */
     public function addPostAction()
     {
         $backImageController = new \controller\BackPImgController;

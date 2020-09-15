@@ -1,6 +1,7 @@
 <?php
+
 /**
- * This files contains Comment class
+ * This file contains Comment class
  */
 namespace model;
 
@@ -57,7 +58,7 @@ class Comment
     }
     
     /**
-     * Getter id
+     * Getter commentId
      *
      * @return int
      */

@@ -1,11 +1,32 @@
 <?php
 
+/**
+ * This file contains BackPImgController class
+ */
 namespace controller;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
+/**
+ * Class for manage post image
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Controller
+ * @package   \controller
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class BackPImgController extends BackPostController
 {
+    /**
+     * Test and manage upload post image
+     * 
+     * @param string $imgPost Name of picture post if exist
+     * 
+     * @return string Path of picture post
+     */
     public function uploadFile($imgPost=null)
     {  
         $var = new \config\GlobalVar;
@@ -35,6 +56,14 @@ class BackPImgController extends BackPostController
         }      
     }
 
+    /**
+     * Move file for save upload file in definity folder
+     * 
+     * @param string $imgPost   Name of picture post
+     * @param string $directory Destination directory of picture post
+     * 
+     * @return void 
+     */
     public function moveFile($imgPost,$directory)
     {
         move_uploaded_file(
@@ -43,6 +72,12 @@ class BackPImgController extends BackPostController
         );
     }
 
+    /**
+     * Copy picture in definitive folder
+     * 
+     * @param string $imgPost   Name of picture post
+     * @param string $directory Definitive directory of picture post
+     */
     public function renameFile($imgPost, $directory)
     {
         rename(
@@ -52,6 +87,12 @@ class BackPImgController extends BackPostController
         );
     }
 
+    /**
+     * Rename picture post with a unique name with time() fonction
+     * 
+     * @return mixed string if addPost or notPublished
+     *               null if preview
+     */
     public function managePostImage() 
     {
         $var = new \config\GlobalVar;
@@ -76,6 +117,11 @@ class BackPImgController extends BackPostController
         return null;           
     }
 
+    /**
+     * Change picture post and delete old picture
+     * 
+     * @return void
+     */
     public function imgChange()
     {
         $var = new \config\GlobalVar;

@@ -1,16 +1,23 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0;
+  margin-left: 0; 
+}
+
 #submitMessage {
   width: 100%;
 }
 
-#nameVisitor {
+.nameVisitor {
   font-size: 0.85em;
 }
 
-#comment {
+.comment {
   font-size: 0.85em;
 }
 
-#commentDate {
+.commentDate {
   font-size: 0.6em;
 }
 
@@ -203,6 +210,20 @@
           background-clip: text;
 }
 
+.black-font h4 {
+  background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.3));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
+.white-font h4, .white-font h2 {
+  background: linear-gradient(rgba(0, 0, 0, 0.9),rgba(0, 0, 0, 0.5));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
 @media (max-width: 992px) {
   .masthead {
     padding-top: 7rem;
@@ -230,18 +251,25 @@
 .projects-section .project-text {
   padding: 3rem;
 }
-@media (max-width: 998px) {
+@media (max-width: 992px) {
   .projects-section .project-text {
     padding: 2rem;
   }
 }
 
-@media (min-width: 999px) {
+@media (min-width: 992px) {
   .content-post-sm {
     display: none;
   }
 }
-@media (max-width: 998px) {
+
+@media (min-width: 768px) {
+  .content-post-xs {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
   #firstPost h4 {
     text-align: left;
   }
@@ -252,10 +280,11 @@
   .content-post-lg {
     display: none;
   }
-  #homePosts h4 {
+  .homePosts h4 {
     text-align: left;
+   
   }
-  #homePosts p {
+  .homePosts p {
     text-align: justify !important;
   }
   .author {
@@ -286,8 +315,105 @@
   }
 }
 
+@media (max-width: 992px) {
+  .textListPost p {
+    text-align: justify;
+  }
+  .textListPost h4 {
+    text-align: left;
+  }
+  .postImage {
+    text-align: center;
+  }
+}
 
+@media (max-width: 540px) {
+  .authorList {
+    text-align: left !important;
+  }
+}
 
+@media (max-width: 992px) {
+  #text-post p{
+    text-align: justify !important;
+    padding: 0;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  #profilPictureMenu {
+    display: none;
+  }
+  #admin {
+    padding: 7rem 0;
+  }
+  #admin .featured-text {
+    padding: 0;
+  }
+  #backHomeProfil {
+    text-align: left;
+  }
+  #button-sm {
+    text-align: left !important;
+    margin-top: 2rem;
+  }
+  #backListPosts div {
+    margin-bottom: 1rem !important;
+  }
+  .btn-sm {
+    width: 50%;
+  }
+  #published-button-sm .btn {
+    width: 50%;
+  }
+  .text-center-sm {
+    text-align: center;
+  }
+  .text-left-sm {
+    text-align: left !important;
+  }
+  .btn-try {
+    width: 20%;
+    margin-bottom: 0;
+  }
+  .try-button{
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 540px) {
+  .btn-sm {
+    width: 80%;
+  }
+  #published-button-sm .btn {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  #published-button-sm {
+    margin-top: 2rem;
+    justify-content: flex-start !important;
+  }
+}
+
+.btn-disabled {
+  box-shadow: none !important;
+}
+.btn-disabled:hover {
+  cursor: default !important;
+}
+
+.oups {
+  font-size: 5rem;
+  text-align: center;
+}
+
+.error-msg {
+  font-size: 3rem;
+  text-align: center;
+}
 
 
 

@@ -1,18 +1,29 @@
 <?php
 
 /**
- * Class Manager parent
+ * This file contains Manager class
  */
-
 namespace model;
 
+/**
+ * Class Manager for database connexion
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Manager
+ * @package   \model\manager
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class Manager 
 { 
     private $_database;
 
     /**
-     * Database connexion 
-     * return PDO object
+     * Database connexion
+     *  
+     * @return PDO object
      */
     public function __construct()
     {
@@ -26,6 +37,8 @@ class Manager
 
     /**
      * Getters
+     * 
+     * @return PDO object
      */
     public function database()
     {
@@ -34,6 +47,10 @@ class Manager
 
     /**
      * Setters
+     * 
+     * @param PDO $database PDO object
+     * 
+     * @return void
      */
     private function setDatabase($database)
     {

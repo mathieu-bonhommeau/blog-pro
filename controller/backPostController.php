@@ -1,11 +1,30 @@
 <?php
 
+/**
+ * This file contains BackPostController class
+ */
 namespace controller;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
+/**
+ * Class for get posts data and send it back to views
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Controller
+ * @package   \controller
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class BackPostController extends BackController
 {
+    /**
+     * Retrives and send data to listposts page
+     * 
+     * @return void 
+     */
     public function backListPosts()
     {
         $var = new \config\GlobalVar;
@@ -28,6 +47,11 @@ class BackPostController extends BackController
         );
     }
 
+    /**
+     * Call the right method for action buttons on list post page 
+     * 
+     * @return void
+     */
     public function backListPostsAction()
     {
         $var = new \config\GlobalVar;
@@ -53,6 +77,15 @@ class BackPostController extends BackController
         $this -> backListPosts();     
     }
 
+    /**
+     * Display add post page
+     * 
+     * @param array  $form        If update post 
+     * @param string $msg         Message
+     * @param Post   $postpreview Post object for manage preview feature
+     * 
+     * @return void
+     */
     public function addPostView(
         array $form=null, 
         $msg=null, 
@@ -84,9 +117,16 @@ class BackPostController extends BackController
         );
     }
 
-    
-
-    public function resultPost($affectedLines, $id) 
+    /**
+     * Manage results of add post
+     * 
+     * @param int $affectedLines Number of affected lines 
+     *                           when add a new post or update post
+     * @param int $postId        Id of post
+     * 
+     * @return void
+     */
+    public function resultPost($affectedLines, $postId) 
     {
         $postManager = new \model\PostManager;
         $var = new \config\GlobalVar;
@@ -97,7 +137,7 @@ class BackPostController extends BackController
             exit(); 
         }
 
-        $data = $postManager -> getPost($id);
+        $data = $postManager -> getPost($postId);
         $newPost = new \model\Post($data);
             
         if ($newPost->published() != 'TRUE') {
@@ -119,6 +159,13 @@ class BackPostController extends BackController
         exit();     
     }
 
+    /**
+     * Manage preview postr feature
+     * 
+     * @param array $form Inputs of addpost form in add post page for preview feature
+     * 
+     * @return void
+     */
     public function previewPost(array $form)
     {
         $var = new \config\GlobalVar;
@@ -136,9 +183,14 @@ class BackPostController extends BackController
                 'newPost' => $newPost    
             )
         );
-        $_SESSION['previewPost'] = $newPost;
+        $var->setSession('previewPost', $newPost);
     }
 
+    /**
+     * Give preview post value at add post form inputs
+     * 
+     * @return void
+     */
     public function inputPostTest() 
     {
         $var = new \config\GlobalVar;
@@ -155,7 +207,14 @@ class BackPostController extends BackController
         return;
     }
 
-    public function dataInputPost($id=null)
+    /**
+     * Test inputs in add post form on addpost page
+     * 
+     * @param int $postId Id of post
+     * 
+     * @return array $form Array with inputs addpost form
+     */
+    public function dataInputPost($postId=null)
     {
         $var = new \config\GlobalVar;
         $backImageController = new \controller\BackPImgController;
@@ -173,7 +232,7 @@ class BackPostController extends BackController
                 $path =  $backImageController -> uploadFile($_FILES['imgPost']);  
             }
             $form = array(
-                'id' => $id,
+                'id' => $postId,
                 'title' => $var->post('titlePost'),
                 'chapo' => $var->post('chapoPost'),
                 'content' => $var->post('contentPost'),'picture' => $path,
@@ -186,10 +245,17 @@ class BackPostController extends BackController
         header('Location: index.php?admin=addpost');
     }
 
-    public function publishedPost($id) 
+    /**
+     * Publish post
+     * 
+     * @param int $postId Id of post
+     * 
+     * @return void
+     */
+    public function publishedPost($postId) 
     {
         $postManager = new \model\PostManager;
-        $data = $postManager -> getPost($id);
+        $data = $postManager -> getPost($postId);
         if ($data) {
             $post = new \model\Post($data);
             $post -> setPublished('TRUE');
@@ -198,7 +264,7 @@ class BackPostController extends BackController
             
             if ($affectedLine == 1 && $_GET['c'] == 'valid') {
                 
-                header('Location: index.php?p=post&id=' . $id);
+                header('Location: index.php?p=post&id=' . $postId);
 
             } elseif ($affectedLine == 1 && $_GET['c'] != 'valid') {
                 
@@ -207,14 +273,18 @@ class BackPostController extends BackController
             throw new \Exception(POST_NO_OK); 
             return;   
         } 
-        throw new \Exception(POST_NO_EXIST);
-        
+        throw new \Exception(POST_NO_EXIST);   
     }
 
-    public function updatePost($id)
+    /**
+     * Update a post
+     * 
+     * @param int $postId Id of post
+     */
+    public function updatePost($postId)
     {
         $postManager = new \model\PostManager;
-        $data = $postManager -> getPost($id);
+        $data = $postManager -> getPost($postId);
         
         if ($data) {
             $post = new \model\Post($data);
@@ -236,10 +306,17 @@ class BackPostController extends BackController
         throw new \Exception(POST_NO_EXIST);  
     }
 
-    public function deleteView($id)
+    /**
+     * Retrieves and send data to delete post page
+     * 
+     * @param int $postId Id of post
+     * 
+     * @return void
+     */
+    public function deleteView($postId)
     {
         $postManager = new \model\PostManager;
-        $dataPost = $postManager -> getPost($id);
+        $dataPost = $postManager -> getPost($postId);
 
         if ($dataPost == false) {
             throw new \Exception(PAGE_NOT_EXIST);
@@ -248,8 +325,8 @@ class BackPostController extends BackController
             $post = new \model\Post($dataPost);
 
             $commentManager = new \model\CommentManager;
-            $dataComment = $commentManager -> getComments($id, 'TRUE');
-            $nbrComments = $commentManager -> nbrComments($id, 'TRUE');
+            $dataComment = $commentManager -> getComments($postId, 'TRUE');
+            $nbrComments = $commentManager -> nbrComments($postId, 'TRUE');
 
             $this->twigInit();
             $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
@@ -266,6 +343,13 @@ class BackPostController extends BackController
         }      
     }
 
+    /**
+     * Delete post
+     * 
+     * @param int $postId Id of post
+     * 
+     * @return void
+     */
     public function deletePost($postId)
     {
         $postManager = new \model\PostManager;
@@ -286,8 +370,13 @@ class BackPostController extends BackController
         }
     }
 
-   
-
+    /**
+     * Delete session
+     * 
+     * @param string $name Index of the session
+     * 
+     * @return void
+     */
     public function deleteSession($name) 
     {
         $var = new \config\GlobalVar;
@@ -317,6 +406,11 @@ class BackPostController extends BackController
         
     }
 
+    /**
+     * Verify if tmp folder exist
+     * 
+     * @return void
+     */
     public function verifTmpFolder()
     {
         if (!file_exists('tmp/')) {

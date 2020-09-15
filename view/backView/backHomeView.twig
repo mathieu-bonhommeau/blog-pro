@@ -6,7 +6,7 @@
 <section class="projects-section bg-light" id="admin">
     <div class="container">
         <h2 class="mb-1">Dashboard</h2>
-        <hr class="d-none d-lg-block mb-2 ml-0" />
+        <hr class="mb-2 ml-0" />
 
         {% if user.type == 'administrator' %}
             <h4 class="mb-5">Statut : Administrateur</h4>
@@ -24,15 +24,18 @@
                         <div class="row justify-content-between no-gutters">
                             <div class="col-lg-12">
                                 <p class="text-left text-black-50">
-                                    <a href="index.php?admin=addpost">AJOUTER UN ARTICLE >>>></a>
+                                    <a href="index.php?admin=addpost" class="content-post-lg">AJOUTER UN ARTICLE >>>></a>
+                                    <a href="index.php?admin=addpost" class="content-post-sm">AJOUTER UN ARTICLE</a>
                                 </p>
                             </div>
                             <div class="col-lg-12">
                                 <p class="text-left text-black-50">
                                     {% if user.type == 'administrator' %}
-                                        <a href="index.php?admin=post">AFFICHER TOUS LES ARTICLES >>>></a>
+                                        <a href="index.php?admin=post" class="content-post-lg">AFFICHER TOUS LES ARTICLES >>>></a>
+                                        <a href="index.php?admin=post" class="content-post-sm">TOUS LES ARTICLES</a>
                                     {% elseif user.type == 'author' %}
-                                        <a href="index.php?admin=post">AFFICHER TOUS MES ARTICLES >>>></a>
+                                    <a href="index.php?admin=post" class="content-post-lg">AFFICHER TOUS MES ARTICLES >>>></a>
+                                    <a href="index.php?admin=post" class="content-post-sm">TOUS MES ARTICLES</a>
                                     {% endif %}
                                 </p>
                             </div>
@@ -52,7 +55,7 @@
                                 </p>
                             </div>
                         </div>
-                        <hr class="d-none d-lg-block mb-0 ml-0 mr-5" />
+                        <hr class="d-block mb-0 ml-0 mr-5" />
                     </div>  
                 </div>
             {% endif %}
@@ -63,12 +66,14 @@
                         <div class="row justify-content-between no-gutters">
                             <div class="col-lg-12">
                                 <p class="text-left text-black-50">
-                                    <a href="index.php?admin=validcomment">COMMENTAIRES A VALIDER >>>></a>
+                                    <a href="index.php?admin=validcomment" class="content-post-lg">COMMENTAIRES A VALIDER >>>></a>
+                                    <a href="index.php?admin=validcomment" class="content-post-sm">COMMENTAIRES A VALIDER</a>
                                 </p>
                             </div>
                             <div class="col-lg-12">
                                 <p class="text-left text-black-50">
-                                    <a href="index.php?admin=listcomments">AFFICHER TOUS LES COMMENTAIRES >>>></a>
+                                    <a href="index.php?admin=listcomments" class="content-post-lg">AFFICHER TOUS LES COMMENTAIRES >>>></a>
+                                    <a href="index.php?admin=listcomments" class="content-post-sm">TOUS LES COMMENTAIRES</a>
                                 </p>
                             </div>
                             <div class="col-lg-12">
@@ -83,7 +88,7 @@
                                 </p>
                             </div>
                         </div>
-                        <hr class="d-none d-lg-block mb-0 ml-0 mr-5" />
+                        <hr class="d-block mb-0 ml-0 mr-5" />
                     </div>
                 </div>
 
@@ -94,12 +99,14 @@
                         <div class="row justify-content-between no-gutters">
                             <div class="col-lg-12">
                                 <p class="text-left text-black-50">
-                                    <a href="index.php?admin=adduser">AJOUTER UN UTILISATEUR >>>></a>
+                                    <a href="index.php?admin=adduser" class="content-post-lg">AJOUTER UN UTILISATEUR >>>></a>
+                                    <a href="index.php?admin=adduser" class="content-post-sm">AJOUTER UN UTILISATEUR</a>
                                 </p>
                             </div>
                             <div class="col-lg-12">
                                 <p class="text-left text-black-50">
-                                    <a href="index.php?admin=listusers">AFFICHER TOUS LES UTILISATEURS >>>></a>
+                                    <a href="index.php?admin=listusers" class="content-post-lg">AFFICHER TOUS LES UTILISATEURS >>>></a>
+                                    <a href="index.php?admin=listusers" class="content-post-sm">TOUS LES UTILISATEURS</a>
                                 </p>
                             </div>
                             <div class="col-lg-12">
@@ -115,7 +122,7 @@
                                 </p>
                             </div>
                         </div>
-                        <hr class="d-none d-lg-block mb-0 ml-0 mr-5" />
+                        <hr class="d-block mb-0 ml-0 mr-5" />
                     </div>
                 </div>
             {% endif %}
@@ -123,7 +130,7 @@
                     <h4 class="mb-4">Profil</h4>
                     <div class="featured-text text-center text-lg-left">
                         <div class="row justify-content-between no-gutters">
-                            <div class="col-lg-12 mb-4">
+                            <div class="col-lg-12 mb-4" id="backHomeProfil">
                                 <div class="d-inline mr-3">
                                     {% if user.profilPicture is null %}
                                         <img src="public/assets/img/userImg/profil.png" alt="Photo de profil" id="profilPicture"/>
@@ -136,11 +143,12 @@
                             
                             <div class="col-lg-12 mb-3">
                                 <p class="text-left text-black-50">
-                                    <a href={{ 'index.php?admin=profil&id=' ~ user.userId }}>MODIFIER LE PROFIL >>>></a>
+                                    <a href="{{ 'index.php?admin=profil&id=' ~ user.userId }}" class="content-post-lg">MODIFIER LE PROFIL >>>></a>
+                                    <a href="{{ 'index.php?admin=profil&id=' ~ user.userId }}" class="content-post-sm">MODIFIER LE PROFIL</a>
                                 </p>
                             </div>
                         </div>
-                        <hr class="d-none d-lg-block mb-0 ml-0 mr-5" />
+                        <hr class="d-block mb-0 ml-0 mr-5" />
                     </div> 
                 </div>
             </div>

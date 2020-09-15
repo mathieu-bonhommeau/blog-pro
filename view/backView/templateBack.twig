@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
     <head>
         <meta charset="utf-8" />
@@ -10,13 +10,13 @@
         <link rel="icon" type="image/x-icon" href="public/assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-        <!--TinyMce
+        <!--TinyMce-->
         <script src="https://cdn.tiny.cloud/1/91pdog4ihnv71gzmict2k0487svx1l066lqcfwhiv7y44x2s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
               selector: 'textarea'
             });
-          </script>-->
+          </script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
@@ -40,10 +40,10 @@
                     {% else %}
                         <img src={{ constant('USER_IMG_DIRECTORY') ~ user.profilPicture }} alt="Photo de profil" id="profilPictureMenu" class="ml-5"/>
                     {% endif %}
-                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.userId }} id="adminProfil">
+                        <a class="nav-link js-scroll-trigger" href="{{'index.php?admin=profil&id=' ~ user.userId }}" id="adminProfil">
                         {{user.userName}} : 
                        {% if user.type == 'administrator' %}
-                           Administrateur
+                           Admin
                        {% elseif user.type == 'author' %}
                            Auteur
                        {% elseif user.type == 'moderator' %} 
@@ -51,12 +51,12 @@
                        {% endif %}
                    </a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        Menu
+                    
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item"></li><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
+                            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=backhome">BackHome</a></li>
                             {% if user.type == 'administrator' or user.type == 'author' %}
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="index.php?admin=post">Articles</a></li>
                             {% endif %}
@@ -119,16 +119,16 @@
         <footer class="footer bg-black small text-center text-white-50">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-xs-12">
                         {% if user %}
-                            <div class="container text-left mb-3"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
-                            <div class="container text-left mb-3"><a href="index.php?p=connect">Changer d'utilisateur</a></div>
-                            <div class="container text-left"><a href="index.php" id="admin">Retour au site >></a></div>
+                            <div class="container text-left mb-3 action"><a href="index.php?p=disconnect" id="connect">Se Deconnecter</a></div>
+                            <div class="container text-left mb-3 action"><a href="index.php?p=connect">Changer d'utilisateur</a></div>
+                            <div class="container text-left mb-3 action"><a href="index.php" id="goto-site">Retour au site >></a></div>
                         {% else %}
-                            <div class="container text-left mb-3"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
+                            <div class="container text-left mb-3 action"><a href="index.php?p=connect" id="connect">Se Connecter</a></div>
                         {% endif %}
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-xs-12 mb-3">
                         <div class="social d-flex justify-content-center">
                             <a class="mx-2" href="https://www.linkedin.com/in/mathieu-bonhommeau-155640128/" target="_blank"><i class="fab fa-circle fa-stack-2x fa-linkedin-in"></i></a>
                             <a class="mx-2" href="https://github.com/matanna" target="_blank"><i class="fab fa-circle fa-stack-2x fa-github"></i></a>
@@ -137,11 +137,11 @@
                     <div class="col-md-4">
                         {% if user %}
                             {% if user.type == 'administrator' or user.type == 'author' %}
-                                <div class="container text-right mb-3"><a href="index.php?admin=post">Liste des articles >></a></div>
+                                <div class="container text-right mb-3 footer-menu"><a href="index.php?admin=post">Liste des articles >></a></div>
                             {% endif %}
-                            <div class="container text-right mb-3"><a href="index.php?admin=listcomments">Liste des commentaires >></a></div>
+                            <div class="container text-right mb-3 footer-menu"><a href="index.php?admin=listcomments">Liste des commentaires >></a></div>
                             {% if user.type == 'administrator' %}
-                                <div class="container text-right mb-3"><a href="index.php?admin=listusers">Liste des utilisateurs >></a></div>
+                                <div class="container text-right mb-3 footer-menu"><a href="index.php?admin=listusers">Liste des utilisateurs >></a></div>
                             {% endif %}
                         {% endif %}
                     </div>

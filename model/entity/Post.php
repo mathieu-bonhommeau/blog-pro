@@ -1,11 +1,22 @@
 <?php
 
 /**
- * Class for post entities
+ * This file contains Post class
  */
 
 namespace model;
 
+/**
+ * Class for Posts.
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Entity
+ * @package   \model\entity
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
 class Post
 { 
     private $_postId;
@@ -47,7 +58,7 @@ class Post
     }
 
     /**
-     * Getter $_id
+     * Getter $_postId
      * 
      * @return int
      */
@@ -97,11 +108,21 @@ class Post
         return $this->_lastDateModif;
     }
 
+    /**
+     * Getter $_picture
+     * 
+     * @return string
+     */
     public function picture()
     {
         return $this->_picture;
     }
 
+    /**
+     * Getter $_published
+     * 
+     * @return bool
+     */
     public function published() 
     {
         return $this->_published;
@@ -118,9 +139,9 @@ class Post
     }
     
     /**
-     * Setter setId
+     * Setter $_postId
      *
-     * @param int $id Id of post
+     * @param int $postId Id of post
      * 
      * @return void
      */
@@ -133,7 +154,7 @@ class Post
     }
     
     /**
-     * Setter setTitle
+     * Setter $_title
      *
      * @param string $title Title of post
      * 
@@ -146,7 +167,7 @@ class Post
     }
     
     /**
-     * Setter setChapo
+     * Setter $_chapo
      *
      * @param string $chapo Chapo of post
      * 
@@ -159,7 +180,7 @@ class Post
     }
     
     /**
-     * Setter setContent
+     * Setter $_content
      *
      * @param string $content Content of post
      * 
@@ -172,7 +193,7 @@ class Post
     }
     
     /**
-     * Setter setLastDateModif
+     * Setter $_lastDateModif
      *
      * @param int $lastDateModif Timestamp of The last Modification 
      * 
@@ -184,6 +205,13 @@ class Post
         $this->_lastDateModif = $lastDateModif;
     }
 
+    /**
+     * Setter $_picture
+     * 
+     * @param string $picture Image name of post
+     * 
+     * @return void
+     */
     public function setPicture($picture)
     { 
         if ($picture == null ) {
@@ -194,6 +222,13 @@ class Post
         }
     }
 
+    /**
+     * Setter $_published
+     * 
+     * @param bool $published
+     * 
+     * @return void
+     */
     public function setPublished($published)
     {
         if (in_array($published, ['TRUE', 'FALSE'])) {    
@@ -203,6 +238,11 @@ class Post
         }
     }
 
+    /**
+     * Setter $_authorName
+     * 
+     * @param string $authorName Author full name of post
+     */
     public function setAuthorName($authorName)
     {
         $authorName = (string)$authorName;

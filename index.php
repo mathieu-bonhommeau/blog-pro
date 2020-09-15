@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is index.php
+ * 
+ * Call routerBack or routerFront class for routing.
+ */
 require 'vendor/autoload.php';
 require 'config/Autoloader.php';
 require 'config/config.php';
@@ -30,6 +34,7 @@ try
 
 catch (Exception $e)
 {
-    echo $e -> getMessage();
+    $controller = new controller\controller;
+    $controller -> errorView($e -> getMessage());
 }
 

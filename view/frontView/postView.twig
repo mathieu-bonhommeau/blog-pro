@@ -4,118 +4,122 @@
 
 <section class="projects-section bg-light" id="projects">
     <div class="container">
-    {% if (backManageComment == 'valid' 
-       or backManageComment == 'ok' 
-       or backManageComment == 'moderate'
-       or backManageComment == 'list') 
-       and user is not null 
-       and post.published == 'FALSE' %}
-    <div class="row">
-        <div class="col-lg-6 text-danger">
-            <h2><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-exclamation-triangle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
-                <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
-            </svg>
-            Cet article n'est pas publié !!!
-            </h2>
+        {% if (backManageComment == 'valid' 
+        or backManageComment == 'ok' 
+        or backManageComment == 'moderate'
+        or backManageComment == 'list') 
+        and user is not null 
+        and post.published == 'FALSE' %}
+        <div class="row">
+            <div class="col-lg-6 text-danger">
+                <h2><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-exclamation-triangle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
+                    <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
+                </svg>
+                Cet article n'est pas publié !!!
+                </h2>
+            </div>
+            <div class="col-lg-6 text-right">
+                <form method="post" action={{ 'index.php?p=post&id=' ~ post.postId  ~ '&c=valid' }}>
+                    <button type="submit" name="publishedPost" class="btn btn-secondary">Publier</button>
+                </form>
+            </div>
         </div>
-        <div class="col-lg-6 text-right">
-            <form method="post" action={{ 'index.php?p=post&id=' ~ post.postId  ~ '&c=valid' }}>
-                <button type="submit" name="publishedPost" class="btn btn-secondary">Publier</button>
-            </form>
-        </div>
-    </div>
-    <hr class="d-none d-lg-block mb-4 ml-0" />
-    {% endif %}
-       <div class="row">
-            <div class="col-lg-6 ">
-                <div class="row"><h2 class="mb-4">{{ post.title }}</h2></div>
-                <div class="row"><p class="text-black-50 ">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
-                <div class="row"><p class="text-black-50 ">{{ post.authorName }}</p></div>
-                <div class="row"><p class="text-black-50 "><a href="#comments" class="badge badge-dark js-scroll-trigger">{{ nbrComments }} commentaires</a></p></div>
+        <hr class="d-none d-lg-block mb-4 ml-0" />
+        {% endif %}
+        <div class="row">
+            <div class="col-lg-6 white-font">
+                <div class="row">
+                    <div class="col-lg-12"><h2 class="mb-4">{{ post.title }}</h2></div>
+                    <div class="col-lg-12"><p class="text-black-50 ">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
+                    <div class="col-lg-12"><p>{{ post.authorName }}</p></div>
+                    <div class="col-lg-12"><p class="text-black-50 mb-4"><a href="#comments" class="badge badge-dark js-scroll-trigger">{{ nbrComments }} commentaires</a></p></div>
+                </div>
             </div> 
-            <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>  
+            <div class="col-lg-6 mb-5">
+                <img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" />
+            </div>  
         </div>
         <div id="addComment"></div>
-        <p class="font-weight-bold">{{ post.chapo }}</p>
-        <p class="text-justify featured-text">{{ post.content|nl2br }}</p>
-        <p>{{ post.authorName }}</p>
-        <p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES</a></p>
-        
+        <div class="row" id="text-post">  
+            <div class="col-lg-12"><p class="font-weight-bold">{{ post.chapo|raw }}</p></div>
+            <div class="col-lg-12"><p class="text-justify featured-text">{{ post.content|raw|nl2br }}</p></div>
+            <div class="col-lg-12"><p>{{ post.authorName }}</p></div>
+            <div class="col-lg-12"><p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES >>>></a></p></div>
+        </div>
+    
         {% if backManageComment == 'moderate' %}
-            <h4 id="comments" class="mb-4 text-success">Message de modération : </h4>
+        <h4 id="comments" class="mb-4 text-success">Message de modération : </h4>
         {% else %}
-            <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
+        <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>
         {% endif %}
-        
+    
         <!--Add a new comment-->
         <form class="form-group" action="index.php?p=post&amp;id={{ post.postId }}" method="post">
             <div class="form-row">
-                <div class="col">
+                <div class="col mb-3">
                     {% if backManageComment == 'moderate' %}
-                        <label for='nameVisitor'>{{user.userName ~ ' : ' ~ user.type }}</label>
-                        <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' value={{ user.userName ~ ' : ' ~ user.type }}  hidden/>
+                    <label for='nameVisitor'>{{user.userName ~ ' : ' ~ user.type }}</label>
+                    <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' value={{ user.userName ~ ' : ' ~ user.type }}  hidden/>
                     {% else %}
-                        <label for='nameVisitor'>Pseudo</label>
-                        <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' required />
+                    <label for='nameVisitor'>Pseudo</label>
+                    <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' required />
                     {% endif %}
                 </div>
                 <div class="col">
                     {% if backManageComment == 'moderate' %}
-                        <label for='emailVisitor'>{{ user.userEmail }}</label>
-                        <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' value={{ user.userEmail }} hidden />
+                    <label for='emailVisitor'>{{ user.userEmail }}</label>
+                    <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' value={{ user.userEmail }} hidden />
                     {% else %}
-                        <label for='emailVisitor'>Email</label>
-                        <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' required />
+                    <label for='emailVisitor'>Email</label>
+                    <input type='email' class='form-control' name='emailVisitor' id='emailVisitor' required />
                     {% endif %}
                 </div>
             </div>
             {% if backManageComment == 'moderate' %}
-                <textarea id="contentComment"  name="content" placeholder="Message de modération" class="form-control mt-3 mb-3" rows=5 required ></textarea>
-                <div class="text-right"></p><button type="submit" id="submitComment" name="submitModerateComment" class="btn btn-success mb-3">Modérer</button></div>
+            <textarea id="contentComment"  name="content" placeholder="Message de modération" class="form-control mt-3 mb-3" rows=5 ></textarea>
+            <div class="text-right"><button type="submit" id="submitComment" name="submitModerateComment" class="btn btn-success mb-3">Modérer</button></div>
             {% else %}
-                <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
-                <div class="text-right"></p><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
+            <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 ></textarea>
+            <div class="text-right"><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
             {% endif %}
         </form>
         <p class="text-center">{{ commentMsg }}</p>
 
         {% if (backManageComment == 'ok' or backManageComment == 'moderate') and user is not null %}
-            <div class="row" id="comments">
-                <div class="col-lg-6 text-success">
-                    <h3><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-hand-thumbs-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16v-1c.563 0 .901-.272 1.066-.56a.865.865 0 0 0 .121-.416c0-.12-.035-.165-.04-.17l-.354-.354.353-.354c.202-.201.407-.511.505-.804.104-.312.043-.441-.005-.488l-.353-.354.353-.354c.043-.042.105-.14.154-.315.048-.167.075-.37.075-.581 0-.211-.027-.414-.075-.581-.05-.174-.111-.273-.154-.315L12.793 9l.353-.354c.353-.352.373-.713.267-1.02-.122-.35-.396-.593-.571-.652-.653-.217-1.447-.224-2.11-.164a8.907 8.907 0 0 0-1.094.171l-.014.003-.003.001a.5.5 0 0 1-.595-.643 8.34 8.34 0 0 0 .145-4.726c-.03-.111-.128-.215-.288-.255l-.262-.065c-.306-.077-.642.156-.667.518-.075 1.082-.239 2.15-.482 2.85-.174.502-.603 1.268-1.238 1.977-.637.712-1.519 1.41-2.614 1.708-.394.108-.62.396-.62.65v4.002c0 .26.22.515.553.55 1.293.137 1.936.53 2.491.868l.04.025c.27.164.495.296.776.393.277.095.63.163 1.14.163h3.5v1H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
-                    </svg>
-                    Le commentaire est validé !!!
-                    </h3>
-                </div>
-            </div> 
-            <hr class="d-none d-lg-block mb-4 ml-0" />
+        <div class="row" id="comments">
+            <div class="col-lg-6 text-success">
+                <h3><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-hand-thumbs-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16v-1c.563 0 .901-.272 1.066-.56a.865.865 0 0 0 .121-.416c0-.12-.035-.165-.04-.17l-.354-.354.353-.354c.202-.201.407-.511.505-.804.104-.312.043-.441-.005-.488l-.353-.354.353-.354c.043-.042.105-.14.154-.315.048-.167.075-.37.075-.581 0-.211-.027-.414-.075-.581-.05-.174-.111-.273-.154-.315L12.793 9l.353-.354c.353-.352.373-.713.267-1.02-.122-.35-.396-.593-.571-.652-.653-.217-1.447-.224-2.11-.164a8.907 8.907 0 0 0-1.094.171l-.014.003-.003.001a.5.5 0 0 1-.595-.643 8.34 8.34 0 0 0 .145-4.726c-.03-.111-.128-.215-.288-.255l-.262-.065c-.306-.077-.642.156-.667.518-.075 1.082-.239 2.15-.482 2.85-.174.502-.603 1.268-1.238 1.977-.637.712-1.519 1.41-2.614 1.708-.394.108-.62.396-.62.65v4.002c0 .26.22.515.553.55 1.293.137 1.936.53 2.491.868l.04.025c.27.164.495.296.776.393.277.095.63.163 1.14.163h3.5v1H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
+                </svg>
+                Le commentaire est validé !!!
+                </h3>
+            </div>
+        </div> 
+        <hr class="d-none d-lg-block mb-4 ml-0" />
         {% endif %}
 
         {% if (backManageComment == 'valid' 
             or backManageComment == 'ok' 
             or backManageComment == 'moderate') 
             and user is not null %}
-            <p><a class="text-danger" href='index.php?admin=validcomment'>RETOUR AU BACKOFFICE >>>></a></p>
+        <p><a class="text-danger" href='index.php?admin=validcomment'>RETOUR AU BACKOFFICE >>>></a></p>
         {% elseif backManageComment == 'list' and user is not null %}
-            <p><a class="text-danger" href='index.php?admin=listcomments'>RETOUR AU BACKOFFICE >>>></a></p>
+        <p><a class="text-danger" href='index.php?admin=listcomments'>RETOUR AU BACKOFFICE >>>></a></p>
         {% endif %}
 
+        <div class="comments">
         {% for comment in comments %}
-            <section class="comments">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="card-title">
-
-                            <span id="nameVisitor" class="font-weight-bold">{{ comment.nameVisitor }}</span> <span id="commentDate" class="font-weight-light">- posté le : {{ comment.commentDate|date("d/m/Y") }}</span>
-                        </div>
-                        <p class="card-text font-weight-light" id="comment">{{ comment.content }}</p>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="card-title">
+                        <span class="font-weight-bold nameVisitor">{{ comment.nameVisitor }}</span> <span class="font-weight-light commentDate">- posté le : {{ comment.commentDate|date("d/m/Y") }}</span>
                     </div>
+                    <p class="card-text font-weight-light comment">{{ comment.content }}</p>
                 </div>
-            </section>
+            </div>
         {% endfor %}
-
+        </div>
     </div>
 </section>
 {% endblock  %}

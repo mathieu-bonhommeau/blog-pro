@@ -5,21 +5,35 @@
 
 <section class="projects-section bg-light" id="backListPosts">
     <div class="container">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between try-button">
             <h2 class="col-lg-6 font-weight-bold align-self-center">Gestion des commentaires</h2>
-            <form action="#" method="post">
+            
+            <!--FormScrenn size lg-->
+            <form action="#" method="post" class="content-post-lg">
                 <div class="col-lg-2"><button type="submit" name="byPost" class="btn btn-primary">Article</button></div>
             </form>
-            <form action="#" method="post">
+            <form action="#" method="post" class="content-post-lg">
                 <div class="col-lg-2"><button type="submit" name="byDate" class="btn btn-primary">Date</button></div>
             </form>
-            <form action="#" method="post">
+            <form action="#" method="post" class="content-post-lg">
                 <div class="col-lg-2"><button type="submit" name="byName" class="btn btn-primary">Auteur</button></div>
+            </form>
+
+            <!--Form Screnn size sm-->
+           
+            <form action="#" method="post" class="content-post-sm">
+                <div class="col-lg-2 mt-3"><button type="submit" name="byPost" class="btn btn-sm btn-primary btn-try">Article</button></div>
+            </form>
+            <form action="#" method="post" class="content-post-sm">
+                <div class="col-lg-2 mt-3"><button type="submit" name="byDate" class="btn btn-sm btn-primary btn-try">Date</button></div>
+            </form>
+            <form action="#" method="post" class="content-post-sm">
+                <div class="col-lg-2 mt-3"><button type="submit" name="byName" class="btn btn-sm btn-primary btn-try">Auteur</button></div>
             </form>
                 
         </div>
-        <hr class="d-none d-lg-block mb-3" />
-        <div class="row mb-3">
+        <hr class="mb-3" />
+        <div class="row mb-3 content-post-lg">
             <div class="col-lg-1  font-weight-bold align-self-center">Id</div>
             <div class="col-lg-2  font-weight-bold align-self-center">Auteur</div>
             <div class="col-lg-4  font-weight-bold align-self-center">Commentaire</div>
@@ -31,22 +45,24 @@
         <hr class="d-none d-lg-block mb-2 ml-0" />
         {% for comment in comments %}
             <div class="row mt-3 mb-3">
-                <div class="col-lg-1 align-self-center"><span class="badge badge-dark">{{comment.id}}</span></div>
-                <div class="col-lg-2 text-truncate align-self-center">{{ comment.nameVisitor }}</div>
-                <div class="col-lg-4 align-self-center">{{ comment.content }}</div>
-                <div class="col-lg-2 align-self-center">{{ comment.commentDate|date("d/m/Y") }}</div>
-                <div class="col-lg-1 align-self-center"><a href={{ 'index.php?p=post&id=' ~ comment.post_id ~ '&c=list'}}><span class="badge badge-info">{{ comment.post_id }}</span></a></div>
-                <div class="col-lg-1 align-self-center text-center">
-                   {% if comment.validComment == 'TRUE' %} 
+                <div class="col-lg-1 align-self-center"><span class="content-post-sm font-weight-bold">Id du commentaire : </span><span class="badge badge-dark">{{comment.id}}</span></div>
+                <div class="col-lg-2 text-truncate align-self-center"><span class="content-post-sm font-weight-bold">De : </span>{{ comment.nameVisitor }}</div>
+                <div class="col-lg-4 align-self-center">{{ comment.content}}</div>
+                <div class="col-lg-2 align-self-center"><span class="content-post-sm font-weight-bold">Le : </span>{{ comment.commentDate|date("d/m/Y") }}</div>
+                <div class="col-lg-1 align-self-center"><span class="content-post-sm font-weight-bold">Id du post : </span><a href="{{ 'index.php?p=post&id=' ~ comment.post_id ~ '&c=list'}}"><span class="badge badge-info">{{ comment.post_id }}</span></a></div>
+                
+                   {% if comment.validComment == 'TRUE' %}
+                   <div class="col-lg-1 align-self-center"> 
                    <!--Check-->
-                        <span class="text-blue font-weight-bold">
-                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <span class="text-blue font-weight-bold btn btn-sm btn-disabled">
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check2 btn-disabled" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
                             </svg>
                         </span>
                    {% else %}
+                   <div class="col-lg-1 align-self-center">
                    <!--Publish-->
-                        <a href={{'index.php?p=post&id=' ~ comment.post_id ~ '&c=ok&cid=' ~ comment.id }} class="btn btn-sm text-blue font-weight-bold">
+                        <a href="{{'index.php?p=post&id=' ~ comment.post_id ~ '&c=ok&cid=' ~ comment.id }}" class="btn btn-sm text-blue font-weight-bold">
                             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check2-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
                                 <path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"/>
@@ -55,9 +71,9 @@
                    {% endif %}
                 </div>
                 <!--Edit and Delete-->
-                <div class="col-lg-1 text-center justify-content-between align-self-center">
+                <div class="col-lg-1 justify-content-between align-self-center">
                     <!--Delete-->
-                    <a href={{'index.php?admin=comment&delete=' ~ comment.id ~ '&del=p'}} class="btn btn-sm text-danger font-weight-bold">
+                    <a href="{{'index.php?admin=comment&delete=' ~ comment.id ~ '&del=p'}}" class="btn btn-sm text-danger font-weight-bold">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                             <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -65,7 +81,7 @@
                     </a>
                 </div>
             </div>
-            <hr class="d-none d-lg-block mb-1 mt-1" />
+            <hr class="mb-1 mt-1" />
         {% endfor %}
     </div>
 </section>

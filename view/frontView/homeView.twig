@@ -60,33 +60,34 @@
         <!-- Principal post-->
         {% for key, post in posts %}
             {% if key == 0 %}
-                <div class="row align-items-center no-gutters mb-4 mb-lg-5 post">
+                <div class="row align-items-center no-gutters mb-4 mb-lg-5 post white-font">
                     <div class="col-xl-7 col-lg-6 col-md-6"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
                     <div class="col-xl-5 col-lg-6 col-md-6">
                         <div class="featured-text text-center text-lg-left" id="firstPost">
-                            <h4>{{ post.title }}</h4>
+                            <h4>{{ post.title}}</h4>
                             <div class="row justify-content-center no-gutters">
                                 <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
-                                <div class="col-lg-6"><p class="text-right text-black-50 author">{{ post.authorName }}</p></div>
+                                <div class="col-lg-6"><p class="text-right author">{{ post.authorName }}</p></div>
                             </div>
-                            <p class="text-black-50 text-justify mb-0 content-post-lg">{{ post.content|truncate(155,true)|raw }}</p>
-                            <p class="text-black-50 text-justify mb-0 content-post-sm">{{ post.content|truncate(70,true)|raw }}</p>
+                            <div class="content-post-lg"><p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true)|raw }}</p></div>
+                            <div class="content-post-sm"><p class="text-black-50 text-justify mb-0">{{ post.content|truncate(70,true)|raw }}</p></div>
                             <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
                         </div>
                     </div>
                 </div>
             <!--Another posts-->
             {% else %}
-                <div class="row justify-content-center no-gutters mb-5 mb-lg-0 post">
-                    <div class="col-md-6 "><img class="img-fluid" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
+                <div class="row justify-content-center no-gutters mb-5 mb-lg-0 post black-font">
+                    <div class="col-md-6 homePostImgs"><img class="img-fluid" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>
                     <div class="col-md-6">
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left" id="homePosts">
-                                    <h4 class="text-white">{{ post.title }}</h4>
+                                <div class="project-text w-100 my-auto text-center text-lg-left homePosts">
+                                    <h4 class="text-white content-post-lg">{{ post.title }}</h4>
+                                    <h4 class="text-white content-post-sm">{{ post.title|truncate(21,true)|raw }}</h4>
                                     <div class="row justify-content-center no-gutters">
                                         <div class="col-lg-6"><p class="text-left text-white-50">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
-                                        <div class="col-lg-6"><p class="text-right text-white-50 author">{{ post.authorName }}</p></div>
+                                        <div class="col-lg-6"><p class="text-right text-white author">{{ post.authorName }}</p></div>
                                     </div>
                                     <p class="mb-0 text-justify text-white-50 content-post-lg">{{ post.content|truncate(100,true)|raw }}</p>
                                     <p class="mb-0 text-justify text-white-50 content-post-sm">{{ post.content|truncate(50,true)|raw }}</p>
@@ -111,26 +112,34 @@
 
     <!-- Signup-->
     <section class="signup-section" id="signup">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-lg-8 mx-auto text-center">
-                <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                <h2 class="text-white mb-5">Me contacter</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto text-center">
+                    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+                    <h2 class="text-white mb-5">Me contacter</h2>
                     <form method="post" action="index.php?p=home#signup">
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputName" name='inputName' type="text" placeholder="Votre nom..." required /></div>
-                            <div class="col"><input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputFirstName" name="inputFirstName" type="text" placeholder="Votre prénom..." required /></div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputName" name='inputName' type="text" placeholder="Votre nom..." required />
+                                </div>
+                                <div class="col">
+                                    <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputFirstName" name="inputFirstName" type="text" placeholder="Votre prénom..." required />
+                                </div>
+                            </div>
+                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" name="inputEmail" type="email" placeholder="Votre adresse mail..." required />
+                            <textarea class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputMessage" name="inputMessage" rows="10" placeholder="Votre message ici..." required></textarea>
+                            <div class="row">
+                                <button class="btn btn-primary" type="submit" id="submitMessage" name="submitMessage">Envoyer</button>
+                            </div>
+                            <div class="row">
+                                <p class="mb-0 text-white-50">{{ msg }}</p>
+                            </div>
                         </div>
-                        <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" name="inputEmail" type="email" placeholder="Votre adresse mail..." required />
-                        <textarea class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputMessage" name="inputMessage" rows="10" placeholder="Votre message ici..." required></textarea>
-                        <div class="row"></div><button class="btn btn-primary" type="submit" id="submitMessage" name="submitMessage">Envoyer</button></div>
-                        <div class="row"></div><p class="mb-0 text-white-50">{{ msg }}</p></div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     </section>
 
 {%  endblock %}

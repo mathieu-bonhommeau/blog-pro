@@ -12,10 +12,10 @@
                 <h2 class="col-lg-6 font-weight-bold align-self-center">Modifier l'utilisateur</h2>
             {% endif %}
         </div>
-        <hr class="d-none d-lg-block  mb-5" />
+        <hr class="mb-5" />
         <div class="row">
             <div class="col-lg-12">
-                <form class="form-group" method="post" action="">
+                <form class="form-group" method="post" action="#">
  
                     {% if updateUser is not null %}
                         <label for="userName" class="font-weight-bold">Identifiant :</label>
@@ -27,57 +27,66 @@
                         <label for="userPasswordConfirm" class="font-weight-bold">Confirmer le mot de passe :</label>
                         <input type="password" name="userPasswordConfirm" id="userPasswordConfirm" class="form-control mb-3" value={{ '"' }}{{ updateUser.password }}{{ '"' }} readonly/>
 
-                        <p class="font-weight-bold">Statut :</p>  
-                        {% if updateUser.type == 'administrator' %}
-                            <input type="radio" id="administrator" name="userType" value="administrator" checked="checked"/>
-                        {% else %}
-                            <input type="radio" id="administrator" name="userType" value="administrator"/>
-                        {% endif %}
-                        <label for="administrator" class="mr-5">Administrateur</label>
-
-                        {% if updateUser.type == 'author' %}
-                            <input type="radio" id="author" name="userType" value="author" checked="checked"/>
-                        {% else %} 
-                            <input type="radio" id="author" name="userType" value="author"/>
-                        {% endif %}    
-                        <label for="author" class="mr-5">Auteur</label>
-
-                        {% if updateUser.type == 'moderator' %}
-                            <input type="radio" id="moderator" name="userType" value="moderator" checked="checked" required/>
-                        {% else %}
-                            <input type="radio" id="moderator" name="userType" value="moderator" required/> 
-                        {% endif %}   
-                        <label for="moderator" class="mr-5 mb-5">Modérateur</label>
-
+                        <p class="font-weight-bold">Statut :</p>
+                        <div class="radio">  
+                            {% if updateUser.type == 'administrator' %}
+                                <input type="radio" id="administrator" name="userType" value="administrator" checked="checked"/>
+                            {% else %}
+                                <input type="radio" id="administrator" name="userType" value="administrator"/>
+                            {% endif %}
+                            <label for="administrator" class="mr-5">Administrateur</label>
+                        </div>
+                        <div class="radio">
+                            {% if updateUser.type == 'author' %}
+                                <input type="radio" id="author" name="userType" value="author" checked="checked"/>
+                            {% else %} 
+                                <input type="radio" id="author" name="userType" value="author"/>
+                            {% endif %}    
+                            <label for="author" class="mr-5">Auteur</label>
+                        </div>
+                        <div class="radio">
+                            {% if updateUser.type == 'moderator' %}
+                                <input type="radio" id="moderator" name="userType" value="moderator" checked="checked" required/>
+                            {% else %}
+                                <input type="radio" id="moderator" name="userType" value="moderator" required/> 
+                            {% endif %}   
+                            <label for="moderator" class="mr-5 mb-5">Modérateur</label>
+                        </div>
+            
                     {% else %}
-                        <label for="userName" class="font-weight-bold">Identifiant :</label>
-                        <input type="text" name="userName" id="userName" class="form-control mb-3" required />
+                            <label for="userName" class="font-weight-bold">Identifiant :</label>
+                            <input type="text" name="userName" id="userName" class="form-control mb-3" required />
 
-                        <label for="userPassword" class="font-weight-bold">Mot de passe :</label>
-                        <input type="password" name="userPassword" id="userPassword" class="form-control mb-3" required />
+                            <label for="userPassword" class="font-weight-bold">Mot de passe :</label>
+                            <input type="password" name="userPassword" id="userPassword" class="form-control mb-3" required />
 
-                        <label for="userPasswordConfirm" class="font-weight-bold">Confirmer le mot de passe :</label>
-                        <input type="password" name="userPasswordConfirm" id="userPasswordConfirm" class="form-control mb-3" required/>
+                            <label for="userPasswordConfirm" class="font-weight-bold">Confirmer le mot de passe :</label>
+                            <input type="password" name="userPasswordConfirm" id="userPasswordConfirm" class="form-control mb-3" required/>
 
-                        <p class="font-weight-bold">Statut :</p>  
-                        <input type="radio" id="administrator" name="userType" value="administrator" />
-                        <label for="administrator" class="mr-5">Administrateur</label>
-                        <input type="radio" id="author" name="userType" value="author" />
-                        <label for="author" class="mr-5">Auteur</label>
-                        <input type="radio" id="moderator" name="userType" value="moderator" required/>
-                        <label for="moderator" class="mr-5 mb-5">Modérateur</label>
+                            <p class="font-weight-bold">Statut :</p>
+                            <div class="radio">
+                                <input type="radio" id="administrator" name="userType" value="administrator" />
+                                <label for="administrator" class="mr-5">Administrateur</label>
+                            </div> 
+                            <div class="radio">
+                                <input type="radio" id="author" name="userType" value="author" />
+                                <label for="author" class="mr-5">Auteur</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" id="moderator" name="userType" value="moderator" required/>
+                                <label for="moderator" class="mr-5 mb-5">Modérateur</label>
+                            </div> 
                     {% endif %}
-                   
+        
                     <div class="form-row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="form-row">
-                                
                                 <div class="col-md-12">
                                     <a href="index.php?admin=listusers" class="btn btn-outline-secondary">Annuler</a>
                                 </div>
                             </div>
                         </div> 
-                        <div class="col-md-6 text-right">
+                        <div class="col-lg-6 text-right"  id="button-sm">
                             <button type="submit" name="addUser" class="btn btn-secondary">
                                 Enregistrer
                             </button>

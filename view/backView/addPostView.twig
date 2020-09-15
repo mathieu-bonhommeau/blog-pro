@@ -12,27 +12,27 @@
                 <h2 class="col-lg-6 font-weight-bold align-self-center">Modifier l'article</h2>
             {% endif %}
         </div>
-        <hr class="d-none d-lg-block  mb-5" />
+        <hr class="mb-5" />
         <div class="row">
             <div class="col-lg-12">
-                <form class="form-group" method="post" action="" enctype="multipart/form-data">
+                <form class="form-group" method="post" action="#" enctype="multipart/form-data">
 
                     <label for="titlePost" class="font-weight-bold">Titre :</label>
                     <input type="text" name="titlePost" id="titlePost" class="form-control mb-3" value={{ '"' }}{{ postPreview.title }}{{ '"' }} required />
 
                     <label for="chapoPost" class="font-weight-bold">Chapô :</label>
-                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-3" value={{ postPreview.chapo }} required >{{ postPreview.chapo }}</textarea>
+                    <textarea name="chapoPost" id="chapoPost" class="form-control mb-4" >{{ postPreview.chapo }}</textarea>
 
                     <label for="contentPost" class="font-weight-bold">Contenu :</label>
-                    <textarea name="contentPost" id="contentPost" class="form-control mb-3" rows="10" value={{ postPreview.content }} required >{{ postPreview.content }}</textarea>
+                    <textarea name="contentPost" id="contentPost" class="form-control mb-4" rows="10" >{{ postPreview.content }}</textarea>
                     
                     <label for="imgPost" class="font-weight-bold">Ajouter une image : </label>
                     {% if postPreview.picture is null %}
                         <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
                         <input type="file" class="mb-5 text-right" id="imgPost" name="imgPost" />
                     {% else %}
-                        <div>
-                            <input type="text" class="mb-5 text-right" id="imgPost" name="imgPost" value={{ postPreview.picture }} disabled="disabled"/>
+                        <div class="mb-5">
+                            <input type="text" class="text-right" id="imgPost" name="imgPost" value={{ postPreview.picture }} disabled="disabled"/>
                             <button type="submit" class="btn btn-img btn-outline-secondary" name="imgChange">Changer l'image</button>
                         </div>
                     {% endif %}
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                         </div> 
-                        <div class="col-md-6 text-right">
+                        <div class="col-md-6 text-right d-flex align-items-end justify-content-end"  id="published-button-sm">
                             <button type="submit" name="addPost" class="btn btn-secondary">
                                 Publier l'article
                             </button>

@@ -1,9 +1,29 @@
 <?php
 
+/**
+ * This file contains UserManager class
+ */
 namespace model;
 
-class UserManager extends Manager 
-{ 
+/**
+ * Class for manage Users in database
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Manager
+ * @package   \model\manager
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
+class UserManager extends Manager
+{
+    /**
+     * Get users
+     * 
+     * @return PDO result sort by register date
+     * Result of request need a faetch process
+     */
     public function getUsers()
     {
         $req = $this->database()->query(
@@ -16,6 +36,14 @@ class UserManager extends Manager
         return $req;
     }
 
+    /**
+     * Get one user
+     * 
+     * @param mixed $info Int if $info is a user id
+     *                    String if $info is a user name
+     * 
+     * @return array
+     */
     public function getUser($info)
     {
         if (is_int($info)) {
@@ -44,6 +72,15 @@ class UserManager extends Manager
         return $data;
     }
 
+    /**
+     * Add a user in database
+     * First the method get userType id in userType database table  
+     * Then it add a user
+     * 
+     * @param User $user Object User
+     * 
+     * @return int Number of affected lines
+     */
     public function addUser(User $user) 
     {
         $req = $this->database()->prepare(
@@ -74,6 +111,13 @@ class UserManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Get type id of userType
+     * 
+     * @param string $userType Type of user (administrator, author or moderator)
+     * 
+     * @return int 
+     */
     public function getTypeId($userType)
     {
         $req = $this->database()->prepare(
@@ -86,6 +130,13 @@ class UserManager extends Manager
         return $data['id'];
     }
 
+    /**
+     * Update a user
+     * 
+     * @param User $user Object User
+     * 
+     * @return int Number of affected lines
+     */
     public function updateUser(User $user) 
     {
         $userTypeId = $this->getTypeId($user->type());
@@ -111,6 +162,13 @@ class UserManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Delete a user
+     * 
+     * @param int $userId Id of user
+     * 
+     * @return Number of affected lines
+     */
     public function deleteUser($userId)
     {
         $req = $this->database()->prepare(
@@ -120,6 +178,11 @@ class UserManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Count all users
+     * 
+     * @return int
+     */
     public function countUser()
     {
         $req = $this->database()->query('SELECT COUNT(*) FROM user');
@@ -128,6 +191,11 @@ class UserManager extends Manager
         return $data['COUNT(*)'];
     }
 
+    /**
+     * Get the last added user
+     * 
+     * @return array
+     */
     public function lastAddedUser()
     {
         $req = $this->database()->query(

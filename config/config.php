@@ -1,6 +1,8 @@
 <?php
 
-//CONSTANTS
+/**
+ * This file contains PARAMETERS AND MESSAGES
+ */
 
 //Database config
 define('HOST', 'mysql:host=localhost');
@@ -25,7 +27,7 @@ define('MSG_OK', 'Votre message a bien été envoyé');
 define('MSG_NO_OK', 'Votre message n\a pas pu être envoyé');
 define('INVALID_EMAIL', 'Oups !!! L\'email saisi est invalide');
 define('EMPTY_FIELDS', 'Veuillez remplir tous les champs');
-define('PAGE_NOT_EXIST', 'Cette page n\existe pas');
+define('PAGE_NOT_EXIST', 'Cette page n\'existe pas');
 define('MSG_TOO_LONG', 'Votre message ne doit pas dépasser 700 caractères');
 define('WAIT_VALID_COMMENT', 'Votre commentaire a bien été envoyé et est en attente de validation');
 define('NO_VALID_COMMENT', 'Le commentaire est déjà validé ou n\'existe pas');

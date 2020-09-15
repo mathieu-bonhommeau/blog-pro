@@ -13,13 +13,13 @@
             </div>
             <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ newPost.picture }} {{ '"' }} alt="" /></div> 
         </div>
-        <p class="font-weight-bold">{{ newPost.chapo }}</p>
-        <p class="text-justify featured-text">{{ newPost.content }}</p>
+        <p class="font-weight-bold">{{ newPost.chapo|raw }}</p>
+        <p class="text-justify featured-text">{{ newPost.content|raw }}</p>
         <p>{{ newPost.authorName }}</p>
         {% if newPost.postId == null %}
             <p class="text-right"><a href='index.php?admin=addpost'>FERMER L'APERCU</a></p>
         {% else %}
-            <p class="text-right"><a href={{'index.php?admin=addpost&id=' ~ newPost.postId}}>FERMER L'APERCU</a></p>
+            <p class="text-right"><a href="{{'index.php?admin=addpost&id=' ~ newPost.postId}}">FERMER L'APERCU</a></p>
         {% endif %}
     </div>
 </section>

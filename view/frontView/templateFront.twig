@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
     <head>
         <meta charset="utf-8" />
@@ -10,13 +10,6 @@
         <link rel="icon" type="image/x-icon" href="public/assets/img/logo.png" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-        <!--TinyMce
-        <script src="https://cdn.tiny.cloud/1/91pdog4ihnv71gzmict2k0487svx1l066lqcfwhiv7y44x2s/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-        <script>
-            tinymce.init({
-              selector: '#contentComment'
-            });
-          </script>-->
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
@@ -48,13 +41,13 @@
                         {% else %}
                             <img src={{ constant('USER_IMG_DIRECTORY') ~ user.profilPicture }} alt="Photo de profil" id="profilPictureMenu" class="ml-5"/>
                         {% endif %}
-                        <a class="nav-link js-scroll-trigger" href={{ 'index.php?admin=profil&id=' ~ user.userId }} id="adminProfil">{{user.userName}} </a>
+                        <a class="nav-link js-scroll-trigger" href="{{'index.php?admin=profil&id=' ~ user.userId }}" id="adminProfil">{{user.userName}} </a>
                     {% endif %}
 
                     
 
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        Menu
+                       
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -143,8 +136,6 @@
                         <div class="container text-center">Copyright © Tous droits réservé</div>
                     </div>
                 </div>
-            </div>
-               
             </footer>
         {% endblock %}
         

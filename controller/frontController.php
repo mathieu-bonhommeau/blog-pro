@@ -1,14 +1,34 @@
 <?php
 
+/**
+ * This file contains FrontController class
+ */
 namespace controller;
 
 use Faker\ValidGenerator;
 use Twig;
 use Twig_Extensions_Extension_Text;
 
-class FrontController extends Controller 
-{ 
-    
+/**
+ * Class for get datas and send it back to front views
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Controller
+ * @package   \controller
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
+class FrontController extends Controller
+{
+    /**
+     * Retrieves and send data to view Homepage
+     * 
+     * @param string $msg Email message
+     * 
+     * @return void
+     */
     public function homePage($msg=null)
     {
         $postManager = new \model\PostManager;
@@ -27,6 +47,12 @@ class FrontController extends Controller
         );
     }
 
+    /**
+     * Test inputs in form for send email on homepage
+     * 
+     * @return mixed array $form if test ok
+     *               string EMPTY_FIELDS if test no ok
+     */
     public function testInputMessage()
     {
         $var = new \config\GlobalVar;
@@ -46,6 +72,13 @@ class FrontController extends Controller
         return EMPTY_FIELDS;
     }
 
+    /**
+     * Sends a email to website support with email form on homepage
+     * 
+     * @param array $form Array with form email inputs
+     * 
+     * @return string Email ok or not
+     */
     public function runSendMessage($form)
     {
         $controller = new \controller\Controller;
@@ -57,6 +90,11 @@ class FrontController extends Controller
         return $msg;
     }
 
+    /**
+     * Retrieves and send data for display a list with all the post on posts view
+     * 
+     * @return void
+     */
     public function listPostsView()
     {
         $postManager = new \model\PostManager;
@@ -74,6 +112,14 @@ class FrontController extends Controller
         );
     }
 
+    /**
+     * Retrieves and send data for display one post on post alone view
+     * 
+     * @param int    $postId Id of post
+     * @param string $msg    Message when visitor send a comment 
+     * 
+     * @return void
+     */
     public function postView($postId, $msg=null)
     {
         $var = new \config\GlobalVar;
@@ -113,6 +159,13 @@ class FrontController extends Controller
         );   
     }
 
+    /**
+     * Add a comment on a post
+     * 
+     * @param array $form Array with inputs comment form
+     * 
+     * @return string Message 
+     */
     public function addNewComment(array $form)
     {
         $comment = new \model\Comment($form);
@@ -127,6 +180,11 @@ class FrontController extends Controller
         }
     }
 
+    /**
+     * Valid comment if get variable 'cid'  exists
+     * 
+     * @return void
+     */
     public function validComment()
     {
         $var = new \config\GlobalVar;
@@ -138,6 +196,15 @@ class FrontController extends Controller
         }
     }
 
+    /**
+     * Test input comment in form on post alone page
+     * 
+     * @param bool  $valid    Comment is valid or not
+     * @param mixed $moderate int if $moderate = 1 Moderate comment
+     *                        else $moderate = null
+     * 
+     * @return string Message
+     */
     public function testInputComment($valid, $moderate=null)
     {
         $var = new \config\GlobalVar;
@@ -171,19 +238,29 @@ class FrontController extends Controller
         return EMPTY_FIELDS;             
     }
 
+    /**
+     * Display connect page
+     * 
+     * @param string $msg Message for connect is ok or not
+     * 
+     * @return void
+     */
     public function connectView($msg=null)
     {
         $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
         echo $this->twig->render(
             'frontView/connectView.twig', array(
                 'user' => $this->user,
                 'msg' => $msg
             )
         );
-
     }
 
+    /**
+     * Test inputs in connect form
+     * 
+     * @return mixed 
+     */
     public function testInputConnect()
     {
         $var = new \config\GlobalVar;
@@ -205,6 +282,16 @@ class FrontController extends Controller
         }
     }
 
+    /**
+     * Verify if user exists with pseudo and password
+     * Connect the user 
+     * 
+     * @param string $pseudo   Pseudo of user
+     * @param string $password Password of user 
+     * 
+     * @return mixed Void if connect is ok
+     *               Message string if connect is no ok
+     */
     public function verifyUser($pseudo, $password)
     {
         $var = new \config\GlobalVar;
