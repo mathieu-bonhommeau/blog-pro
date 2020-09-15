@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * This file contains Manager class
+ */
+namespace model;
+
+/**
+ * Class Manager for database connexion
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Manager
+ * @package   \model\manager
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
+ */
+class Manager 
+{ 
+    private $_database;
+
+    /**
+     * Database connexion
+     *  
+     * @return PDO object
+     */
+    public function __construct()
+    {
+        $connect = HOST . ';' . PORT . ';' . DBNAME . ';' . CHARSET . ';';
+        $database = new \PDO(
+            $connect, USER, PASSWORD, 
+            array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION) 
+        );
+        $this->setDatabase($database);
+    }
+
+    /**
+     * Getters
+     * 
+     * @return PDO object
+     */
+    public function database()
+    {
+        return $this->_database;
+    }
+
+    /**
+     * Setters
+     * 
+     * @param PDO $database PDO object
+     * 
+     * @return void
+     */
+    private function setDatabase($database)
+    {
+        $this->_database = $database;
+    }
+}
