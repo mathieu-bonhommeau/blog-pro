@@ -4,6 +4,7 @@
  * This file contains PARAMETERS AND MESSAGES
  */
 
+ 
 //Database config
 define('HOST', 'mysql:host=localhost');
 define('PORT', 'port=3308');
