@@ -11,6 +11,14 @@ use Twig_Extensions_Extension_Text;
 
 /**
  * Class for get datas and send it back to front views
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Controller
+ * @package   \controller
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
  */
 class FrontController extends Controller
 {

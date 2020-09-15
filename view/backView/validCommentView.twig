@@ -24,7 +24,7 @@
             <div class="row mt-3 mb-3">
                 <div class="col-lg-1 align-self-center text-center-sm"><span class="content-post-sm font-weight-bold">Id du commentaire : </span><span class="badge badge-dark">{{comment.id}}</span></div>
                 <div class="col-lg-1 text-truncate align-self-center text-center-sm"><span class="content-post-sm font-weight-bold">De : </span>{{ comment.nameVisitor }}</div>
-                <div class="col-lg-4 align-self-center text-size-sm text-center-sm">{{ comment.content }}</div>
+                <div class="col-lg-4 align-self-center text-size-sm text-center-sm">{{ comment.content|raw }}</div>
                 <div class="col-lg-2 align-self-center text-center-sm"><span class="content-post-sm font-weight-bold">Le : </span>{{ comment.commentDate|date("d/m/Y") }}</div>
                 <!--View post-->
                 <div class="col-lg-1 text-center align-self-center">

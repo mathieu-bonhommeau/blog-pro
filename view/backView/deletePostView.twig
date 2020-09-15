@@ -22,8 +22,8 @@
             </div> 
             <div class="col-lg-6 mb-5"><img class="img-fluid mb-3 mb-lg-0" src={{ '"' }} {{ constant('POST_IMG_DIRECTORY') ~ post.picture}} {{ '"' }} alt="" /></div>  
         </div>
-        <p class="font-weight-bold">{{ post.chapo }}</p>
-        <p class="text-justify featured-text">{{ post.content }}</p>
+        <p class="font-weight-bold">{{ post.chapo|raw }}</p>
+        <p class="text-justify featured-text">{{ post.content|raw }}</p>
         <p>{{ post.authorName }}</p>
         
         <h4 id="comments" class="mb-4">{{ nbrComments }} Commentaires : </h4>

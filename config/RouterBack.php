@@ -7,6 +7,14 @@ namespace config;
 
 /**
  * Class for routing on back pages
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Config
+ * @package   \config
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
  */
 class RouterBack
 {

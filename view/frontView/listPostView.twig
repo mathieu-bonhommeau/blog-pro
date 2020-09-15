@@ -25,7 +25,7 @@
                                 <div class="col-sm-6"><p class="text-left text-black-50">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
                                 <div class="col-sm-6"><p class="text-right authorList">{{ post.authorName }}</p></div>
                             </div>
-                            <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true) }}</p>
+                            <p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true)|raw }}</p>
                             <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
                         </div>
                     </div>

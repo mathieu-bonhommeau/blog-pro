@@ -7,6 +7,14 @@ namespace model;
 
 /**
  * Class for manage Posts in database
+ * 
+ * PHP version 7.3.12
+ * 
+ * @category  Manager
+ * @package   \model\manager
+ * @author    Mathieu Bonhommeau <mat.bonohmmeau85@gmail.com>
+ * @copyright 2020 Mathieu Bonhommeau
+ * @link      http://localhost/blog-pro/index.php
  */
 class PostManager extends Manager
 {

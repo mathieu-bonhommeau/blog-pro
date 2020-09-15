@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This file is index.php
+ * 
+ * Call routerBack or routerFront class for routing.
+ */
 require 'vendor/autoload.php';
 require 'config/Autoloader.php';
 require 'config/config.php';

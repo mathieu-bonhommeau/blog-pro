@@ -69,8 +69,8 @@
                                 <div class="col-lg-6"><p class="text-left text-black-50">{{ post.lastDateModif|date("d/m/Y") }}</p></div>
                                 <div class="col-lg-6"><p class="text-right author">{{ post.authorName }}</p></div>
                             </div>
-                            <p class="text-black-50 text-justify mb-0 content-post-lg">{{ post.content|truncate(155,true)|raw }}</p>
-                            <p class="text-black-50 text-justify mb-0 content-post-sm">{{ post.content|truncate(70,true)|raw }}</p>
+                            <div class="content-post-lg"><p class="text-black-50 text-justify mb-0">{{ post.content|truncate(155,true)|raw }}</p></div>
+                            <div class="content-post-sm"><p class="text-black-50 text-justify mb-0">{{ post.content|truncate(70,true)|raw }}</p></div>
                             <p class="mt-2"><a href='index.php?p=post&amp;id={{ post.id }}' >LIRE LA SUITE >></a></p>
                         </div>
                     </div>

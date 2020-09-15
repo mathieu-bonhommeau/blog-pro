@@ -47,7 +47,7 @@
             <div class="row mt-3 mb-3">
                 <div class="col-lg-1 align-self-center"><span class="content-post-sm font-weight-bold">Id du commentaire : </span><span class="badge badge-dark">{{comment.id}}</span></div>
                 <div class="col-lg-2 text-truncate align-self-center"><span class="content-post-sm font-weight-bold">De : </span>{{ comment.nameVisitor }}</div>
-                <div class="col-lg-4 align-self-center">{{ comment.content }}</div>
+                <div class="col-lg-4 align-self-center">{{ comment.content}}</div>
                 <div class="col-lg-2 align-self-center"><span class="content-post-sm font-weight-bold">Le : </span>{{ comment.commentDate|date("d/m/Y") }}</div>
                 <div class="col-lg-1 align-self-center"><span class="content-post-sm font-weight-bold">Id du post : </span><a href="{{ 'index.php?p=post&id=' ~ comment.post_id ~ '&c=list'}}"><span class="badge badge-info">{{ comment.post_id }}</span></a></div>
                 

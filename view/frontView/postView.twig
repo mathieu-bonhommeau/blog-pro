@@ -42,8 +42,8 @@
         </div>
         <div id="addComment"></div>
         <div class="row" id="text-post">  
-            <div class="col-lg-12"><p class="font-weight-bold">{{ post.chapo }}</p></div>
-            <div class="col-lg-12"><p class="text-justify featured-text">{{ post.content|nl2br }}</p></div>
+            <div class="col-lg-12"><p class="font-weight-bold">{{ post.chapo|raw }}</p></div>
+            <div class="col-lg-12"><p class="text-justify featured-text">{{ post.content|raw|nl2br }}</p></div>
             <div class="col-lg-12"><p>{{ post.authorName }}</p></div>
             <div class="col-lg-12"><p class="text-right"><a href='index.php?p=listposts'>RETOUR AUX ARTICLES >>>></a></p></div>
         </div>
@@ -57,7 +57,7 @@
         <!--Add a new comment-->
         <form class="form-group" action="index.php?p=post&amp;id={{ post.postId }}" method="post">
             <div class="form-row">
-                <div class="col">
+                <div class="col mb-3">
                     {% if backManageComment == 'moderate' %}
                     <label for='nameVisitor'>{{user.userName ~ ' : ' ~ user.type }}</label>
                     <input type='text' class='form-control' name='nameVisitor' id='nameVisitor' value={{ user.userName ~ ' : ' ~ user.type }}  hidden/>
@@ -80,7 +80,7 @@
             <textarea id="contentComment"  name="content" placeholder="Message de modération" class="form-control mt-3 mb-3" rows=5 ></textarea>
             <div class="text-right"><button type="submit" id="submitComment" name="submitModerateComment" class="btn btn-success mb-3">Modérer</button></div>
             {% else %}
-            <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 required ></textarea>
+            <textarea id="contentComment"  name="content" placeholder="Votre message ici" class="form-control mt-3 mb-3" rows=5 ></textarea>
             <div class="text-right"><button type="submit" id="submitComment" name="submitComment" class="btn btn-dark mb-3">Envoyer</button></div>
             {% endif %}
         </form>
