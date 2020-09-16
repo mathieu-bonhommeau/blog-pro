@@ -21,7 +21,8 @@ class Autoloader
     private static $_directories = [
         'controller/', 
         'model/entity/', 
-        'model/manager/', 
+        'model/manager/',
+        'view/', 
         'view/frontView/',
         'view/backView/',
         'config/'];

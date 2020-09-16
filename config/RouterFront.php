@@ -52,7 +52,7 @@ class RouterFront
         } elseif ($get == 'listposts') {
 
             $frontController = new \controller\FrontController;
-            $frontController -> listPostsView(); 
+            $frontController -> listPosts(); 
             return;
             
         } elseif ($get == 'post' && $var->issetGet('id')) {
@@ -63,7 +63,7 @@ class RouterFront
                 && ($var->get('c') == 'ok' || $var->get('c') == 'moderate')
             ) {
                 $frontController -> validComment();
-                $frontController -> postView($var->get('id'));
+                $frontController -> post($var->get('id'));
                 return;
 
             } elseif ($var->issetPost('submitComment')) {
@@ -91,14 +91,14 @@ class RouterFront
             } 
                 
             if ($var->issetSession('commentMsg')) {
-                $frontController -> postView(
+                $frontController -> post(
                     $var->get('id'), $var->session('commentMsg')
                 );
                 $var -> unsetSession('commentMsg');
                 return;
             } 
 
-            $frontController -> postView($var->get('id'));
+            $frontController -> post($var->get('id'));
             return;
 
         } elseif ($get == 'connect') {
@@ -115,11 +115,11 @@ class RouterFront
             
             if ($var->issetSession('msgConnect')) {
 
-                $frontController -> connectView($var->session('msgConnect'));
+                $frontController -> connect($var->session('msgConnect'));
                 $var -> unsetSession('msgConnect');
                 return;
             } 
-            $frontController -> connectView();
+            $frontController -> connect();
             return;
                
         } elseif ($get == 'disconnect') {

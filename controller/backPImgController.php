@@ -4,8 +4,6 @@
  * This file contains BackPImgController class
  */
 namespace controller;
-use Twig;
-use Twig_Extensions_Extension_Text;
 
 /**
  * Class for manage post image
@@ -77,6 +75,8 @@ class BackPImgController extends BackPostController
      * 
      * @param string $imgPost   Name of picture post
      * @param string $directory Definitive directory of picture post
+     * 
+     * @return void
      */
     public function renameFile($imgPost, $directory)
     {
@@ -125,13 +125,14 @@ class BackPImgController extends BackPostController
     public function imgChange()
     {
         $var = new \config\GlobalVar;
+        $backAddPostController = new \controller\BackAddPostController;
 
         if ($var->issetSession('previewPost')) {
             if (file_exists($var->session('previewPost') -> picture())) {
                 unlink($var->session('previewPost')-> picture());
             }
             $var->session('previewPost')->setPicture(null);
-            $this -> addPostView(
+            $backAddPostController -> addPost(
                 $form=null, $msg=null, $var->session('previewPost')
             );
         }  
