@@ -26,7 +26,7 @@ class GlobalVar
      */
     public function get($index) 
     {
-        return filter_input(INPUT_GET, $index);
+        return filter_input(INPUT_GET, $index, FILTER_SANITIZE_STRING);
     }
 
     /**
@@ -39,7 +39,7 @@ class GlobalVar
     public function issetGet($index)
     {
         $index = htmlspecialchars($index);
-        $get = filter_input(INPUT_GET, $index);
+        $get = filter_input(INPUT_GET, $index, FILTER_SANITIZE_STRING);
         if (isset($get)) {
             return true;
         }
@@ -53,7 +53,7 @@ class GlobalVar
      */
     public function post($index) 
     {
-        return filter_input(INPUT_POST, $index);
+        return filter_input(INPUT_POST, $index, FILTER_SANITIZE_STRING);
     }
 
     /**
@@ -79,7 +79,7 @@ class GlobalVar
     public function issetPost($index)
     {
         $index = htmlspecialchars($index);
-        $post =  filter_input(INPUT_POST, $index);
+        $post =  filter_input(INPUT_POST, $index, FILTER_SANITIZE_STRING);
         if (isset($post)) {
             return true;
         }
@@ -96,7 +96,7 @@ class GlobalVar
     public function noEmptyPost($index)
     {
         $index = htmlspecialchars($index);
-        $post =  filter_input(INPUT_POST, $index);
+        $post =  filter_input(INPUT_POST, $index, FILTER_SANITIZE_STRING);
         if (!empty($post)) {
             return true;
         }
@@ -113,7 +113,7 @@ class GlobalVar
     public function emptyPost($index)
     {
         $index = htmlspecialchars($index);
-        $post =  filter_input(INPUT_POST, $index);
+        $post =  filter_input(INPUT_POST, $index, FILTER_SANITIZE_STRING);
         if (empty($post)) {
             return true;
         }
