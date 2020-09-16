@@ -27,7 +27,7 @@ class BackCommentController extends BackController
      * 
      * @return void
      */
-    public function validComment()
+    public function validCommentView()
     {
         $commentManager = new \model\CommentManager;
         $comments = $commentManager -> getAllComments('FALSE');

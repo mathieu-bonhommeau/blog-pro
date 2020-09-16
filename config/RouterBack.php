@@ -57,7 +57,7 @@ class RouterBack
                 return;
 
             } elseif ($get == 'validcomment') { 
-                $backCommentController -> validComment();
+                $backCommentController -> validCommentView();
                 return;
 
             } elseif ($get == 'comment') {

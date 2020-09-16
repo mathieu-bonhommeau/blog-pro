@@ -78,7 +78,7 @@ class BackPostController extends BackController
     }
 
     /**
-     * Display add post page
+     * Retrives and send data to addPost page
      * 
      * @param array  $form        If update post 
      * @param string $msg         Message
@@ -187,7 +187,8 @@ class BackPostController extends BackController
     }
 
     /**
-     * Give preview post value at add post form inputs
+     * If session 'previewpost' exists, 
+     * this method give these values at addpost form inputs
      * 
      * @return void
      */
@@ -371,7 +372,7 @@ class BackPostController extends BackController
     }
 
     /**
-     * Delete session
+     * Delete post session
      * 
      * @param string $name Index of the session
      * 
