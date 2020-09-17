@@ -35,6 +35,14 @@ class View
         ); 
     }
 
+    /**
+     * This method retrieves data and page adress from the controller
+     * 
+     * @param array $data Data from the database
+     * @param string $path Path of the twig file for the view
+     * 
+     * @return void
+     */
     public function displayPage($data, $path)
     {
         $this->twigInit();
