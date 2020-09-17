@@ -135,6 +135,13 @@ class CommentManager extends Manager
         return $req->rowCount();
     }
 
+    /**
+     * Delete all the comments from a post
+     * 
+     * @param int $post_id Id of post
+     * 
+     * @return int Number of affected lines
+     */
     public function deletePostComments($post_id)
     {
         $req = $this->database()->prepare(

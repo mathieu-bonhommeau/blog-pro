@@ -16,30 +16,12 @@ namespace model;
  * @copyright 2020 Mathieu Bonhommeau
  * @link      http://localhost/blog-pro/index.php
  */
-class Message 
+class Message extends Entity
 {
     private $_name;
     private $_firstName;
     private $_email;
     private $_message;
-
-    /**
-     * __construct Init object
-     *
-     * @param array $form Array Array with database data
-     * 
-     * @return void
-     */
-    public function __construct(array $form)
-    {
-        foreach ($form as $key => $value) {
-            $key = ucfirst($key);
-            $method = 'set'. $key;
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-    }
 
     /**
      * Getter $_inputName

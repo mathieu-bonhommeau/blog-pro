@@ -19,7 +19,7 @@ namespace config;
 class RouterBack
 {
     /**
-     * Routing on back pages
+     * This method route to controllers for display back office pages
      * 
      * @param string $get Index $_GET
      * 

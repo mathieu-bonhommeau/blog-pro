@@ -48,6 +48,7 @@
                                                         <li><a href="../namespaces/config.html">\config</a></li>
                                                         <li><a href="../namespaces/controller.html">\controller</a></li>
                                                         <li><a href="../namespaces/model.html">\model</a></li>
+                                                        <li><a href="../namespaces/view.html">\view</a></li>
                                                     </ul>
                     </li>
                                         <li class="dropdown" id="charts-menu">
@@ -69,12 +70,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">44</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">41</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -102,16 +103,16 @@
                                                                             <li><a href="#config\Autoloader.php"><i class="icon-file"></i> config\Autoloader.php</a></li>
                                                                                                     <li><a href="#config\config.php"><i class="icon-file"></i> config\config.php</a></li>
                                                                                                     <li><a href="#config\GlobalVar.php"><i class="icon-file"></i> config\GlobalVar.php</a></li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li><a href="#controller\backPostController.php"><i class="icon-file"></i> controller\backPostController.php</a></li>
-                                                                                                                                                            <li><a href="#controller\Controller.php"><i class="icon-file"></i> controller\Controller.php</a></li>
+                                                                                                                                                                                                                    <li><a href="#controller\backAddPostController.php"><i class="icon-file"></i> controller\backAddPostController.php</a></li>
+                                                                                                                                                                                                                                                                                                                                                                                            <li><a href="#controller\Controller.php"><i class="icon-file"></i> controller\Controller.php</a></li>
                                                                                                                                                             <li><a href="#index.php"><i class="icon-file"></i> index.php</a></li>
                                                                                                     <li><a href="#model\entity\Comment.php"><i class="icon-file"></i> model\entity\Comment.php</a></li>
-                                                                                                    <li><a href="#model\entity\Message.php"><i class="icon-file"></i> model\entity\Message.php</a></li>
+                                                                                                                                                            <li><a href="#model\entity\Message.php"><i class="icon-file"></i> model\entity\Message.php</a></li>
                                                                                                     <li><a href="#model\entity\Post.php"><i class="icon-file"></i> model\entity\Post.php</a></li>
                                                                                                     <li><a href="#model\entity\User.php"><i class="icon-file"></i> model\entity\User.php</a></li>
-                                                                                                    <li><a href="#model\manager\CommentManager.php"><i class="icon-file"></i> model\manager\CommentManager.php</a></li>
-                                                                                                    <li><a href="#model\manager\Manager.php"><i class="icon-file"></i> model\manager\Manager.php</a></li>
-                                                                                                                                                                                    </ul>
+                                                                                                                                                            <li><a href="#model\manager\Manager.php"><i class="icon-file"></i> model\manager\Manager.php</a></li>
+                                                                                                                                                                                                                    <li><a href="#view\View.php"><i class="icon-file"></i> view\View.php</a></li>
+                                                                    </ul>
         </div>
 
         <div class="span10 offset2">
@@ -178,7 +179,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             config\GlobalVar.php
-                            <small style="float: right;padding-right: 10px;">3</small>
+                            <small style="float: right;padding-right: 10px;">2</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -200,11 +201,6 @@
                                         <td>54</td>
                                         <td>Argument $index is missing from the Docblock of post</td>
                                     </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>128</td>
-                                        <td>Argument $index is missing from the Docblock of session</td>
-                                    </tr>
                                                             </tbody>
                             </table>
                         </div>
@@ -214,18 +210,10 @@
                             <div class="package-contents">
                                     </div>
                             <div class="package-contents">
-                                    </div>
-                            <div class="package-contents">
-                                    </div>
-                            <div class="package-contents">
-                                    </div>
-                            <div class="package-contents">
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="controller\backPostController.php" id="controller\backPostController.php"></a>
+                                            <a name="controller\backAddPostController.php" id="controller\backAddPostController.php"></a>
                         <h3>
                             <i class="icon-file"></i>
-                            controller\backPostController.php
+                            controller\backAddPostController.php
                             <small style="float: right;padding-right: 10px;">3</small>
                         </h3>
                         <div>
@@ -240,22 +228,30 @@
                                 <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>89</td>
-                                        <td>Name of argument $postPreview does not match with the DocBlock&#039;s name $postpreview in addPostView()</td>
+                                        <td>102</td>
+                                        <td>Name of argument $postPreview does not match with the DocBlock&#039;s name $postpreview in addPost()</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>89</td>
-                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $postPreview in addPostView()</td>
+                                        <td>102</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $postPreview in addPost()</td>
                                     </tr>
                                                                     <tr>
                                         <td>notice</td>
-                                        <td>89</td>
-                                        <td>Parameter $postpreview could not be found in addPostView()</td>
+                                        <td>102</td>
+                                        <td>Parameter $postpreview could not be found in addPost()</td>
                                     </tr>
                                                             </tbody>
                             </table>
                         </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
                                     </div>
                             <div class="package-contents">
                                     </div>
@@ -264,7 +260,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             controller\Controller.php
-                            <small style="float: right;padding-right: 10px;">3</small>
+                            <small style="float: right;padding-right: 10px;">2</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -278,17 +274,12 @@
                                 <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>23</td>
-                                        <td>No summary for property $twig</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>24</td>
+                                        <td>22</td>
                                         <td>No summary for property $user</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>25</td>
+                                        <td>23</td>
                                         <td>No summary for property $msg</td>
                                     </tr>
                                                             </tbody>
@@ -383,6 +374,8 @@
                                                             </tbody>
                             </table>
                         </div>
+                                    </div>
+                            <div class="package-contents">
                                     </div>
                             <div class="package-contents">
                                             <a name="model\entity\Message.php" id="model\entity\Message.php"></a>
@@ -553,35 +546,6 @@
                         </div>
                                     </div>
                             <div class="package-contents">
-                                            <a name="model\manager\CommentManager.php" id="model\manager\CommentManager.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            model\manager\CommentManager.php
-                            <small style="float: right;padding-right: 10px;">2</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>138</td>
-                                        <td>Argument $post_id is missing from the Docblock of deletePostComments</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>138</td>
-                                        <td>No summary for method deletePostComments()</td>
-                                    </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
                                     </div>
                             <div class="package-contents">
                                             <a name="model\manager\Manager.php" id="model\manager\Manager.php"></a>
@@ -613,6 +577,32 @@
                                     </div>
                             <div class="package-contents">
                                     </div>
+                            <div class="package-contents">
+                                            <a name="view\View.php" id="view\View.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            view\View.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $twig</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
                     </div>
     </section>
 
@@ -628,6 +618,7 @@
                                                                             <li><a href="../namespaces/config.html">\config</a></li>
                                                                             <li><a href="../namespaces/controller.html">\controller</a></li>
                                                                             <li><a href="../namespaces/model.html">\model</a></li>
+                                                                            <li><a href="../namespaces/view.html">\view</a></li>
                                                                     </ul>
                             </div>
                         </section>
@@ -655,7 +646,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 15th, 2020 at 16:12.
+                    on September 17th, 2020 at 20:38.
                 </section>
             </section>
         </section>

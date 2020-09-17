@@ -19,7 +19,7 @@ namespace config;
 class RouterFront 
 {
     /**
-     * Routing on front pages
+     * This method route to controllers for display front office pages
      * 
      * @param string $get Index $_GET
      * 

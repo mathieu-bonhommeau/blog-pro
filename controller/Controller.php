@@ -6,7 +6,8 @@
 namespace controller;
 
 /**
- * Class for init Twig, send email and control session
+ * Class Parent of controllers
+ *This class contains method for send a email, control the session and manage the error page
  * 
  * PHP version 7.3.12
  * 

@@ -62,7 +62,7 @@ class GlobalVar
      * @param string $index Name of index
      * @param string $value Value of index
      * 
-     * @return mixed
+     * @return string
      */
     public function setPost($index, $value) 
     {
@@ -123,6 +123,8 @@ class GlobalVar
     /**
      * Getter $_SESSION
      * 
+     * @param mixed $index
+     * 
      * @return mixed
      */
     public function session($index)
@@ -138,7 +140,7 @@ class GlobalVar
      * @param string $index Name of index
      * @param string $value Value of index
      * 
-     * @return mixed
+     * @return void
      */
     public function setSession($index, $value) 
     {
