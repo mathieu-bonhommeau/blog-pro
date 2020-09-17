@@ -19,7 +19,7 @@ namespace config;
 class RouterBack
 {
     /**
-     * Routing on back pages
+     * This method route to controllers for display back office pages
      * 
      * @param string $get Index $_GET
      * 
@@ -57,7 +57,7 @@ class RouterBack
                 return;
 
             } elseif ($get == 'validcomment') { 
-                $backCommentController -> validCommentView();
+                $backCommentController -> validCommentPage();
                 return;
 
             } elseif ($get == 'comment') {
@@ -89,11 +89,11 @@ class RouterBack
 
                 } elseif ($var->issetGet('id')) {
                     $form = $backUserController -> getUpdateUser($var->get('id'));
-                    $backUserController -> addUserView($form);
+                    $backUserController -> addUserPage($form);
                     return;
                     
                 } else {
-                    $backUserController -> addUserView();
+                    $backUserController -> addUserPage();
                     return;
                 }
 
@@ -124,7 +124,7 @@ class RouterBack
                         
                     } elseif ($var->issetGet('c') 
                     ) {
-                        $backUserController -> profilView(
+                        $backUserController -> profilPage(
                             $var->get('id'), $var->get('c')
                         );
                         return;
@@ -137,7 +137,7 @@ class RouterBack
                         );
                         exit();
                     }   
-                    $backUserController -> profilView($var->get('id'));
+                    $backUserController -> profilPage($var->get('id'));
                     return;
                 }
                 return;

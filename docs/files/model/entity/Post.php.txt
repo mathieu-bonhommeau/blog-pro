@@ -17,7 +17,7 @@ namespace model;
  * @copyright 2020 Mathieu Bonhommeau
  * @link      http://localhost/blog-pro/index.php
  */
-class Post
+class Post extends Entity
 { 
     private $_postId;
     private $_title;
@@ -28,35 +28,6 @@ class Post
     private $_published;
     private $_authorName;
         
-    /**
-     * __construct Init object 
-     *
-     * @param array $data Array with database data
-     * 
-     * @return void
-     */
-    public function __construct($data)
-    {
-        $this -> hydrate($data);
-    }
-    
-    /**
-     * Hydrate 
-     *
-     * @param array $data Array with database data
-     * 
-     * @return void
-     */
-    public function hydrate($data)
-    {
-        foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key); 
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-        }
-    }
-
     /**
      * Getter $_postId
      * 

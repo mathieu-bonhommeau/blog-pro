@@ -6,7 +6,7 @@
 namespace config;
 
 /**
- * Class for autoloader of class
+ * Class for autoload all the class of the project
  * 
  * PHP version 7.3.12
  * 
@@ -16,12 +16,13 @@ namespace config;
  * @copyright 2020 Mathieu Bonhommeau
  * @link      http://localhost/blog-pro/index.php
  */
-class Autoloader 
+class Autoloader
 {
     private static $_directories = [
         'controller/', 
         'model/entity/', 
-        'model/manager/', 
+        'model/manager/',
+        'view/', 
         'view/frontView/',
         'view/backView/',
         'config/'];
@@ -33,12 +34,12 @@ class Autoloader
      */
     public function __construct()
     {
-        spl_autoload_register([__CLASS__, 'classLoader']);
-        
+        spl_autoload_register([__CLASS__, 'classLoader']); 
     }
 
     /**
-     * Test class
+     * Loop for find the corresponding class in the project
+     * Test if the file exist
      * 
      * @param string $className Name of class
      * 

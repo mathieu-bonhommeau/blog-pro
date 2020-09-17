@@ -4,11 +4,10 @@
  * This file contains Controller class
  */
 namespace controller;
-use Twig;
-use Twig_Extensions_Extension_Text;
 
 /**
- * Class for init Twig, send email and control session
+ * Class Parent of controllers
+ *This class contains method for send a email, control the session and manage the error page
  * 
  * PHP version 7.3.12
  * 
@@ -20,7 +19,6 @@ use Twig_Extensions_Extension_Text;
  */
 class Controller
 {
-    protected $twig;
     protected $user;
     protected $msg;
 
@@ -48,19 +46,6 @@ class Controller
         } else {
             $this->user = null;
         }
-    }
-
-    /**
-     * Init twig
-     * 
-     * @return void
-     */
-    public function twigInit()
-    {
-        $loader = new Twig\Loader\FilesystemLoader('view');
-        $this->twig = new Twig\Environment(
-            $loader, ['cache' => false, 'debug' => true]
-        ); 
     }
 
     /**
@@ -115,16 +100,12 @@ class Controller
      * 
      * @return void
      */
-    public function errorView($exception)
+    public function error($exception)
     {
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        $this->twig->addExtension(new Twig_Extensions_Extension_Text()); 
+        $view = new \view\View;
 
-        echo $this->twig->render(
-            'errorView.twig', array(
-                'exception' => $exception 
-            )
-        );
+        $data = array('exception' => $exception);
+        $page = 'errorView.twig';
+        $view -> displayPage($data, $page);
     }
 }

@@ -4,8 +4,6 @@
  * This file contains BackPostController class
  */
 namespace controller;
-use Twig;
-use Twig_Extensions_Extension_Text;
 
 /**
  * Class for get posts data and send it back to views
@@ -29,22 +27,16 @@ class BackPostController extends BackController
     {
         $var = new \config\GlobalVar;
         $postManager = new \model\PostManager;
+        $view = new \view\View;
         
         if ($var->session('user')->type() == 'administrator') {
             $posts = $postManager -> getPosts();
         } elseif ($var->session('user')->type() == 'author') {
             $posts = $postManager -> getUserPosts($var->session('user')->userId());
         }
-
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-        echo $this->twig->render(
-            'backView/backListPostView.twig', array(
-                'user' => $this->user,
-                'posts' => $posts 
-            )
-        );
+        $data = array('user' => $this->user,'posts' => $posts);
+        $page = 'backView/backListPostView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
@@ -55,9 +47,10 @@ class BackPostController extends BackController
     public function backListPostsAction()
     {
         $var = new \config\GlobalVar;
+        $backAddPostController = new \controller\BackAddPostController;
 
         if ($var->issetGet('published')) {
-            $this -> publishedPost($var->get('published'));
+            $backAddPostController -> publishedPost($var->get('published'));
             return; 
         }   
         if ($var->issetGet('delete')) { 
@@ -70,241 +63,11 @@ class BackPostController extends BackController
                 exit();  
 
             } else {
-                $this -> deleteView($var->get('delete'));
+                $this -> deletePostPage($var->get('delete'));
                 return;  
             }    
         }
         $this -> backListPosts();     
-    }
-
-    /**
-     * Retrives and send data to addPost page
-     * 
-     * @param array  $form        If update post 
-     * @param string $msg         Message
-     * @param Post   $postpreview Post object for manage preview feature
-     * 
-     * @return void
-     */
-    public function addPostView(
-        array $form=null, 
-        $msg=null, 
-        \model\Post $postPreview=null
-    ) { 
-        if ($form != null) {
-            $newPost = new \model\Post($form);
-            $postManager = new \model\PostManager;
-            
-            if ($newPost->postId() == null) {
-                $result = $postManager -> addPost($newPost);
-                $this -> resultPost($result[0], $result[1]);
-
-            } else {
-                
-                $result = $postManager -> updatePost($newPost);
-                
-                $this -> resultPost($result, $newPost->postId());
-            }
-        }
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        echo $this->twig->render(
-            'backView/addPostView.twig', array(
-                'user' => $this->user,
-                'msg' => $msg,
-                'postPreview' => $postPreview  
-            )
-        );
-    }
-
-    /**
-     * Manage results of add post
-     * 
-     * @param int $affectedLines Number of affected lines 
-     *                           when add a new post or update post
-     * @param int $postId        Id of post
-     * 
-     * @return void
-     */
-    public function resultPost($affectedLines, $postId) 
-    {
-        $postManager = new \model\PostManager;
-        $var = new \config\GlobalVar;
-
-        if ($affectedLines != 1) {
-            $var->setSession('addPostMsg', POST_NO_OK);
-            header('Location: index.php?admin=addpost');
-            exit(); 
-        }
-
-        $data = $postManager -> getPost($postId);
-        $newPost = new \model\Post($data);
-            
-        if ($newPost->published() != 'TRUE') {
-            $var->setSession('addPostMsg', MSG_SAVE);
-            $this -> deleteSession('previewPost');
-            header('Location: index.php?admin=addpost');
-            exit();
-        }
-
-        if (($var->issetSession('previewPost') 
-            && $var->issetSession('oldImage')) && (basename(
-                $var->session('previewPost')->picture()
-            )  != $var->session('oldImage'))
-        ) {
-            unlink(POST_IMG_DIRECTORY . $var->session('oldImage'));  
-        }
-        $this -> deleteSession('previewPost');
-        header('Location: index.php?p=post&id=' . $newPost->postId());
-        exit();     
-    }
-
-    /**
-     * Manage preview postr feature
-     * 
-     * @param array $form Inputs of addpost form in add post page for preview feature
-     * 
-     * @return void
-     */
-    public function previewPost(array $form)
-    {
-        $var = new \config\GlobalVar;
-        
-        $newPost = new \model\Post($form);
-        $newPost -> setLastDateModif(time());
-        $newPost -> setAuthorName($var->session('user')->authorName());
-
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-        echo $this->twig->render(
-            'backView\postPreview.twig', array(
-                'user' => $this->user,
-                'newPost' => $newPost    
-            )
-        );
-        $var->setSession('previewPost', $newPost);
-    }
-
-    /**
-     * If session 'previewpost' exists, 
-     * this method give these values at addpost form inputs
-     * 
-     * @return void
-     */
-    public function inputPostTest() 
-    {
-        $var = new \config\GlobalVar;
-
-        if (($var->emptyPost('titlePost') 
-            && $var->emptyPost('chapoPost') 
-            && $var->emptyPost('contentPost')) 
-            && ($var->issetSession('previewPost'))
-        ) {
-            $var->setPost('titlePost', $var->session('previewPost')->title());
-            $var->setPost('chapoPost', $var->session('previewPost')->chapo());
-            $var->setPost('contentPost', $var->session('previewPost')->content());  
-        }
-        return;
-    }
-
-    /**
-     * Test inputs in add post form on addpost page
-     * 
-     * @param int $postId Id of post
-     * 
-     * @return array $form Array with inputs addpost form
-     */
-    public function dataInputPost($postId=null)
-    {
-        $var = new \config\GlobalVar;
-        $backImageController = new \controller\BackPImgController;
-
-        $this -> inputPostTest();
-
-        if ($var->noEmptyPost('titlePost')
-            && $var->noEmptyPost('chapoPost')
-            && $var->noEmptyPost('contentPost')
-        ) {
-            if (empty($_FILES['imgPost']['name'])) {
-                $path = $backImageController->managePostImage();
-    
-            } else {
-                $path =  $backImageController -> uploadFile($_FILES['imgPost']);  
-            }
-            $form = array(
-                'id' => $postId,
-                'title' => $var->post('titlePost'),
-                'chapo' => $var->post('chapoPost'),
-                'content' => $var->post('contentPost'),'picture' => $path,
-                'published' => 'FALSE'   
-            );
-            return $form;
-
-        }
-        $var->setSession('addPostMsg', EMPTY_FIELDS);
-        header('Location: index.php?admin=addpost');
-    }
-
-    /**
-     * Publish post
-     * 
-     * @param int $postId Id of post
-     * 
-     * @return void
-     */
-    public function publishedPost($postId) 
-    {
-        $postManager = new \model\PostManager;
-        $data = $postManager -> getPost($postId);
-        if ($data) {
-            $post = new \model\Post($data);
-            $post -> setPublished('TRUE');
-            
-            $affectedLine = $postManager -> updatePost($post);
-            
-            if ($affectedLine == 1 && $_GET['c'] == 'valid') {
-                
-                header('Location: index.php?p=post&id=' . $postId);
-
-            } elseif ($affectedLine == 1 && $_GET['c'] != 'valid') {
-                
-                header('Location: index.php?admin=post');
-            }
-            throw new \Exception(POST_NO_OK); 
-            return;   
-        } 
-        throw new \Exception(POST_NO_EXIST);   
-    }
-
-    /**
-     * Update a post
-     * 
-     * @param int $postId Id of post
-     */
-    public function updatePost($postId)
-    {
-        $postManager = new \model\PostManager;
-        $data = $postManager -> getPost($postId);
-        
-        if ($data) {
-            $post = new \model\Post($data);
-            
-            $_SESSION['oldImage'] = basename($post->picture());
-
-            if ($post->picture() != null 
-                && file_exists(POST_IMG_DIRECTORY . $post->picture())
-            ) {
-                $this -> verifTmpFolder();
-                copy(
-                    POST_IMG_DIRECTORY . $post->picture(), 'tmp/' 
-                    . 'tmp' . $post->picture()
-                );
-                $post->setPicture('tmp/' . 'tmp' . $post->picture());
-            }
-            return $post;
-        } 
-        throw new \Exception(POST_NO_EXIST);  
     }
 
     /**
@@ -314,9 +77,11 @@ class BackPostController extends BackController
      * 
      * @return void
      */
-    public function deleteView($postId)
+    public function deletePostPage($postId)
     {
         $postManager = new \model\PostManager;
+        $view = new \view\View;
+
         $dataPost = $postManager -> getPost($postId);
 
         if ($dataPost == false) {
@@ -329,18 +94,14 @@ class BackPostController extends BackController
             $dataComment = $commentManager -> getComments($postId, 'TRUE');
             $nbrComments = $commentManager -> nbrComments($postId, 'TRUE');
 
-            $this->twigInit();
-            $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-            $this->twig->addExtension(new Twig_Extensions_Extension_Text());
-
-            echo $this->twig->render(
-                'backView/deletePostView.twig', array(
-                    'post' => $post,
-                    'comments' => $dataComment,
-                    'nbrComments' => $nbrComments['COUNT(*)'],
-                    'user' => $this->user
-                )
+            $data = array(
+                'post' => $post,
+                'comments' => $dataComment,
+                'nbrComments' => $nbrComments['COUNT(*)'],
+                'user' => $this->user
             );
+            $page = 'backView/deletePostView.twig';
+            $view -> displayPage($data, $page);
         }      
     }
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  mar. 15 sep. 2020 à 21:35
+-- Généré le :  jeu. 17 sep. 2020 à 16:33
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   PRIMARY KEY (`id`),
   KEY `fk_post_id` (`post_id`),
   KEY `fk_comment_user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=219 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `comment`
@@ -93,7 +93,6 @@ INSERT INTO `comment` (`id`, `nameVisitor`, `content`, `commentDate`, `emailVisi
 (209, 'administrator : Mat85', 'un com de valid', '2020-09-08 19:39:31', 'mathieu.bonhommeau@orange.fr', 'TRUE', 18, 147),
 (210, 'Mathieu Bonhommeau', 'fdhserdfhedf', '2020-09-09 23:42:32', 'mathieu.bonhommeau@orange.fr', 'TRUE', 18, 19),
 (212, 'administrator : Mat85', 'Je le valide mais bon je suis pas content ', '2020-09-12 19:03:32', 'mathieu.bonhommeau@orange.fr', 'TRUE', 18, 130),
-(215, 'administrator : Mat85', '<p>Un commentaire de mod</p>', '2020-09-15 18:35:02', 'mathieu.bonhommeau@orange.fr', 'TRUE', 18, 19),
 (216, 'Mat', '<p>balabla</p>', '2020-09-15 18:35:34', 'matanna@orange.fr', 'FALSE', 18, 130);
 
 -- --------------------------------------------------------
@@ -114,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `user_id` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_post_user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `post`

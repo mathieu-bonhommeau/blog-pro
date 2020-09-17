@@ -17,7 +17,7 @@ namespace model;
  * @copyright 2020 Mathieu Bonhommeau
  * @link      http://localhost/blog-pro/index.php
  */
-class User 
+class User extends Entity
 { 
     private $_userId;
     private $_userName;
@@ -29,36 +29,6 @@ class User
     private $_type;
 
     private static $_role = array('administrator', 'author', 'moderator');
-
-    /**
-     * __construct Init object 
-     *
-     * @param array $data Array with database data
-     * 
-     * @return void
-     */
-    public function __construct($data)
-    {
-        $this->hydrate($data);
-    }
-
-    /**
-     * Hydrate 
-     *
-     * @param array $data Array with database data
-     * 
-     * @return void
-     */
-    public function hydrate($data)
-    {
-        foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
-            if (method_exists($this, $method)) {
-                $this->$method($value);
-            }
-
-        }
-    }
 
     /**
      * Getter $_userId

@@ -16,7 +16,7 @@ namespace model;
  * @copyright 2020 Mathieu Bonhommeau
  * @link      http://localhost/blog-pro/index.php
  */
-class Comment
+class Comment extends Entity
 {
     private $_commentId;
     private $_nameVisitor;
@@ -26,36 +26,6 @@ class Comment
     private $_validComment;
     private $_user_id;
     private $_post_id;
-    
-    /**
-     * __construct Init object
-     *
-     * @param array $data Array Array with database data
-     * 
-     * @return void
-     */
-    public function __construct($data)
-    {
-        $this -> hydrate($data);
-    }
-    
-    /**
-     * Hydrate
-     *
-     * @param array $data Array Array with database data
-     * 
-     * @return void
-     */
-    public function hydrate($data)
-    {
-        foreach ($data as $key => $value) {
-            $key = ucfirst($key);
-            $method = 'set' . $key;
-            if (method_exists($this, $method)) {
-                $this -> $method($value);
-            }
-        }
-    }
     
     /**
      * Getter commentId

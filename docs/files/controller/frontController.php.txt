@@ -5,10 +5,6 @@
  */
 namespace controller;
 
-use Faker\ValidGenerator;
-use Twig;
-use Twig_Extensions_Extension_Text;
-
 /**
  * Class for get datas and send it back to front views
  * 
@@ -31,20 +27,19 @@ class FrontController extends Controller
      */
     public function homePage($msg=null)
     {
+
         $postManager = new \model\PostManager;
         $posts = $postManager -> getHomePosts(3);
+        $view = new \view\View;
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        $this->twig->addExtension(new Twig_Extensions_Extension_Text()); 
-
-        echo $this->twig->render(
-            'frontView/homeView.twig', array(
-                'posts' => $posts,
-                'msg' => $msg,
-                'user' => $this->user 
-            )
+        $data = array(
+            'posts' => $posts,
+            'msg' => $msg,
+            'user' => $this->user 
         );
+        $page = 'frontView/homeView.twig';
+        $view -> displayPage($data, $page);
+
     }
 
     /**
@@ -91,25 +86,20 @@ class FrontController extends Controller
     }
 
     /**
-     * Retrieves and send data for display a list with all the post on posts view
+     * Retrieves and send data for display a list 
+     * with all the posts on listposts view
      * 
      * @return void
      */
-    public function listPostsView()
+    public function listPosts()
     {
         $postManager = new \model\PostManager;
         $posts = $postManager -> getPosts();
+        $view = new \view\View;
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        $this->twig->addExtension(new Twig_Extensions_Extension_Text()); 
-
-        echo $this->twig->render(
-            'frontView/listPostView.twig', array(
-                'posts' => $posts,
-                'user' => $this->user
-            )
-        );
+        $data = array('posts' => $posts,'user' => $this->user);
+        $page = 'frontView/listPostView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
@@ -120,9 +110,10 @@ class FrontController extends Controller
      * 
      * @return void
      */
-    public function postView($postId, $msg=null)
+    public function post($postId, $msg=null)
     {
         $var = new \config\GlobalVar;
+        $view = new \view\View;
 
         $backManageComment = null;
 
@@ -148,15 +139,13 @@ class FrontController extends Controller
         $commentManager = new \model\CommentManager;
         $dataComment = $commentManager -> getComments($postId);
         $nbrComments = $commentManager -> nbrComments($postId, 'TRUE');
-        $this->twigInit();
-        $this->twig->addExtension(new Twig_Extensions_Extension_Text());
-        echo $this->twig->render(
-            'frontView/postView.twig', array('post' => $post, 
-            'comments' => $dataComment,'nbrComments' => $nbrComments['COUNT(*)'],
-            'commentMsg' => $msg, 'user' => $this->user,
-            'backManageComment' => $backManageComment
-            )
-        );   
+
+        $data = array('post' => $post, 'comments' => $dataComment,
+            'nbrComments' => $nbrComments['COUNT(*)'], 'commentMsg' => $msg, 
+            'user' => $this->user, 'backManageComment' => $backManageComment
+        );
+        $page = 'frontView/postView.twig';
+        $view -> displayPage($data, $page);   
     }
 
     /**
@@ -245,15 +234,13 @@ class FrontController extends Controller
      * 
      * @return void
      */
-    public function connectView($msg=null)
+    public function connect($msg=null)
     {
-        $this->twigInit();
-        echo $this->twig->render(
-            'frontView/connectView.twig', array(
-                'user' => $this->user,
-                'msg' => $msg
-            )
-        );
+        $view = new \view\View;
+
+        $data = array('user' => $this->user,'msg' => $msg);
+        $page = 'frontView/connectView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
@@ -277,7 +264,7 @@ class FrontController extends Controller
         } else {
 
             $msgConnect = EMPTY_FIELDS;
-            $this -> connectView($msgConnect);
+            $this -> connect($msgConnect);
             return;
         }
     }

@@ -35,6 +35,6 @@ try
 catch (Exception $e)
 {
     $controller = new controller\controller;
-    $controller -> errorView($e -> getMessage());
+    $controller -> error($e -> getMessage());
 }
 

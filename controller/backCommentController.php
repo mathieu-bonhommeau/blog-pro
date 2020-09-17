@@ -6,8 +6,6 @@
 namespace controller;
 
 use Exception;
-use Twig;
-use Twig_Extensions_Extension_Text;
 
 /**
  * Class for get comments data and send it back to views
@@ -27,20 +25,15 @@ class BackCommentController extends BackController
      * 
      * @return void
      */
-    public function validCommentView()
+    public function validCommentPage()
     {
         $commentManager = new \model\CommentManager;
+        $view = new \view\View;
         $comments = $commentManager -> getAllComments('FALSE');
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-        echo $this->twig->render(
-            'backView/validCommentView.twig', array(
-                'user' => $this->user,
-                'comments' => $comments 
-            )
-        );
+        $data = array('user' => $this->user,'comments' => $comments);
+        $page = 'backView/validCommentView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
@@ -64,9 +57,10 @@ class BackCommentController extends BackController
      * 
      * @return void
      */
-    public function deleteCommentView($commentId)
+    public function deleteCommentPage($commentId)
     {
         $var = new \config\GlobalVar;
+        $view = new \view\View;
 
         $commentManager = new \model\CommentManager;
         $data = $commentManager -> getComment($commentId);
@@ -75,15 +69,9 @@ class BackCommentController extends BackController
         }
         $comment = new \model\Comment($data);
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-        echo $this->twig->render(
-            'backView/deleteCommentView.twig', array(
-                'user' => $this->user,
-                'comment' => $comment 
-            )
-        );
+        $data = array('user' => $this->user,'comment' => $comment);
+        $page = 'backView/deleteCommentView.twig';
+        $view -> displayPage($data, $page);
         $var->setSession('comment', $comment);
     }
 
@@ -157,17 +145,13 @@ class BackCommentController extends BackController
     public function listComments($try=null)
     {
         $commentManager = new \model\CommentManager;
+        $view = new \view\View;
+
         $comments = $commentManager -> getAllComments(null, $try);
     
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-        echo $this->twig->render(
-            'backView/backListCommentView.twig', array(
-                'user' => $this->user,
-                'comments' => $comments
-            )
-        );
+        $data = array('user' => $this->user,'comments' => $comments);
+        $page = 'backView/backListCommentView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
@@ -199,7 +183,7 @@ class BackCommentController extends BackController
             exit();
         }
 
-        $this -> deleteCommentView($var->get('delete'));
+        $this -> deleteCommentPage($var->get('delete'));
         return;
     }
 

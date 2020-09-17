@@ -4,8 +4,6 @@
  * This file contains BackUserController class
  */
 namespace controller;
-use Twig;
-use Twig_Extensions_Extension_Text;
 
 /**
  * Class for get users data and send it back to views
@@ -29,9 +27,10 @@ class BackUserController extends BackController
      * 
      * @return void 
      */
-    public function addUserView($form=null)
+    public function addUserPage($form=null)
     {
         $var = new \config\GlobalVar;
+        $view = new \view\View;
 
         $msg = null;
         $updateUser = null;
@@ -47,15 +46,11 @@ class BackUserController extends BackController
         
         $var->setSession('updateUser', $updateUser);
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        echo $this->twig->render(
-            'backView/addUserView.twig', array(
-                'user' => $this->user,
-                'msg' => $msg,
-                'updateUser' => $updateUser   
-            )
+        $data = array('user' => $this->user,'msg' => $msg,
+            'updateUser' => $updateUser   
         );
+        $page = 'backView/addUserView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
@@ -65,7 +60,7 @@ class BackUserController extends BackController
      * 
      * @return int Number of affected lines in database 
      */
-    public function addUser($form)
+    public function addUserCreate($form)
     {
         $userManager = new \model\UserManager;
         $user = new \model\User($form);
@@ -101,7 +96,7 @@ class BackUserController extends BackController
                 ),
                 'type' => $var->post('userType') 
             );
-            $affectedLine = $this -> addUser($form);
+            $affectedLine = $this -> addUserCreate($form);
         }
             
         if ($affectedLine == 1 ) {
@@ -157,15 +152,13 @@ class BackUserController extends BackController
     public function listUsers()
     {
         $userManager = new \model\UserManager;
+        $view = new \view\View;
+
         $users = $userManager -> getUsers();
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-        echo $this->twig->render(
-            'backView/backListUserView.twig', array(
-                'user' => $this->user,
-                'users' => $users  
-            )
-        );
+        
+        $data = array('user' => $this->user,'users' => $users); 
+        $page = 'backView/backListUserView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
@@ -207,26 +200,22 @@ class BackUserController extends BackController
      * 
      * @return void
      */
-    public function deleteUserView($userId)
+    public function deleteUserPage($userId)
     {
         $userManager = new \model\UserManager;
         $postManager = new \model\PostManager;
+        $view = new \view\View;
 
         $data = $userManager -> getUser((int)$userId);
         $posts = $postManager -> getUserPosts($userId);
 
         $deleteUser = new \model\User($data);
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-        echo $this->twig->render(
-            'backView/deleteUserView.twig', array(
-                'user' => $this->user,
-                'deleteUser' => $deleteUser,
-                'posts' => $posts 
-            )
-        ); 
+        $datas = array('user' => $this->user,'deleteUser' => $deleteUser,
+            'posts' => $posts 
+        );
+        $page = 'backView/deleteUserView.twig';
+        $view -> displayPage($datas, $page); 
     }
 
     /**
@@ -251,7 +240,7 @@ class BackUserController extends BackController
             }
             throw new \Exception(USER_NO_DELETE);
         }  
-        $this -> deleteUserView($userId);
+        $this -> deleteUserPage($userId);
         return;
     }
 
@@ -264,8 +253,9 @@ class BackUserController extends BackController
      * 
      * @return void
      */
-    public function profilView($userId, $update=null)
+    public function profilPage($userId, $update=null)
     {
+        $view = new \view\View;
         $var = new \config\GlobalVar;
         $userManager = new \model\UserManager;
 
@@ -286,18 +276,11 @@ class BackUserController extends BackController
             $var->unsetSession('resetImage');
         }
 
-        $this->twigInit();
-        $this->twig->addExtension(new Twig\Extension\DebugExtension); //think to delete this line
-
-        echo $this->twig->render(
-            'backView/profilView.twig', array(
-                'user' => $this->user,
-                'userProfil' => $userProfil,
-                'update' => $update,
-                'msg' => $msg
-                
-            )
+        $data = array('user' => $this->user,'userProfil' => $userProfil,
+            'update' => $update,'msg' => $msg
         );
+        $page = 'backView/profilView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**

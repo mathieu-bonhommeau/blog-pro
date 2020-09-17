@@ -4,8 +4,6 @@
  * This file contains BackController class
  */
 namespace controller;
-use Twig;
-use Twig_Extensions_Extension_Text;
 
 /**
  * Class for display back home page
@@ -27,6 +25,7 @@ class BackController extends Controller
      */
     public function backHomePage()
     {
+        $view = new \view\View;
         $infos = $this -> backHomePostBadge();
         
         $commentManager = new \model\CommentManager;
@@ -37,17 +36,15 @@ class BackController extends Controller
         $nbrUser = $userManager->countUser();
         $lastAddedUser = $userManager->lastAddedUser();
 
-        $this->twigInit();
-
-        echo $this->twig->render(
-            'backView/backHomeView.twig', array(
-                'user' => $this->user,'nbrPosts' => $infos['nbrPosts'],
-                'lastDatePost' => $infos['lastDatePost'],
-                'nbrCommentNoValid' => $nbrCommentNoValid,
-                'lastDateComment' => $lastDateComment,
-                'nbrUser' => $nbrUser,'lastAddedUser' => $lastAddedUser
-            )
+        $data = array(
+            'user' => $this->user,'nbrPosts' => $infos['nbrPosts'],
+            'lastDatePost' => $infos['lastDatePost'],
+            'nbrCommentNoValid' => $nbrCommentNoValid,
+            'lastDateComment' => $lastDateComment,
+            'nbrUser' => $nbrUser,'lastAddedUser' => $lastAddedUser
         );
+        $page = 'backView/backHomeView.twig';
+        $view -> displayPage($data, $page);
     }
 
     /**
