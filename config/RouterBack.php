@@ -30,10 +30,10 @@ class RouterBack
         $var = new \config\GlobalVar;
 
         if ($var->issetSession('user')) {
-            $backController = new \controller\backController;
-            $backPostController = new \controller\backPostController;
+            $backController = new \controller\BackController;
+            $backPostController = new \controller\BackPostController;
             $backCommentController = new \controller\BackCommentController;
-            $backUserController = new \controller\backUserController;
+            $backUserController = new \controller\BackUserController;
             $backAddPostController = new \controller\BackAddPostController;
 
             if ($get == 'backhome') {

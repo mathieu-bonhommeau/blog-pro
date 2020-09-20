@@ -85,7 +85,7 @@ class RouterFront
 
             } elseif ($var->issetPost('publishedPost')) {
                 
-                $backPostController = new \controller\BackPostController;
+                $backPostController = new \controller\BackAddPostController;
                 $backPostController -> publishedPost($var->get('id'));
                 return;
             } 

@@ -32,7 +32,7 @@ class BackController extends Controller
         $nbrCommentNoValid = $commentManager -> nbrAllComments('FALSE');
         $lastDateComment = $commentManager -> lastDateComment();
 
-        $userManager = new \model\userManager;
+        $userManager = new \model\UserManager;
         $nbrUser = $userManager->countUser();
         $lastAddedUser = $userManager->lastAddedUser();
 
