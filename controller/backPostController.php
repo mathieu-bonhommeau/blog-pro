@@ -133,7 +133,8 @@ class BackPostController extends BackController
     }
 
     /**
-     * Delete post session
+     * This method delete post session if it exist 
+     * and delete post picture if picture exist in 'postImg' folder
      * 
      * @param string $name Index of the session
      * 

@@ -129,7 +129,8 @@ class BackAddPostController extends BackPostController
     }
 
     /**
-     * Manage results of add post
+     * Manage Results return from PostManager for add post
+     * If post picture was change, this method delete old picture 
      * 
      * @param int $affectedLines Number of affected lines 
      *                           when add a new post or update post
@@ -171,7 +172,7 @@ class BackAddPostController extends BackPostController
     }
 
     /**
-     * Manage preview postr feature
+     * Manage preview post feature
      * 
      * @param array $form Inputs of addpost form in add post page for preview feature
      * 
